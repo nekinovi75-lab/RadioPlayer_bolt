@@ -97,7 +97,7 @@ export const StationCard: React.FC<StationCardProps> = ({ station }) => {
 
       <button
         onClick={handleDelete}
-        className="hidden sm:flex absolute top-3 left-[5.25rem] w-8 h-8 rounded-full bg-red-500 hover:bg-red-600 text-white items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-lg"
+        className="hidden sm:flex absolute top-3 right-3 w-8 h-8 rounded-full bg-red-500 hover:bg-red-600 text-white items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-lg"
       >
         <Trash2 className="w-4 h-4" />
       </button>
