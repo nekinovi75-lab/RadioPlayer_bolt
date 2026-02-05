@@ -1,0 +1,183 @@
+import React, { useState, useEffect } from 'react';
+import { useStations } from '../contexts/StationsContext';
+import { RadioStation } from '../utils/csvParser';
+import { X } from 'lucide-react';
+
+interface EditStationModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  station: RadioStation | null;
+}
+
+export const EditStationModal: React.FC<EditStationModalProps> = ({ isOpen, onClose, station }) => {
+  const { editStation } = useStations();
+  const [stationName, setStationName] = useState('');
+  const [url, setUrl] = useState('');
+  const [logo, setLogo] = useState('');
+  const [category, setCategory] = useState('Pop');
+  const [errors, setErrors] = useState<{ name?: string; url?: string }>({});
+
+  useEffect(() => {
+    if (station) {
+      setStationName(station.stationName);
+      setUrl(station.url);
+      setLogo(station.logo);
+      setCategory(station.category || 'Other');
+    }
+  }, [station]);
+
+  if (!isOpen || !station) return null;
+
+  const validateForm = () => {
+    const newErrors: { name?: string; url?: string } = {};
+
+    if (!stationName.trim()) {
+      newErrors.name = 'Station name is required';
+    }
+
+    if (!url.trim()) {
+      newErrors.url = 'Stream URL is required';
+    } else if (!url.startsWith('http://') && !url.startsWith('https://')) {
+      newErrors.url = 'URL must start with http:// or https://';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!validateForm()) return;
+
+    editStation(station.id, {
+      stationName: stationName.trim(),
+      url: url.trim(),
+      logo: logo.trim(),
+      category: category
+    });
+
+    setErrors({});
+    onClose();
+  };
+
+  const handleClose = () => {
+    setErrors({});
+    onClose();
+  };
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-md w-full transform transition-all">
+        <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Edit Radio Station</h2>
+          <button
+            onClick={handleClose}
+            className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+          >
+            <X className="w-6 h-6" />
+          </button>
+        </div>
+
+        <form onSubmit={handleSubmit} className="p-6 space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Station Name *
+            </label>
+            <input
+              type="text"
+              value={stationName}
+              onChange={(e) => setStationName(e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+              placeholder="BBC Radio 1"
+            />
+            {errors.name && (
+              <p className="mt-1 text-sm text-red-500">{errors.name}</p>
+            )}
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Stream URL *
+            </label>
+            <input
+              type="text"
+              value={url}
+              onChange={(e) => setUrl(e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+              placeholder="https://stream.example.com/radio"
+            />
+            {errors.url && (
+              <p className="mt-1 text-sm text-red-500">{errors.url}</p>
+            )}
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Logo (optional)
+            </label>
+            <input
+              type="text"
+              value={logo}
+              onChange={(e) => setLogo(e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+              placeholder="bbc-radio1.svg or https://example.com/logo.png"
+            />
+            <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+              Enter filename (from /images/logos/) or full URL
+            </p>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Category
+            </label>
+            <select
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors cursor-pointer"
+            >
+              <option value="Pop">Pop</option>
+              <option value="Rock">Rock</option>
+              <option value="Jazz">Jazz</option>
+              <option value="Classical">Classical</option>
+              <option value="Electronic">Electronic</option>
+              <option value="Hip Hop">Hip Hop</option>
+              <option value="Country">Country</option>
+              <option value="R&B">R&B</option>
+              <option value="Indie">Indie</option>
+              <option value="Metal">Metal</option>
+              <option value="Reggae">Reggae</option>
+              <option value="Latin">Latin</option>
+              <option value="Blues">Blues</option>
+              <option value="Folk">Folk</option>
+              <option value="Chill">Chill</option>
+              <option value="Retro">Retro</option>
+              <option value="Talk">Talk</option>
+              <option value="News">News</option>
+              <option value="Sports">Sports</option>
+              <option value="Regional">Regional</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div className="flex gap-3 pt-4">
+            <button
+              type="button"
+              onClick={handleClose}
+              className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="flex-1 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors shadow-md"
+            >
+              Save Changes
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};

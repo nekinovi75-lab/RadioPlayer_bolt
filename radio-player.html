@@ -1,0 +1,2104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Radio Player</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-primary: #f9fafb;
+      --bg-secondary: #ffffff;
+      --bg-tertiary: #f3f4f6;
+      --border-color: #e5e7eb;
+      --text-primary: #111827;
+      --text-secondary: #6b7280;
+      --text-tertiary: #9ca3af;
+      --blue-600: #2563eb;
+      --blue-700: #1d4ed8;
+      --blue-500: #3b82f6;
+      --blue-100: #dbeafe;
+      --cyan-600: #0891b2;
+      --cyan-100: #cffafe;
+      --pink-500: #ec4899;
+      --pink-600: #db2777;
+      --red-500: #ef4444;
+      --red-600: #dc2626;
+      --green-500: #22c55e;
+      --gray-100: #f3f4f6;
+      --gray-200: #e5e7eb;
+      --gray-300: #d1d5db;
+      --gray-400: #9ca3af;
+      --gray-500: #6b7280;
+      --gray-600: #4b5563;
+      --gray-700: #374151;
+      --gray-800: #1f2937;
+    }
+
+    body.dark {
+      --bg-primary: #111827;
+      --bg-secondary: #1f2937;
+      --bg-tertiary: #374151;
+      --border-color: #374151;
+      --text-primary: #ffffff;
+      --text-secondary: #9ca3af;
+      --text-tertiary: #6b7280;
+      --gray-100: #374151;
+      --gray-700: #1f2937;
+      --gray-800: #111827;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background-color: var(--bg-secondary);
+      border-bottom: 1px solid var(--border-color);
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      transition: background-color 0.3s, border-color 0.3s;
+    }
+
+    .header-content {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      gap: 0.5rem;
+    }
+
+    @media (min-width: 640px) {
+      .header-content {
+        padding: 0 1rem;
+        gap: 1rem;
+      }
+    }
+
+    .logo-section {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-shrink: 0;
+    }
+
+    @media (min-width: 640px) {
+      .logo-section {
+        gap: 0.75rem;
+      }
+    }
+
+    .logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      background: linear-gradient(to bottom right, var(--blue-600), var(--cyan-600));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .logo-text {
+      color: white;
+      font-size: 1.25rem;
+      font-weight: bold;
+    }
+
+    .app-title {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .search-container {
+      flex: 1;
+      max-width: 28rem;
+      position: relative;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 0.5rem 2.25rem;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      background-color: var(--bg-secondary);
+      color: var(--text-primary);
+      font-size: 0.875rem;
+      transition: all 0.2s;
+    }
+
+    @media (min-width: 640px) {
+      .search-input {
+        padding: 0.5rem 2.5rem;
+        font-size: 1rem;
+      }
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--blue-500);
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+    }
+
+    .search-input::placeholder {
+      color: var(--text-tertiary);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-tertiary);
+    }
+
+    .search-clear {
+      position: absolute;
+      right: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--text-tertiary);
+      cursor: pointer;
+      padding: 0.25rem;
+      display: none;
+    }
+
+    .search-clear:hover {
+      color: var(--text-secondary);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      flex-shrink: 0;
+    }
+
+    @media (min-width: 640px) {
+      .header-actions {
+        gap: 0.5rem;
+      }
+    }
+
+    .btn {
+      padding: 0.5rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.25rem;
+    }
+
+    @media (min-width: 640px) {
+      .btn {
+        gap: 0.5rem;
+      }
+    }
+
+    .btn-primary {
+      background-color: var(--blue-600);
+      color: white;
+      padding: 0.5rem 0.5rem;
+      font-weight: 500;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      font-size: 0.875rem;
+    }
+
+    @media (min-width: 768px) {
+      .btn-primary {
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+      }
+    }
+
+    .btn-primary:hover {
+      background-color: var(--blue-700);
+    }
+
+    .btn-icon {
+      background: none;
+      color: var(--text-secondary);
+    }
+
+    .btn-icon:hover {
+      color: var(--text-primary);
+      background-color: var(--gray-100);
+    }
+
+    .btn-icon.import-export {
+      display: none;
+    }
+
+    @media (min-width: 640px) {
+      .btn-icon.import-export {
+        display: flex;
+      }
+    }
+
+    .btn-icon.active {
+      background-color: var(--pink-500);
+      color: white;
+    }
+
+    .btn-icon.active:hover {
+      background-color: var(--pink-600);
+    }
+
+    .divider {
+      height: 2rem;
+      width: 1px;
+      background-color: var(--border-color);
+      margin: 0 0.25rem;
+      display: none;
+    }
+
+    @media (min-width: 640px) {
+      .divider {
+        display: block;
+        margin: 0 0.5rem;
+      }
+    }
+
+    main {
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .main-content {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 1rem 0.75rem;
+    }
+
+    @media (min-width: 640px) {
+      .main-content {
+        padding: 2rem 1rem;
+      }
+    }
+
+    .loading-container, .empty-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 5rem 1rem;
+      text-align: center;
+    }
+
+    .empty-icon-container {
+      width: 5rem;
+      height: 5rem;
+      border-radius: 50%;
+      background-color: var(--gray-100);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+
+    .empty-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .empty-description {
+      color: var(--text-secondary);
+      max-width: 28rem;
+    }
+
+    .stations-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 0.75rem;
+    }
+
+    @media (min-width: 640px) {
+      .stations-grid {
+        gap: 1.5rem;
+      }
+    }
+
+    .stations-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    @media (min-width: 640px) {
+      .stations-list {
+        gap: 0.75rem;
+      }
+    }
+
+    .station-card {
+      position: relative;
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s;
+    }
+
+    .station-card:hover {
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    }
+
+    .station-card-image-container {
+      position: relative;
+      width: 100%;
+      padding-top: 100%;
+      background: linear-gradient(to bottom right, var(--blue-100), var(--cyan-100));
+      overflow: hidden;
+    }
+
+    body.dark .station-card-image-container {
+      background: linear-gradient(to bottom right, var(--gray-700), var(--gray-600));
+    }
+
+    .station-card-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .station-card-overlay {
+      position: absolute;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.3s;
+      opacity: 0;
+    }
+
+    .station-card:hover .station-card-overlay {
+      background-color: rgba(0, 0, 0, 0.3);
+      opacity: 1;
+    }
+
+    .play-button {
+      width: 4rem;
+      height: 4rem;
+      border-radius: 50%;
+      background-color: var(--blue-600);
+      color: white;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      transform: scale(0);
+      transition: all 0.3s;
+    }
+
+    .station-card:hover .play-button {
+      transform: scale(1);
+    }
+
+    .play-button:hover {
+      background-color: var(--blue-700);
+    }
+
+    .live-badge {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.75rem;
+      background-color: var(--green-500);
+      color: white;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+
+    .station-card-actions {
+      position: absolute;
+      top: 0.5rem;
+      left: 0.5rem;
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    @media (min-width: 640px) {
+      .station-card-actions {
+        top: 0.75rem;
+        left: 0.75rem;
+      }
+    }
+
+    .action-btn {
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      border: none;
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s;
+      opacity: 0;
+      touch-action: manipulation;
+    }
+
+    .station-card:hover .action-btn {
+      opacity: 1;
+    }
+
+    .action-btn.favorite-active {
+      opacity: 1;
+      background-color: var(--pink-500);
+    }
+
+    .action-btn.favorite-active:hover {
+      background-color: var(--pink-600);
+    }
+
+    .action-btn.favorite-inactive {
+      background-color: var(--gray-500);
+    }
+
+    .action-btn.favorite-inactive:hover {
+      background-color: var(--gray-600);
+    }
+
+    .action-btn.edit {
+      background-color: var(--blue-500);
+      display: none;
+    }
+
+    @media (min-width: 640px) {
+      .action-btn.edit {
+        display: flex;
+      }
+    }
+
+    .action-btn.edit:hover {
+      background-color: var(--blue-600);
+    }
+
+    .action-btn.delete {
+      background-color: var(--red-500);
+      display: none;
+    }
+
+    @media (min-width: 640px) {
+      .action-btn.delete {
+        display: flex;
+      }
+    }
+
+    .action-btn.delete:hover {
+      background-color: var(--red-600);
+    }
+
+    .station-card-info {
+      padding: 0.75rem;
+    }
+
+    @media (min-width: 640px) {
+      .station-card-info {
+        padding: 1rem;
+      }
+    }
+
+    .station-card-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    @media (min-width: 640px) {
+      .station-card-title {
+        font-size: 1.125rem;
+      }
+    }
+
+    .station-card-url {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-top: 0.25rem;
+    }
+
+    @media (min-width: 640px) {
+      .station-card-url {
+        font-size: 0.875rem;
+      }
+    }
+
+    .station-list-item {
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      transition: all 0.2s;
+    }
+
+    @media (min-width: 640px) {
+      .station-list-item {
+        padding: 1rem;
+        gap: 1rem;
+      }
+    }
+
+    .station-list-item:hover {
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .station-list-image-container {
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .station-list-image {
+      width: 3rem;
+      height: 3rem;
+      border-radius: 8px;
+      object-fit: contain;
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    }
+
+    @media (min-width: 640px) {
+      .station-list-image {
+        width: 4rem;
+        height: 4rem;
+      }
+    }
+
+    .live-indicator {
+      position: absolute;
+      top: -0.25rem;
+      right: -0.25rem;
+      width: 0.75rem;
+      height: 0.75rem;
+      background-color: var(--green-500);
+      border-radius: 50%;
+      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+
+    @media (min-width: 640px) {
+      .live-indicator {
+        width: 1rem;
+        height: 1rem;
+      }
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.5;
+      }
+    }
+
+    .station-list-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .station-list-title-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .station-list-title {
+      font-weight: 600;
+      color: var(--text-primary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: 0.875rem;
+    }
+
+    @media (min-width: 640px) {
+      .station-list-title {
+        font-size: 1rem;
+      }
+    }
+
+    .live-badge-small {
+      background-color: var(--green-500);
+      color: white;
+      padding: 0.125rem 0.5rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      flex-shrink: 0;
+    }
+
+    .station-list-url {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-top: 0.125rem;
+    }
+
+    @media (min-width: 640px) {
+      .station-list-url {
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+      }
+    }
+
+    .station-list-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      flex-shrink: 0;
+    }
+
+    @media (min-width: 640px) {
+      .station-list-actions {
+        gap: 0.5rem;
+      }
+    }
+
+    .list-action-btn {
+      width: 2.25rem;
+      height: 2.25rem;
+      border-radius: 50%;
+      border: none;
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      transition: all 0.2s;
+      touch-action: manipulation;
+    }
+
+    @media (min-width: 640px) {
+      .list-action-btn {
+        width: 2.5rem;
+        height: 2.5rem;
+      }
+    }
+
+    .list-action-btn.favorite-btn {
+      opacity: 0;
+      background-color: var(--gray-500);
+    }
+
+    .station-list-item:hover .list-action-btn.favorite-btn {
+      opacity: 1;
+    }
+
+    .list-action-btn.favorite-btn.active {
+      opacity: 1;
+      background-color: var(--pink-500);
+    }
+
+    .list-action-btn.favorite-btn.active:hover {
+      background-color: var(--pink-600);
+    }
+
+    .list-action-btn.favorite-btn:hover {
+      background-color: var(--gray-600);
+    }
+
+    .list-action-btn.play-btn {
+      width: 2.75rem;
+      height: 2.75rem;
+      background-color: var(--blue-600);
+    }
+
+    @media (min-width: 640px) {
+      .list-action-btn.play-btn {
+        width: 3rem;
+        height: 3rem;
+      }
+    }
+
+    .list-action-btn.play-btn:hover {
+      background-color: var(--blue-700);
+    }
+
+    .list-action-btn.edit-btn {
+      opacity: 0;
+      background-color: var(--blue-500);
+      display: none;
+    }
+
+    @media (min-width: 640px) {
+      .list-action-btn.edit-btn {
+        display: flex;
+      }
+    }
+
+    .station-list-item:hover .list-action-btn.edit-btn {
+      opacity: 1;
+    }
+
+    .list-action-btn.edit-btn:hover {
+      background-color: var(--blue-600);
+    }
+
+    .list-action-btn.delete-btn {
+      opacity: 0;
+      background-color: var(--red-500);
+      display: none;
+    }
+
+    @media (min-width: 640px) {
+      .list-action-btn.delete-btn {
+        display: flex;
+      }
+    }
+
+    .station-list-item:hover .list-action-btn.delete-btn {
+      opacity: 1;
+    }
+
+    .list-action-btn.delete-btn:hover {
+      background-color: var(--red-600);
+    }
+
+    .audio-player {
+      background-color: var(--bg-secondary);
+      border-top: 1px solid var(--border-color);
+      padding: 0.75rem;
+      transition: background-color 0.3s, border-color 0.3s;
+    }
+
+    @media (min-width: 640px) {
+      .audio-player {
+        padding: 1.5rem;
+      }
+    }
+
+    .audio-player-content {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    @media (min-width: 640px) {
+      .audio-player-content {
+        gap: 1.5rem;
+      }
+    }
+
+    .audio-player-empty {
+      text-align: center;
+      color: var(--text-tertiary);
+    }
+
+    .current-station-image-container {
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .current-station-image {
+      width: 3rem;
+      height: 3rem;
+      border-radius: 8px;
+      object-fit: contain;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    @media (min-width: 640px) {
+      .current-station-image {
+        width: 4rem;
+        height: 4rem;
+      }
+    }
+
+    .playing-indicator {
+      position: absolute;
+      top: -0.25rem;
+      right: -0.25rem;
+      width: 0.75rem;
+      height: 0.75rem;
+      background-color: var(--green-500);
+      border-radius: 50%;
+      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+
+    @media (min-width: 640px) {
+      .playing-indicator {
+        width: 1rem;
+        height: 1rem;
+      }
+    }
+
+    .current-station-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .current-station-title {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    @media (min-width: 640px) {
+      .current-station-title {
+        font-size: 1.125rem;
+      }
+    }
+
+    .current-station-status {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    @media (min-width: 640px) {
+      .current-station-status {
+        font-size: 0.875rem;
+      }
+    }
+
+    .current-station-error {
+      font-size: 0.75rem;
+      color: var(--red-500);
+      margin-top: 0.25rem;
+    }
+
+    @media (min-width: 640px) {
+      .current-station-error {
+        font-size: 0.875rem;
+      }
+    }
+
+    .player-play-button {
+      width: 2.75rem;
+      height: 2.75rem;
+      border-radius: 50%;
+      background-color: var(--blue-600);
+      color: white;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.2s;
+      flex-shrink: 0;
+      touch-action: manipulation;
+    }
+
+    @media (min-width: 640px) {
+      .player-play-button {
+        width: 3rem;
+        height: 3rem;
+      }
+    }
+
+    .player-play-button:hover:not(:disabled) {
+      background-color: var(--blue-700);
+    }
+
+    .player-play-button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .volume-control {
+      display: none;
+      align-items: center;
+      gap: 0.75rem;
+      width: 8rem;
+    }
+
+    @media (min-width: 640px) {
+      .volume-control {
+        display: flex;
+      }
+    }
+
+    .volume-icon {
+      color: var(--text-secondary);
+    }
+
+    .volume-slider {
+      flex: 1;
+      height: 0.5rem;
+      background-color: var(--gray-200);
+      border-radius: 8px;
+      appearance: none;
+      cursor: pointer;
+      outline: none;
+    }
+
+    body.dark .volume-slider {
+      background-color: var(--gray-700);
+    }
+
+    .volume-slider::-webkit-slider-thumb {
+      appearance: none;
+      width: 1rem;
+      height: 1rem;
+      background-color: var(--blue-600);
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .volume-slider::-moz-range-thumb {
+      width: 1rem;
+      height: 1rem;
+      background-color: var(--blue-600);
+      border-radius: 50%;
+      cursor: pointer;
+      border: none;
+    }
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 50;
+      padding: 1rem;
+    }
+
+    .modal-overlay.show {
+      display: flex;
+    }
+
+    .modal {
+      background-color: var(--bg-secondary);
+      border-radius: 12px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      max-width: 28rem;
+      width: 100%;
+      transform: scale(0.95);
+      transition: transform 0.3s;
+    }
+
+    .modal-overlay.show .modal {
+      transform: scale(1);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .modal-title {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      color: var(--text-tertiary);
+      cursor: pointer;
+      padding: 0.25rem;
+      transition: color 0.2s;
+    }
+
+    .modal-close:hover {
+      color: var(--text-secondary);
+    }
+
+    .modal-body {
+      padding: 1.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      background-color: var(--bg-secondary);
+      color: var(--text-primary);
+      font-size: 1rem;
+      transition: all 0.2s;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--blue-500);
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+    }
+
+    .form-error {
+      margin-top: 0.25rem;
+      font-size: 0.875rem;
+      color: var(--red-500);
+    }
+
+    .form-hint {
+      margin-top: 0.25rem;
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+
+    .modal-footer {
+      display: flex;
+      gap: 0.75rem;
+      padding-top: 1rem;
+    }
+
+    .modal-footer .btn {
+      flex: 1;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-secondary {
+      border: 1px solid var(--border-color);
+      background: none;
+      color: var(--text-primary);
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--gray-100);
+    }
+
+    .btn-primary {
+      background-color: var(--blue-600);
+      color: white;
+      border: none;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--blue-700);
+    }
+
+    .icon {
+      width: 20px;
+      height: 20px;
+    }
+
+    .icon-sm {
+      width: 16px;
+      height: 16px;
+    }
+
+    .icon-lg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .icon-xl {
+      width: 32px;
+      height: 32px;
+    }
+
+    .spinner {
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    @media (max-width: 639px) {
+      .app-title {
+        display: none;
+      }
+
+      .header-actions .btn-text {
+        display: none;
+      }
+
+      .search-input::placeholder {
+        content: "Search...";
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <div class="logo-section">
+        <div class="logo">
+          <span class="logo-text">R</span>
+        </div>
+        <h1 class="app-title">Radio Player</h1>
+      </div>
+
+      <div class="search-container">
+        <svg class="icon search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.35-4.35"></path>
+        </svg>
+        <input
+          type="text"
+          id="searchInput"
+          class="search-input"
+          placeholder="Search..."
+        />
+        <button id="searchClear" class="search-clear">
+          <svg class="icon icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path d="M18 6 6 18M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+
+      <div class="header-actions">
+        <button id="addStationBtn" class="btn btn-primary">
+          <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path d="M5 12h14M12 5v14"></path>
+          </svg>
+          <span class="btn-text">Add</span>
+        </button>
+
+        <div class="divider"></div>
+
+        <input type="file" id="importInput" accept=".csv" class="hidden" />
+        <button id="importBtn" class="btn btn-icon import-export" title="Import CSV">
+          <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"></path>
+          </svg>
+        </button>
+
+        <button id="exportBtn" class="btn btn-icon import-export" title="Export CSV">
+          <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"></path>
+          </svg>
+        </button>
+
+        <div class="divider"></div>
+
+        <button id="favoritesToggle" class="btn btn-icon" title="Show favorites">
+          <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>
+          </svg>
+        </button>
+
+        <button id="viewToggle" class="btn btn-icon" title="Toggle view">
+          <svg id="viewIconList" class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"></path>
+          </svg>
+          <svg id="viewIconGrid" class="icon hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <rect width="7" height="7" x="3" y="3" rx="1"></rect>
+            <rect width="7" height="7" x="14" y="3" rx="1"></rect>
+            <rect width="7" height="7" x="14" y="14" rx="1"></rect>
+            <rect width="7" height="7" x="3" y="14" rx="1"></rect>
+          </svg>
+        </button>
+
+        <button id="themeToggle" class="btn btn-icon" title="Toggle theme">
+          <svg id="themeIconSun" class="icon hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+          </svg>
+          <svg id="themeIconMoon" class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="main-content">
+      <div id="stationsContainer"></div>
+    </div>
+  </main>
+
+  <div class="audio-player">
+    <div id="audioPlayerContent" class="audio-player-content"></div>
+  </div>
+
+  <div id="addStationModal" class="modal-overlay">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 class="modal-title">Add Radio Station</h2>
+        <button class="modal-close" onclick="closeAddModal()">
+          <svg class="icon-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path d="M18 6 6 18M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+      <form id="addStationForm" class="modal-body">
+        <div class="form-group">
+          <label class="form-label">Station Name *</label>
+          <input type="text" id="addStationName" class="form-input" placeholder="BBC Radio 1" />
+          <div id="addNameError" class="form-error hidden"></div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Stream URL *</label>
+          <input type="text" id="addStationUrl" class="form-input" placeholder="https://stream.example.com/radio" />
+          <div id="addUrlError" class="form-error hidden"></div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Logo (optional)</label>
+          <input type="text" id="addStationLogo" class="form-input" placeholder="bbc-radio1.svg or https://example.com/logo.png" />
+          <div class="form-hint">Enter filename (will look in public/images/logos/) or full URL</div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeAddModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Add Station</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="editStationModal" class="modal-overlay">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 class="modal-title">Edit Radio Station</h2>
+        <button class="modal-close" onclick="closeEditModal()">
+          <svg class="icon-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path d="M18 6 6 18M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+      <form id="editStationForm" class="modal-body">
+        <input type="hidden" id="editStationId" />
+        <div class="form-group">
+          <label class="form-label">Station Name *</label>
+          <input type="text" id="editStationName" class="form-input" placeholder="BBC Radio 1" />
+          <div id="editNameError" class="form-error hidden"></div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Stream URL *</label>
+          <input type="text" id="editStationUrl" class="form-input" placeholder="https://stream.example.com/radio" />
+          <div id="editUrlError" class="form-error hidden"></div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Logo (optional)</label>
+          <input type="text" id="editStationLogo" class="form-input" placeholder="bbc-radio1.svg or https://example.com/logo.png" />
+          <div class="form-hint">Enter filename (will look in public/images/logos/) or full URL</div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeEditModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const DEFAULT_LOGO = './public/images/logos/default-logo.svg';
+
+    const DEFAULT_STATIONS = [
+      { id: '1', stationName: 'BBC Radio 1', url: 'https://stream.live.vc.bbcmedia.co.uk/bbc_radio_one', logo: 'bbc-radio1.svg' },
+      { id: '2', stationName: 'Jazz FM', url: 'https://edge-bauerall-01-gos2.sharp-stream.com/jazz.mp3', logo: 'jazz-fm.svg' },
+      { id: '3', stationName: 'Classical Radio', url: 'https://stream.live.vc.bbcmedia.co.uk/bbc_radio_three', logo: 'classical.svg' },
+      { id: '4', stationName: 'Smooth FM', url: 'https://media-ssl.musicradio.com/SmoothUK', logo: 'smooth-fm.svg' },
+      { id: '5', stationName: 'NPR News', url: 'https://npr-ice.streamguys1.com/live.mp3', logo: 'npr.svg' },
+      { id: '6', stationName: 'Chill Lounge', url: 'https://streams.bigfm.de/bigfm-lounge-128-aac', logo: 'chill.svg' }
+    ];
+
+    function getLogoPath(logoFilename) {
+      if (!logoFilename) return DEFAULT_LOGO;
+      if (logoFilename.startsWith('http://') || logoFilename.startsWith('https://')) return logoFilename;
+      return `./public/images/logos/${logoFilename}`;
+    }
+
+    let state = {
+      stations: [],
+      favorites: new Set(),
+      currentStation: null,
+      isPlaying: false,
+      isLoading: false,
+      volume: 0.7,
+      error: null,
+      theme: 'light',
+      viewMode: 'grid',
+      searchQuery: '',
+      showOnlyFavorites: false
+    };
+
+    let audio = null;
+    let currentEditingId = null;
+
+    function initAudio() {
+      audio = new Audio();
+      audio.volume = state.volume;
+
+      audio.addEventListener('playing', () => {
+        state.isLoading = false;
+        state.isPlaying = true;
+        state.error = null;
+        render();
+      });
+
+      audio.addEventListener('pause', () => {
+        state.isPlaying = false;
+        render();
+      });
+
+      audio.addEventListener('waiting', () => {
+        state.isLoading = true;
+        render();
+      });
+
+      audio.addEventListener('error', () => {
+        state.isLoading = false;
+        state.isPlaying = false;
+        state.error = 'Failed to connect to stream';
+        render();
+      });
+    }
+
+    function loadState() {
+      const storedStations = localStorage.getItem('radio-stations');
+      const storedFavorites = localStorage.getItem('radio-favorites');
+      const storedTheme = localStorage.getItem('radio-theme');
+      const storedViewMode = localStorage.getItem('radio-view-mode');
+      const storedVolume = localStorage.getItem('radio-volume');
+
+      state.stations = storedStations ? JSON.parse(storedStations) : DEFAULT_STATIONS;
+      state.favorites = storedFavorites ? new Set(JSON.parse(storedFavorites)) : new Set();
+      state.theme = storedTheme || 'light';
+      state.viewMode = storedViewMode || 'grid';
+      state.volume = storedVolume ? parseFloat(storedVolume) : 0.7;
+
+      if (state.theme === 'dark') {
+        document.body.classList.add('dark');
+      }
+
+      if (audio) {
+        audio.volume = state.volume;
+      }
+    }
+
+    function saveState() {
+      localStorage.setItem('radio-stations', JSON.stringify(state.stations));
+      localStorage.setItem('radio-favorites', JSON.stringify([...state.favorites]));
+      localStorage.setItem('radio-theme', state.theme);
+      localStorage.setItem('radio-view-mode', state.viewMode);
+      localStorage.setItem('radio-volume', state.volume.toString());
+    }
+
+    function playStation(station) {
+      if (!audio) return;
+
+      state.isLoading = true;
+      state.error = null;
+
+      if (state.currentStation?.id === station.id && state.isPlaying) {
+        audio.pause();
+        state.isPlaying = false;
+        state.isLoading = false;
+        render();
+        return;
+      }
+
+      audio.src = station.url;
+      audio.load();
+
+      audio.play().catch(() => {
+        state.error = 'Failed to play stream. Try clicking again.';
+        state.isLoading = false;
+        render();
+      });
+
+      state.currentStation = station;
+      render();
+    }
+
+    function pauseStation() {
+      if (audio) {
+        audio.pause();
+      }
+    }
+
+    function setVolume(value) {
+      state.volume = Math.max(0, Math.min(1, value));
+      if (audio) {
+        audio.volume = state.volume;
+      }
+      saveState();
+    }
+
+    function toggleFavorite(stationId) {
+      if (state.favorites.has(stationId)) {
+        state.favorites.delete(stationId);
+      } else {
+        state.favorites.add(stationId);
+      }
+      saveState();
+      render();
+    }
+
+    function deleteStation(stationId) {
+      if (confirm('Delete this station?')) {
+        state.stations = state.stations.filter(s => s.id !== stationId);
+        if (state.currentStation?.id === stationId) {
+          state.currentStation = null;
+          state.isPlaying = false;
+          if (audio) {
+            audio.pause();
+            audio.src = '';
+          }
+        }
+        saveState();
+        render();
+      }
+    }
+
+    function addStation(name, url, logo) {
+      const newStation = {
+        id: `${Date.now()}-${Math.random()}`,
+        stationName: name,
+        url: url,
+        logo: logo
+      };
+      state.stations.push(newStation);
+      saveState();
+      render();
+    }
+
+    function editStation(id, name, url, logo) {
+      const index = state.stations.findIndex(s => s.id === id);
+      if (index !== -1) {
+        state.stations[index] = { id, stationName: name, url, logo };
+        if (state.currentStation?.id === id) {
+          state.currentStation = state.stations[index];
+        }
+        saveState();
+        render();
+      }
+    }
+
+    function toggleTheme() {
+      state.theme = state.theme === 'light' ? 'dark' : 'light';
+      document.body.classList.toggle('dark', state.theme === 'dark');
+      saveState();
+      updateThemeIcon();
+    }
+
+    function toggleViewMode() {
+      state.viewMode = state.viewMode === 'grid' ? 'list' : 'grid';
+      saveState();
+      updateViewIcon();
+      render();
+    }
+
+    function updateThemeIcon() {
+      const sunIcon = document.getElementById('themeIconSun');
+      const moonIcon = document.getElementById('themeIconMoon');
+      if (state.theme === 'dark') {
+        sunIcon.classList.remove('hidden');
+        moonIcon.classList.add('hidden');
+      } else {
+        sunIcon.classList.add('hidden');
+        moonIcon.classList.remove('hidden');
+      }
+    }
+
+    function updateViewIcon() {
+      const listIcon = document.getElementById('viewIconList');
+      const gridIcon = document.getElementById('viewIconGrid');
+      if (state.viewMode === 'grid') {
+        listIcon.classList.remove('hidden');
+        gridIcon.classList.add('hidden');
+      } else {
+        listIcon.classList.add('hidden');
+        gridIcon.classList.remove('hidden');
+      }
+    }
+
+    function getFilteredStations() {
+      let filtered = state.stations;
+
+      if (state.showOnlyFavorites) {
+        filtered = filtered.filter(s => state.favorites.has(s.id));
+      }
+
+      if (state.searchQuery.trim()) {
+        const query = state.searchQuery.toLowerCase();
+        filtered = filtered.filter(s =>
+          s.stationName.toLowerCase().includes(query) ||
+          s.url.toLowerCase().includes(query)
+        );
+      }
+
+      return filtered;
+    }
+
+    function renderStations() {
+      const container = document.getElementById('stationsContainer');
+      const filtered = getFilteredStations();
+
+      if (state.stations.length === 0) {
+        container.innerHTML = `
+          <div class="empty-container">
+            <div class="empty-icon-container">
+              <svg class="icon-xl" style="color: var(--text-tertiary)" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path d="m9 9 10.5-3m0 6.553v3.75a2.25 2.25 0 0 1-1.632 2.163l-1.32.377a1.803 1.803 0 1 1-.99-3.467l2.31-.66a2.25 2.25 0 0 0 1.632-2.163Zm0 0V2.25L9 5.25v10.303m0 0v3.75a2.25 2.25 0 0 1-1.632 2.163l-1.32.377a1.803 1.803 0 0 1-.99-3.467l2.31-.66A2.25 2.25 0 0 0 9 15.553Z"></path>
+              </svg>
+            </div>
+            <h3 class="empty-title">No stations yet</h3>
+            <p class="empty-description">Add your first radio station to get started, or import a CSV file with your favorite stations.</p>
+          </div>
+        `;
+        return;
+      }
+
+      if (filtered.length === 0) {
+        if (state.showOnlyFavorites) {
+          container.innerHTML = `
+            <div class="empty-container">
+              <div class="empty-icon-container">
+                <svg class="icon-xl" style="color: var(--text-tertiary)" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>
+                </svg>
+              </div>
+              <h3 class="empty-title">No favorite stations</h3>
+              <p class="empty-description">Mark stations as favorites by clicking the heart icon to see them here.</p>
+            </div>
+          `;
+        } else {
+          container.innerHTML = `
+            <div class="empty-container">
+              <div class="empty-icon-container">
+                <svg class="icon-xl" style="color: var(--text-tertiary)" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path d="m21 21-4.35-4.35M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"></path>
+                </svg>
+              </div>
+              <h3 class="empty-title">No stations found</h3>
+              <p class="empty-description">No stations match "${state.searchQuery}". Try a different search term.</p>
+            </div>
+          `;
+        }
+        return;
+      }
+
+      if (state.viewMode === 'grid') {
+        container.innerHTML = `<div class="stations-grid">${filtered.map(renderStationCard).join('')}</div>`;
+      } else {
+        container.innerHTML = `<div class="stations-list">${filtered.map(renderStationListItem).join('')}</div>`;
+      }
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    function renderStationCard(station) {
+      const isCurrentStation = state.currentStation?.id === station.id;
+      const isFavorite = state.favorites.has(station.id);
+      const logoUrl = getLogoPath(station.logo);
+      const stationJson = JSON.stringify(station).replace(/"/g, '&quot;');
+
+      return `
+        <div class="station-card">
+          <div class="station-card-image-container">
+            <img src="${escapeHtml(logoUrl)}" alt="${escapeHtml(station.stationName)}" class="station-card-image" onerror="this.src='${getLogoPath('')}'" />
+            <div class="station-card-overlay">
+              <button class="play-button" onclick='playStation(${stationJson})'>
+                ${isCurrentStation && state.isPlaying ? `
+                  <svg class="icon-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <rect width="4" height="16" x="6" y="4"></rect>
+                    <rect width="4" height="16" x="14" y="4"></rect>
+                  </svg>
+                ` : `
+                  <svg class="icon-lg" fill="currentColor" viewBox="0 0 24 24">
+                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                  </svg>
+                `}
+              </button>
+            </div>
+            ${isCurrentStation && state.isPlaying ? `
+              <div class="live-badge">
+                <svg class="icon icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="animation: pulse 2s infinite">
+                  <path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.5M15.2 7.8c2.3 2.3 2.3 6.1 0 8.5M19.1 4.9c3.9 3.9 3.9 10.3 0 14.2M12 12h.01"></path>
+                </svg>
+                LIVE
+              </div>
+            ` : ''}
+          </div>
+          <div class="station-card-actions">
+            <button class="action-btn ${isFavorite ? 'favorite-active' : 'favorite-inactive'}" onclick="toggleFavorite('${station.id}')">
+              <svg class="icon icon-sm" fill="${isFavorite ? 'currentColor' : 'none'}" stroke="currentColor" viewBox="0 0 24 24">
+                <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>
+              </svg>
+            </button>
+            <button class="action-btn edit" onclick="openEditModal('${station.id}')">
+              <svg class="icon icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                <path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4Z"></path>
+              </svg>
+            </button>
+            <button class="action-btn delete" onclick="deleteStation('${station.id}')">
+              <svg class="icon icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path d="M3 6h18M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+              </svg>
+            </button>
+          </div>
+          <div class="station-card-info">
+            <h3 class="station-card-title">${escapeHtml(station.stationName)}</h3>
+            <p class="station-card-url">${escapeHtml(station.url)}</p>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderStationListItem(station) {
+      const isCurrentStation = state.currentStation?.id === station.id;
+      const isFavorite = state.favorites.has(station.id);
+      const logoUrl = getLogoPath(station.logo);
+      const stationJson = JSON.stringify(station).replace(/"/g, '&quot;');
+
+      return `
+        <div class="station-list-item">
+          <div class="station-list-image-container">
+            <img src="${escapeHtml(logoUrl)}" alt="${escapeHtml(station.stationName)}" class="station-list-image" onerror="this.src='${getLogoPath('')}'" />
+            ${isCurrentStation && state.isPlaying ? '<div class="live-indicator"></div>' : ''}
+          </div>
+          <div class="station-list-info">
+            <div class="station-list-title-row">
+              <h3 class="station-list-title">${escapeHtml(station.stationName)}</h3>
+              ${isCurrentStation && state.isPlaying ? `
+                <div class="live-badge-small">
+                  <svg class="icon icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.5M15.2 7.8c2.3 2.3 2.3 6.1 0 8.5M19.1 4.9c3.9 3.9 3.9 10.3 0 14.2M12 12h.01"></path>
+                  </svg>
+                  LIVE
+                </div>
+              ` : ''}
+            </div>
+            <p class="station-list-url">${escapeHtml(station.url)}</p>
+          </div>
+          <div class="station-list-actions">
+            <button class="list-action-btn favorite-btn ${isFavorite ? 'active' : ''}" onclick="toggleFavorite('${station.id}')">
+              <svg class="icon icon-sm" fill="${isFavorite ? 'currentColor' : 'none'}" stroke="currentColor" viewBox="0 0 24 24">
+                <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>
+              </svg>
+            </button>
+            <button class="list-action-btn play-btn" onclick='playStation(${stationJson})'>
+              ${isCurrentStation && state.isPlaying ? `
+                <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <rect width="4" height="16" x="6" y="4"></rect>
+                  <rect width="4" height="16" x="14" y="4"></rect>
+                </svg>
+              ` : `
+                <svg class="icon" fill="currentColor" viewBox="0 0 24 24">
+                  <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+              `}
+            </button>
+            <button class="list-action-btn edit-btn" onclick="openEditModal('${station.id}')">
+              <svg class="icon icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                <path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4Z"></path>
+              </svg>
+            </button>
+            <button class="list-action-btn delete-btn" onclick="deleteStation('${station.id}')">
+              <svg class="icon icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path d="M3 6h18M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderAudioPlayer() {
+      const container = document.getElementById('audioPlayerContent');
+
+      if (!state.currentStation) {
+        container.innerHTML = '<div class="audio-player-empty">Select a station to start playing</div>';
+        return;
+      }
+
+      const logoUrl = getLogoPath(state.currentStation.logo);
+      const statusText = state.isLoading ? 'Connecting...' : state.isPlaying ? 'Now Playing' : 'Paused';
+
+      container.innerHTML = `
+        <div class="current-station-image-container">
+          <img src="${escapeHtml(logoUrl)}" alt="${escapeHtml(state.currentStation.stationName)}" class="current-station-image" onerror="this.src='${getLogoPath('')}'" />
+          ${state.isPlaying ? '<div class="playing-indicator"></div>' : ''}
+        </div>
+        <div class="current-station-info">
+          <h3 class="current-station-title">${escapeHtml(state.currentStation.stationName)}</h3>
+          <p class="current-station-status">${statusText}</p>
+          ${state.error ? `<p class="current-station-error">${escapeHtml(state.error)}</p>` : ''}
+        </div>
+        <button class="player-play-button" onclick="pauseStation()" ${state.isLoading ? 'disabled' : ''}>
+          ${state.isLoading ? `
+            <svg class="icon-lg spinner" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path d="M21 12a9 9 0 1 1-6.219-8.56"></path>
+            </svg>
+          ` : state.isPlaying ? `
+            <svg class="icon-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <rect width="4" height="16" x="6" y="4"></rect>
+              <rect width="4" height="16" x="14" y="4"></rect>
+            </svg>
+          ` : `
+            <svg class="icon-lg" fill="currentColor" viewBox="0 0 24 24">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+          `}
+        </button>
+        <div class="volume-control">
+          ${state.volume === 0 ? `
+            <svg class="icon volume-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path d="M11 5 6 9H2v6h4l5 4V5ZM15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+              <line x1="2" x2="22" y1="2" y2="22"></line>
+            </svg>
+          ` : `
+            <svg class="icon volume-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+              <path d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+            </svg>
+          `}
+          <input type="range" class="volume-slider" min="0" max="1" step="0.01" value="${state.volume}" oninput="setVolume(parseFloat(this.value))" />
+        </div>
+      `;
+    }
+
+    function render() {
+      renderStations();
+      renderAudioPlayer();
+    }
+
+    function openAddModal() {
+      document.getElementById('addStationModal').classList.add('show');
+      document.getElementById('addStationName').value = '';
+      document.getElementById('addStationUrl').value = '';
+      document.getElementById('addStationLogo').value = '';
+      document.getElementById('addNameError').classList.add('hidden');
+      document.getElementById('addUrlError').classList.add('hidden');
+    }
+
+    function closeAddModal() {
+      document.getElementById('addStationModal').classList.remove('show');
+    }
+
+    function openEditModal(stationId) {
+      const station = state.stations.find(s => s.id === stationId);
+      if (!station) return;
+
+      currentEditingId = stationId;
+      document.getElementById('editStationId').value = stationId;
+      document.getElementById('editStationName').value = station.stationName;
+      document.getElementById('editStationUrl').value = station.url;
+      document.getElementById('editStationLogo').value = station.logo || '';
+      document.getElementById('editNameError').classList.add('hidden');
+      document.getElementById('editUrlError').classList.add('hidden');
+      document.getElementById('editStationModal').classList.add('show');
+    }
+
+    function closeEditModal() {
+      document.getElementById('editStationModal').classList.remove('show');
+      currentEditingId = null;
+    }
+
+    function validateAddForm() {
+      const name = document.getElementById('addStationName').value.trim();
+      const url = document.getElementById('addStationUrl').value.trim();
+      let isValid = true;
+
+      const nameError = document.getElementById('addNameError');
+      const urlError = document.getElementById('addUrlError');
+
+      if (!name) {
+        nameError.textContent = 'Station name is required';
+        nameError.classList.remove('hidden');
+        isValid = false;
+      } else {
+        nameError.classList.add('hidden');
+      }
+
+      if (!url) {
+        urlError.textContent = 'Stream URL is required';
+        urlError.classList.remove('hidden');
+        isValid = false;
+      } else if (!url.startsWith('http://') && !url.startsWith('https://')) {
+        urlError.textContent = 'URL must start with http:// or https://';
+        urlError.classList.remove('hidden');
+        isValid = false;
+      } else {
+        urlError.classList.add('hidden');
+      }
+
+      return isValid;
+    }
+
+    function validateEditForm() {
+      const name = document.getElementById('editStationName').value.trim();
+      const url = document.getElementById('editStationUrl').value.trim();
+      let isValid = true;
+
+      const nameError = document.getElementById('editNameError');
+      const urlError = document.getElementById('editUrlError');
+
+      if (!name) {
+        nameError.textContent = 'Station name is required';
+        nameError.classList.remove('hidden');
+        isValid = false;
+      } else {
+        nameError.classList.add('hidden');
+      }
+
+      if (!url) {
+        urlError.textContent = 'Stream URL is required';
+        urlError.classList.remove('hidden');
+        isValid = false;
+      } else if (!url.startsWith('http://') && !url.startsWith('https://')) {
+        urlError.textContent = 'URL must start with http:// or https://';
+        urlError.classList.remove('hidden');
+        isValid = false;
+      } else {
+        urlError.classList.add('hidden');
+      }
+
+      return isValid;
+    }
+
+    function exportCSV() {
+      const header = 'StationName,Url,Logo\n';
+      const rows = state.stations.map(s => `${s.stationName},${s.url},${s.logo || ''}`).join('\n');
+      const csv = header + rows;
+
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement('a');
+      const url = URL.createObjectURL(blob);
+
+      link.setAttribute('href', url);
+      link.setAttribute('download', 'stations.csv');
+      link.style.visibility = 'hidden';
+
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      URL.revokeObjectURL(url);
+    }
+
+    function importCSV(file) {
+      const reader = new FileReader();
+
+      reader.onload = (e) => {
+        try {
+          const content = e.target.result;
+          const lines = content.trim().split('\n');
+
+          if (lines.length < 2) {
+            alert('CSV file is empty or invalid');
+            return;
+          }
+
+          const stations = [];
+          for (let i = 1; i < lines.length; i++) {
+            const values = lines[i].split(',').map(v => v.trim());
+            if (values.length >= 2 && values[0] && values[1]) {
+              stations.push({
+                id: `${Date.now()}-${i}`,
+                stationName: values[0],
+                url: values[1],
+                logo: values[2] || ''
+              });
+            }
+          }
+
+          if (stations.length === 0) {
+            alert('No valid stations found in CSV file');
+            return;
+          }
+
+          state.stations = stations;
+          saveState();
+          render();
+        } catch (error) {
+          alert('Failed to parse CSV file');
+        }
+      };
+
+      reader.onerror = () => {
+        alert('Failed to read file');
+      };
+
+      reader.readAsText(file);
+    }
+
+    document.getElementById('searchInput').addEventListener('input', (e) => {
+      state.searchQuery = e.target.value;
+      const clearBtn = document.getElementById('searchClear');
+      clearBtn.style.display = state.searchQuery ? 'block' : 'none';
+      render();
+    });
+
+    document.getElementById('searchInput').addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        state.searchQuery = '';
+        e.target.value = '';
+        document.getElementById('searchClear').style.display = 'none';
+        render();
+      }
+    });
+
+    document.getElementById('searchClear').addEventListener('click', () => {
+      state.searchQuery = '';
+      document.getElementById('searchInput').value = '';
+      document.getElementById('searchClear').style.display = 'none';
+      render();
+    });
+
+    document.getElementById('addStationBtn').addEventListener('click', openAddModal);
+
+    document.getElementById('addStationForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!validateAddForm()) return;
+
+      const name = document.getElementById('addStationName').value.trim();
+      const url = document.getElementById('addStationUrl').value.trim();
+      const logo = document.getElementById('addStationLogo').value.trim();
+
+      addStation(name, url, logo);
+      closeAddModal();
+    });
+
+    document.getElementById('editStationForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!validateEditForm()) return;
+
+      const id = document.getElementById('editStationId').value;
+      const name = document.getElementById('editStationName').value.trim();
+      const url = document.getElementById('editStationUrl').value.trim();
+      const logo = document.getElementById('editStationLogo').value.trim();
+
+      editStation(id, name, url, logo);
+      closeEditModal();
+    });
+
+    document.getElementById('importBtn').addEventListener('click', () => {
+      document.getElementById('importInput').click();
+    });
+
+    document.getElementById('importInput').addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        importCSV(file);
+      }
+      e.target.value = '';
+    });
+
+    document.getElementById('exportBtn').addEventListener('click', exportCSV);
+
+    document.getElementById('favoritesToggle').addEventListener('click', () => {
+      state.showOnlyFavorites = !state.showOnlyFavorites;
+      const btn = document.getElementById('favoritesToggle');
+      if (state.showOnlyFavorites) {
+        btn.classList.add('active');
+        btn.querySelector('svg').style.fill = 'currentColor';
+      } else {
+        btn.classList.remove('active');
+        btn.querySelector('svg').style.fill = 'none';
+      }
+      render();
+    });
+
+    document.getElementById('viewToggle').addEventListener('click', toggleViewMode);
+
+    document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+
+    document.getElementById('addStationModal').addEventListener('click', (e) => {
+      if (e.target.id === 'addStationModal') {
+        closeAddModal();
+      }
+    });
+
+    document.getElementById('editStationModal').addEventListener('click', (e) => {
+      if (e.target.id === 'editStationModal') {
+        closeEditModal();
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeAddModal();
+        closeEditModal();
+      }
+    });
+
+    initAudio();
+    loadState();
+    updateThemeIcon();
+    updateViewIcon();
+    render();
+  </script>
+</body>
+</html>

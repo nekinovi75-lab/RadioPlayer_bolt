@@ -1,0 +1,5 @@
+<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+  <rect width="200" height="200" fill="#1a1a1a"/>
+  <text x="100" y="110" font-family="Arial, sans-serif" font-size="72" font-weight="bold" fill="#ffffff" text-anchor="middle">BBC</text>
+  <text x="100" y="150" font-family="Arial, sans-serif" font-size="24" fill="#e91e63" text-anchor="middle">RADIO 1</text>
+</svg>
