@@ -2,195 +2,198 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Theme variable definitions - outside @layer to prevent Tailwind tree-shaking */
+
+/* Blueprint Theme - Classic blue, clean and professional (original design) */
+.theme-blueprint {
+  --bg: #dbeafe;
+  --card: #ffffff;
+  --card-hover: #f0f7ff;
+  --header: #ffffff;
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --primary-subtle: #dbeafe;
+  --text: #1e293b;
+  --text-secondary: #64748b;
+  --text-on-primary: #ffffff;
+  --border: #bfdbfe;
+  --input-bg: #f8fafc;
+  --danger: #ef4444;
+  --danger-hover: #dc2626;
+  --danger-subtle: #fef2f2;
+  --success: #22c55e;
+  --success-hover: #16a34a;
+  --favorite: #ec4899;
+  --favorite-hover: #db2777;
+  --overlay: rgba(15, 23, 42, 0.5);
+}
+
+.theme-blueprint.dark {
+  --bg: #0f172a;
+  --card: #1e293b;
+  --card-hover: #273549;
+  --header: #1e293b;
+  --primary: #3b82f6;
+  --primary-hover: #60a5fa;
+  --primary-subtle: #1e3a5f;
+  --text: #e2e8f0;
+  --text-secondary: #94a3b8;
+  --text-on-primary: #ffffff;
+  --border: #334155;
+  --input-bg: #0f172a;
+  --danger: #f87171;
+  --danger-hover: #ef4444;
+  --danger-subtle: #3b1818;
+  --success: #4ade80;
+  --success-hover: #22c55e;
+  --favorite: #f472b6;
+  --favorite-hover: #ec4899;
+  --overlay: rgba(0, 0, 0, 0.6);
+}
+
+/* Ember Theme - Warm, bold with amber and terracotta tones */
+.theme-ember {
+  --bg: #fef3e2;
+  --card: #fffbf5;
+  --card-hover: #fef0db;
+  --header: #fffbf5;
+  --primary: #d97706;
+  --primary-hover: #b45309;
+  --primary-subtle: #fef3c7;
+  --text: #292524;
+  --text-secondary: #78716c;
+  --text-on-primary: #ffffff;
+  --border: #fed7aa;
+  --input-bg: #fffbeb;
+  --danger: #dc2626;
+  --danger-hover: #b91c1c;
+  --danger-subtle: #fef2f2;
+  --success: #16a34a;
+  --success-hover: #15803d;
+  --favorite: #e11d48;
+  --favorite-hover: #be123c;
+  --overlay: rgba(41, 37, 36, 0.5);
+}
+
+.theme-ember.dark {
+  --bg: #1c1410;
+  --card: #292019;
+  --card-hover: #352a20;
+  --header: #292019;
+  --primary: #f59e0b;
+  --primary-hover: #fbbf24;
+  --primary-subtle: #422d0a;
+  --text: #fef3c7;
+  --text-secondary: #a8a29e;
+  --text-on-primary: #1c1410;
+  --border: #44382b;
+  --input-bg: #1c1410;
+  --danger: #f87171;
+  --danger-hover: #ef4444;
+  --danger-subtle: #3b1818;
+  --success: #4ade80;
+  --success-hover: #22c55e;
+  --favorite: #fb7185;
+  --favorite-hover: #f43f5e;
+  --overlay: rgba(0, 0, 0, 0.6);
+}
+
+/* Forest Theme - Natural, grounded with earthy green tones */
+.theme-forest {
+  --bg: #e8f5e2;
+  --card: #f5faf2;
+  --card-hover: #e6f2e0;
+  --header: #f5faf2;
+  --primary: #16a34a;
+  --primary-hover: #15803d;
+  --primary-subtle: #dcfce7;
+  --text: #1a2e1a;
+  --text-secondary: #5c7c5c;
+  --text-on-primary: #ffffff;
+  --border: #bbdebb;
+  --input-bg: #f7fcf5;
+  --danger: #dc2626;
+  --danger-hover: #b91c1c;
+  --danger-subtle: #fef2f2;
+  --success: #22c55e;
+  --success-hover: #16a34a;
+  --favorite: #e11d48;
+  --favorite-hover: #be123c;
+  --overlay: rgba(26, 46, 26, 0.5);
+}
+
+.theme-forest.dark {
+  --bg: #0f1a10;
+  --card: #1a2b1a;
+  --card-hover: #243524;
+  --header: #1a2b1a;
+  --primary: #4ade80;
+  --primary-hover: #86efac;
+  --primary-subtle: #14391f;
+  --text: #dcfce7;
+  --text-secondary: #86b88a;
+  --text-on-primary: #0f1a10;
+  --border: #2d4a2d;
+  --input-bg: #0f1a10;
+  --danger: #f87171;
+  --danger-hover: #ef4444;
+  --danger-subtle: #3b1818;
+  --success: #4ade80;
+  --success-hover: #22c55e;
+  --favorite: #fb7185;
+  --favorite-hover: #f43f5e;
+  --overlay: rgba(0, 0, 0, 0.6);
+}
+
+/* Nightfall Theme - Cool, modern with teal and slate tones */
+.theme-nightfall {
+  --bg: #e8f4f8;
+  --card: #f0f9fb;
+  --card-hover: #dff0f5;
+  --header: #f0f9fb;
+  --primary: #0891b2;
+  --primary-hover: #0e7490;
+  --primary-subtle: #cffafe;
+  --text: #0c1222;
+  --text-secondary: #4b6478;
+  --text-on-primary: #ffffff;
+  --border: #a5d8e6;
+  --input-bg: #f5fbfc;
+  --danger: #dc2626;
+  --danger-hover: #b91c1c;
+  --danger-subtle: #fef2f2;
+  --success: #0d9488;
+  --success-hover: #0f766e;
+  --favorite: #e11d48;
+  --favorite-hover: #be123c;
+  --overlay: rgba(12, 18, 34, 0.5);
+}
+
+.theme-nightfall.dark {
+  --bg: #0c1222;
+  --card: #141d2f;
+  --card-hover: #1c283d;
+  --header: #141d2f;
+  --primary: #22d3ee;
+  --primary-hover: #67e8f9;
+  --primary-subtle: #0c3644;
+  --text: #e0f2fe;
+  --text-secondary: #7ba3b8;
+  --text-on-primary: #0c1222;
+  --border: #243347;
+  --input-bg: #0c1222;
+  --danger: #f87171;
+  --danger-hover: #ef4444;
+  --danger-subtle: #3b1818;
+  --success: #2dd4bf;
+  --success-hover: #14b8a6;
+  --favorite: #fb7185;
+  --favorite-hover: #f43f5e;
+  --overlay: rgba(0, 0, 0, 0.6);
+}
+
+/* Global base styles */
 @layer base {
-  /* Blueprint Theme - Classic blue, clean and professional (original design) */
-  .theme-blueprint {
-    --bg: #dbeafe;
-    --card: #ffffff;
-    --card-hover: #f0f7ff;
-    --header: #ffffff;
-    --primary: #2563eb;
-    --primary-hover: #1d4ed8;
-    --primary-subtle: #dbeafe;
-    --text: #1e293b;
-    --text-secondary: #64748b;
-    --text-on-primary: #ffffff;
-    --border: #bfdbfe;
-    --input-bg: #f8fafc;
-    --danger: #ef4444;
-    --danger-hover: #dc2626;
-    --danger-subtle: #fef2f2;
-    --success: #22c55e;
-    --success-hover: #16a34a;
-    --favorite: #ec4899;
-    --favorite-hover: #db2777;
-    --overlay: rgba(15, 23, 42, 0.5);
-  }
-
-  .theme-blueprint.dark {
-    --bg: #0f172a;
-    --card: #1e293b;
-    --card-hover: #273549;
-    --header: #1e293b;
-    --primary: #3b82f6;
-    --primary-hover: #60a5fa;
-    --primary-subtle: #1e3a5f;
-    --text: #e2e8f0;
-    --text-secondary: #94a3b8;
-    --text-on-primary: #ffffff;
-    --border: #334155;
-    --input-bg: #0f172a;
-    --danger: #f87171;
-    --danger-hover: #ef4444;
-    --danger-subtle: #3b1818;
-    --success: #4ade80;
-    --success-hover: #22c55e;
-    --favorite: #f472b6;
-    --favorite-hover: #ec4899;
-    --overlay: rgba(0, 0, 0, 0.6);
-  }
-
-  /* Ember Theme - Warm, bold with amber and terracotta tones */
-  .theme-ember {
-    --bg: #fef3e2;
-    --card: #fffbf5;
-    --card-hover: #fef0db;
-    --header: #fffbf5;
-    --primary: #d97706;
-    --primary-hover: #b45309;
-    --primary-subtle: #fef3c7;
-    --text: #292524;
-    --text-secondary: #78716c;
-    --text-on-primary: #ffffff;
-    --border: #fed7aa;
-    --input-bg: #fffbeb;
-    --danger: #dc2626;
-    --danger-hover: #b91c1c;
-    --danger-subtle: #fef2f2;
-    --success: #16a34a;
-    --success-hover: #15803d;
-    --favorite: #e11d48;
-    --favorite-hover: #be123c;
-    --overlay: rgba(41, 37, 36, 0.5);
-  }
-
-  .theme-ember.dark {
-    --bg: #1c1410;
-    --card: #292019;
-    --card-hover: #352a20;
-    --header: #292019;
-    --primary: #f59e0b;
-    --primary-hover: #fbbf24;
-    --primary-subtle: #422d0a;
-    --text: #fef3c7;
-    --text-secondary: #a8a29e;
-    --text-on-primary: #1c1410;
-    --border: #44382b;
-    --input-bg: #1c1410;
-    --danger: #f87171;
-    --danger-hover: #ef4444;
-    --danger-subtle: #3b1818;
-    --success: #4ade80;
-    --success-hover: #22c55e;
-    --favorite: #fb7185;
-    --favorite-hover: #f43f5e;
-    --overlay: rgba(0, 0, 0, 0.6);
-  }
-
-  /* Forest Theme - Natural, grounded with earthy green tones */
-  .theme-forest {
-    --bg: #e8f5e2;
-    --card: #f5faf2;
-    --card-hover: #e6f2e0;
-    --header: #f5faf2;
-    --primary: #16a34a;
-    --primary-hover: #15803d;
-    --primary-subtle: #dcfce7;
-    --text: #1a2e1a;
-    --text-secondary: #5c7c5c;
-    --text-on-primary: #ffffff;
-    --border: #bbdebb;
-    --input-bg: #f7fcf5;
-    --danger: #dc2626;
-    --danger-hover: #b91c1c;
-    --danger-subtle: #fef2f2;
-    --success: #22c55e;
-    --success-hover: #16a34a;
-    --favorite: #e11d48;
-    --favorite-hover: #be123c;
-    --overlay: rgba(26, 46, 26, 0.5);
-  }
-
-  .theme-forest.dark {
-    --bg: #0f1a10;
-    --card: #1a2b1a;
-    --card-hover: #243524;
-    --header: #1a2b1a;
-    --primary: #4ade80;
-    --primary-hover: #86efac;
-    --primary-subtle: #14391f;
-    --text: #dcfce7;
-    --text-secondary: #86b88a;
-    --text-on-primary: #0f1a10;
-    --border: #2d4a2d;
-    --input-bg: #0f1a10;
-    --danger: #f87171;
-    --danger-hover: #ef4444;
-    --danger-subtle: #3b1818;
-    --success: #4ade80;
-    --success-hover: #22c55e;
-    --favorite: #fb7185;
-    --favorite-hover: #f43f5e;
-    --overlay: rgba(0, 0, 0, 0.6);
-  }
-
-  /* Nightfall Theme - Cool, modern with teal and slate tones */
-  .theme-nightfall {
-    --bg: #e8f4f8;
-    --card: #f0f9fb;
-    --card-hover: #dff0f5;
-    --header: #f0f9fb;
-    --primary: #0891b2;
-    --primary-hover: #0e7490;
-    --primary-subtle: #cffafe;
-    --text: #0c1222;
-    --text-secondary: #4b6478;
-    --text-on-primary: #ffffff;
-    --border: #a5d8e6;
-    --input-bg: #f5fbfc;
-    --danger: #dc2626;
-    --danger-hover: #b91c1c;
-    --danger-subtle: #fef2f2;
-    --success: #0d9488;
-    --success-hover: #0f766e;
-    --favorite: #e11d48;
-    --favorite-hover: #be123c;
-    --overlay: rgba(12, 18, 34, 0.5);
-  }
-
-  .theme-nightfall.dark {
-    --bg: #0c1222;
-    --card: #141d2f;
-    --card-hover: #1c283d;
-    --header: #141d2f;
-    --primary: #22d3ee;
-    --primary-hover: #67e8f9;
-    --primary-subtle: #0c3644;
-    --text: #e0f2fe;
-    --text-secondary: #7ba3b8;
-    --text-on-primary: #0c1222;
-    --border: #243347;
-    --input-bg: #0c1222;
-    --danger: #f87171;
-    --danger-hover: #ef4444;
-    --danger-subtle: #3b1818;
-    --success: #2dd4bf;
-    --success-hover: #14b8a6;
-    --favorite: #fb7185;
-    --favorite-hover: #f43f5e;
-    --overlay: rgba(0, 0, 0, 0.6);
-  }
-
   * {
     @apply transition-colors duration-200;
   }
@@ -229,7 +232,6 @@
     border: 0;
   }
 }
-
 
 @layer utilities {
   .scrollbar-thin {
