@@ -67,7 +67,7 @@ export const StationListItem: React.FC<StationListItemProps> = ({ station }) => 
               {station.category}
             </span>
           </div>
-          <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 truncate mt-0.5 sm:mt-1">
+          <p className="text-xs sm:text-sm text-theme-text opacity-60 truncate mt-0.5 sm:mt-1">
             {station.url}
           </p>
         </div>

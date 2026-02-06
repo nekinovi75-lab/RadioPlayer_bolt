@@ -21,7 +21,7 @@ export const AudioPlayer: React.FC = () => {
   if (!currentStation) {
     return (
       <div className="fixed bottom-0 left-0 right-0 bg-theme-card border-t border-theme-border p-6 transition-colors z-50">
-        <div className="max-w-7xl mx-auto text-center text-gray-400 dark:text-gray-500">
+        <div className="max-w-7xl mx-auto text-center text-theme-text opacity-50">
           Select a station to start playing
         </div>
       </div>
@@ -49,7 +49,7 @@ export const AudioPlayer: React.FC = () => {
           <h3 className="text-sm sm:text-lg font-semibold text-theme-text truncate">
             {currentStation.stationName}
           </h3>
-          <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 truncate">
+          <p className="text-xs sm:text-sm text-theme-text opacity-60 truncate">
             {isLoading ? 'Connecting...' : isPlaying ? 'Now Playing' : 'Paused'}
           </p>
           {error && (
@@ -62,7 +62,7 @@ export const AudioPlayer: React.FC = () => {
           className={`flex items-center gap-1 p-2 sm:p-0 rounded-lg transition-colors flex-shrink-0 ${
             isActive
               ? 'bg-orange-100 hover:bg-orange-200 dark:bg-orange-900 dark:hover:bg-orange-800 text-orange-700 dark:text-orange-200'
-              : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white sm:hover:bg-gray-100 sm:dark:hover:bg-gray-700'
+              : 'text-theme-text opacity-60 hover:opacity-100 sm:hover:bg-theme-bg'
           }`}
           title="Sleep timer"
         >
@@ -89,7 +89,7 @@ export const AudioPlayer: React.FC = () => {
             <span className={`text-sm font-medium ${
               isActive
                 ? 'text-orange-700 dark:text-orange-200'
-                : 'text-gray-600 dark:text-gray-400'
+                : 'text-theme-text opacity-60'
             }`}>
               {formatTime(timeRemaining)}
             </span>
@@ -98,7 +98,7 @@ export const AudioPlayer: React.FC = () => {
 
         <button
           onClick={() => setIsShortcutsOpen(true)}
-          className="hidden sm:flex p-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-theme-bg rounded-lg transition-colors flex-shrink-0"
+          className="hidden sm:flex p-2 text-theme-text opacity-60 hover:opacity-100 hover:bg-theme-bg rounded-lg transition-colors flex-shrink-0"
           title="View keyboard shortcuts"
         >
           <HelpCircle className="w-5 h-5" />
@@ -106,9 +106,9 @@ export const AudioPlayer: React.FC = () => {
 
         <div className="hidden sm:flex items-center gap-3 w-32">
           {volume === 0 ? (
-            <VolumeX className="w-5 h-5 text-gray-600 dark:text-gray-400" />
+            <VolumeX className="w-5 h-5 text-theme-text opacity-60" />
           ) : (
-            <Volume2 className="w-5 h-5 text-gray-600 dark:text-gray-400" />
+            <Volume2 className="w-5 h-5 text-theme-text opacity-60" />
           )}
           <input
             type="range"
@@ -117,7 +117,7 @@ export const AudioPlayer: React.FC = () => {
             step="0.01"
             value={volume}
             onChange={(e) => setVolume(parseFloat(e.target.value))}
-            className="flex-1 h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-600"
+            className="flex-1 h-2 bg-theme-border rounded-lg appearance-none cursor-pointer accent-primary"
           />
         </div>
       </div>

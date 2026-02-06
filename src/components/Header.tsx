@@ -52,19 +52,19 @@ export const Header: React.FC = () => {
 
             <div className="flex-1 flex gap-2 sm:gap-4">
               <div className="relative flex-1 max-w-full sm:max-w-2xl">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-gray-400" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-theme-text opacity-40" />
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onKeyDown={(e) => e.key === 'Escape' && setSearchQuery('')}
                   placeholder="Search..."
-                  className="w-full pl-9 sm:pl-10 pr-9 sm:pr-10 py-2 text-sm sm:text-base border border-theme-border rounded-lg bg-theme-card text-theme-text placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+                  className="w-full pl-9 sm:pl-10 pr-9 sm:pr-10 py-2 text-sm sm:text-base border border-theme-border rounded-lg bg-theme-card text-theme-text placeholder-gray-400 focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
                 />
                 {searchQuery && (
                   <button
                     onClick={() => setSearchQuery('')}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-theme-text opacity-40 hover:text-gray-600 dark:hover:text-gray-300"
                   >
                     <X className="w-4 h-4" />
                   </button>
@@ -74,7 +74,7 @@ export const Header: React.FC = () => {
               <select
                 value={categoryFilter}
                 onChange={(e) => setCategoryFilter(e.target.value)}
-                className="hidden sm:block px-3 py-2 text-sm sm:text-base border border-theme-border rounded-lg bg-theme-card text-theme-text focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors cursor-pointer"
+                className="hidden sm:block px-3 py-2 text-sm sm:text-base border border-theme-border rounded-lg bg-theme-card text-theme-text focus:ring-2 focus:ring-primary focus:border-transparent transition-colors cursor-pointer"
               >
                 {categories.map(category => (
                   <option key={category} value={category}>{category}</option>
@@ -88,7 +88,7 @@ export const Header: React.FC = () => {
                 className={`p-2 rounded-lg transition-colors ${
                   showOnlyFavorites
                     ? 'bg-pink-500 text-white hover:bg-pink-600'
-                    : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-theme-bg'
+                    : 'text-theme-text opacity-60 hover:text-gray-900 dark:hover:text-white hover:bg-theme-bg'
                 }`}
                 title={showOnlyFavorites ? 'Show all stations' : 'Show only favorites'}
               >
@@ -97,7 +97,7 @@ export const Header: React.FC = () => {
 
               <button
                 onClick={toggleViewMode}
-                className="p-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-theme-bg rounded-lg transition-colors"
+                className="p-2 text-theme-text opacity-60 hover:text-gray-900 dark:hover:text-white hover:bg-theme-bg rounded-lg transition-colors"
                 title={viewMode === 'grid' ? 'Switch to list view' : 'Switch to grid view'}
               >
                 {viewMode === 'grid' ? (
@@ -125,7 +125,7 @@ export const Header: React.FC = () => {
 
               <button
                 onClick={() => fileInputRef.current?.click()}
-                className="hidden sm:flex p-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-theme-bg rounded-lg transition-colors"
+                className="hidden sm:flex p-2 text-theme-text opacity-60 hover:text-gray-900 dark:hover:text-white hover:bg-theme-bg rounded-lg transition-colors"
                 title="Import CSV"
               >
                 <Upload className="w-5 h-5" />
@@ -133,7 +133,7 @@ export const Header: React.FC = () => {
 
               <button
                 onClick={exportStations}
-                className="hidden sm:flex p-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-theme-bg rounded-lg transition-colors"
+                className="hidden sm:flex p-2 text-theme-text opacity-60 hover:text-gray-900 dark:hover:text-white hover:bg-theme-bg rounded-lg transition-colors"
                 title="Export CSV"
               >
                 <Download className="w-5 h-5" />
@@ -144,7 +144,7 @@ export const Header: React.FC = () => {
               <div className="relative sm:hidden">
                 <button
                   onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                  className="p-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-theme-bg rounded-lg transition-colors"
+                  className="p-2 text-theme-text opacity-60 hover:text-gray-900 dark:hover:text-white hover:bg-theme-bg rounded-lg transition-colors"
                   title="Menu"
                 >
                   <Menu className="w-5 h-5" />
@@ -199,7 +199,7 @@ export const Header: React.FC = () => {
                     </select>
 
                     <div className="border-t border-theme-border pt-2">
-                      <p className="text-xs font-semibold text-gray-600 dark:text-gray-400 px-4 py-2 uppercase">Design System</p>
+                      <p className="text-xs font-semibold text-theme-text opacity-60 px-4 py-2 uppercase">Design System</p>
                       <div className="space-y-1 px-2 pb-2">
                         {themes.map(theme => (
                           <button

@@ -30,7 +30,7 @@ export const KeyboardShortcutsModal: React.FC<KeyboardShortcutsModalProps> = ({ 
           <h2 className="text-lg font-bold text-theme-text">Keyboard Shortcuts</h2>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+            className="text-theme-text opacity-40 hover:opacity-70 transition-colors"
             aria-label="Close dialog"
           >
             <X className="w-5 h-5" />

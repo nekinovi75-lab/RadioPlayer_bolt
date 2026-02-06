@@ -39,7 +39,7 @@ export const ThemeSelector: React.FC = () => {
           className="absolute right-0 mt-2 w-56 bg-theme-card border border-theme-border rounded-lg shadow-lg z-50"
         >
           <div className="p-2 border-b border-theme-border">
-            <p className="text-xs font-semibold text-gray-600 dark:text-gray-400 px-2 py-1 uppercase">Design System</p>
+            <p className="text-xs font-semibold text-theme-text opacity-60 px-2 py-1 uppercase">Design System</p>
           </div>
 
           <div className="p-2 space-y-1">
@@ -60,7 +60,7 @@ export const ThemeSelector: React.FC = () => {
                   <div className="text-sm font-medium text-theme-text">
                     {theme.name}
                   </div>
-                  <div className="text-xs text-gray-500 dark:text-gray-400 truncate">
+                  <div className="text-xs text-theme-text opacity-60 truncate">
                     {theme.description}
                   </div>
                 </div>
@@ -78,14 +78,14 @@ export const ThemeSelector: React.FC = () => {
             >
               {colorMode === 'light' ? (
                 <>
-                  <Moon className="w-4 h-4 text-gray-600 dark:text-gray-400" />
+                  <Moon className="w-4 h-4 text-theme-text opacity-60" />
                   <span className="text-sm font-medium text-theme-text">
                     Switch to Dark Mode
                   </span>
                 </>
               ) : (
                 <>
-                  <Sun className="w-4 h-4 text-gray-600 dark:text-gray-400" />
+                  <Sun className="w-4 h-4 text-theme-text opacity-60" />
                   <span className="text-sm font-medium text-theme-text">
                     Switch to Light Mode
                   </span>

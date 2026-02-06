@@ -35,14 +35,14 @@ export const SleepTimerModal: React.FC<SleepTimerModalProps> = ({ isOpen, onClos
           <h2 className="text-2xl font-bold text-theme-text">Sleep Timer</h2>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+            className="text-theme-text opacity-40 hover:opacity-70 transition-colors"
           >
             <X className="w-6 h-6" />
           </button>
         </div>
 
         <div className="p-6 space-y-4">
-          <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+          <p className="text-sm text-theme-text opacity-70 mb-4">
             Playback will stop after the selected duration
           </p>
 
@@ -79,7 +79,7 @@ export const SleepTimerModal: React.FC<SleepTimerModalProps> = ({ isOpen, onClos
                 Set
               </button>
             </div>
-            <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+            <p className="mt-1 text-xs text-theme-text opacity-60">
               1 - 480 minutes
             </p>
           </div>

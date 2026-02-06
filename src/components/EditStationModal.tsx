@@ -73,7 +73,7 @@ export const EditStationModal: React.FC<EditStationModalProps> = ({ isOpen, onCl
           <h2 className="text-2xl font-bold text-theme-text">Edit Radio Station</h2>
           <button
             onClick={handleClose}
-            className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+            className="text-theme-text opacity-40 hover:opacity-70 transition-colors"
           >
             <X className="w-6 h-6" />
           </button>
@@ -81,7 +81,7 @@ export const EditStationModal: React.FC<EditStationModalProps> = ({ isOpen, onCl
 
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-sm font-medium text-theme-text opacity-80 mb-2">
               Station Name *
             </label>
             <input
@@ -97,7 +97,7 @@ export const EditStationModal: React.FC<EditStationModalProps> = ({ isOpen, onCl
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-sm font-medium text-theme-text opacity-80 mb-2">
               Stream URL *
             </label>
             <input
@@ -113,7 +113,7 @@ export const EditStationModal: React.FC<EditStationModalProps> = ({ isOpen, onCl
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-sm font-medium text-theme-text opacity-80 mb-2">
               Logo (optional)
             </label>
             <input
@@ -123,13 +123,13 @@ export const EditStationModal: React.FC<EditStationModalProps> = ({ isOpen, onCl
               className="w-full px-4 py-2 border border-theme-border rounded-lg bg-theme-bg text-theme-text focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
               placeholder="bbc-radio1.svg or https://example.com/logo.png"
             />
-            <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+            <p className="mt-1 text-xs text-theme-text opacity-60">
               Enter filename (from /images/logos/) or full URL
             </p>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-sm font-medium text-theme-text opacity-80 mb-2">
               Category
             </label>
             <select
@@ -165,7 +165,7 @@ export const EditStationModal: React.FC<EditStationModalProps> = ({ isOpen, onCl
             <button
               type="button"
               onClick={handleClose}
-              className="flex-1 px-4 py-2 border border-theme-border text-gray-700 dark:text-gray-300 rounded-lg hover:bg-theme-bg transition-colors"
+              className="flex-1 px-4 py-2 border border-theme-border text-theme-text opacity-80 rounded-lg hover:bg-theme-bg transition-colors"
             >
               Cancel
             </button>
