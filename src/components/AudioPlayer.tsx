@@ -13,7 +13,7 @@ const formatTime = (seconds: number): string => {
 };
 
 export const AudioPlayer: React.FC = () => {
-  const { currentStation, isPlaying, isLoading, volume, error, pause, setVolume } = usePlayer();
+  const { currentStation, isPlaying, isLoading, volume, error, pause, playStation, setVolume } = usePlayer();
   const { timeRemaining, isActive } = useSleepTimer();
   const [isTimerModalOpen, setIsTimerModalOpen] = useState(false);
   const [isShortcutsOpen, setIsShortcutsOpen] = useState(false);
@@ -58,7 +58,7 @@ export const AudioPlayer: React.FC = () => {
         </div>
 
         <button
-          onClick={pause}
+          onClick={() => isPlaying ? pause() : playStation(currentStation)}
           disabled={isLoading}
           className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white flex items-center justify-center transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-lg flex-shrink-0 touch-manipulation"
         >
