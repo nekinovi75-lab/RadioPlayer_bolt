@@ -10,8 +10,6 @@ interface ThemeContextType {
   toggleColorMode: () => void;
   setColorMode: (mode: ColorMode) => void;
   setDesignSystem: (system: DesignSystem) => void;
-  theme: ColorMode;
-  toggleTheme: () => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -24,7 +22,10 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const [designSystem, setDesignSystem] = useState<DesignSystem>(() => {
     const stored = localStorage.getItem('radio-design-system');
-    return (stored as DesignSystem) || 'mint';
+    if (stored && themes.some(t => t.id === stored)) {
+      return stored as DesignSystem;
+    }
+    return 'blueprint';
   });
 
   useEffect(() => {
@@ -43,27 +44,13 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     setColorMode(prev => prev === 'light' ? 'dark' : 'light');
   };
 
-  const setColorModeValue = (mode: ColorMode) => {
-    setColorMode(mode);
-  };
-
-  const setDesignSystemValue = (system: DesignSystem) => {
-    setDesignSystem(system);
-  };
-
-  const toggleTheme = () => {
-    toggleColorMode();
-  };
-
   return (
     <ThemeContext.Provider value={{
       colorMode,
       designSystem,
       toggleColorMode,
-      setColorMode: setColorModeValue,
-      setDesignSystem: setDesignSystemValue,
-      theme: colorMode,
-      toggleTheme,
+      setColorMode,
+      setDesignSystem,
     }}>
       {children}
     </ThemeContext.Provider>

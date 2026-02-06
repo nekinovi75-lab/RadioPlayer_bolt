@@ -38,7 +38,7 @@ export const StationsDisplay: React.FC = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <Loader2 className="w-8 h-8 text-primary animate-spin" />
+        <Loader2 className="w-8 h-8 text-t-primary animate-spin" />
       </div>
     );
   }
@@ -46,13 +46,13 @@ export const StationsDisplay: React.FC = () => {
   if (stations.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-20 text-center">
-        <div className="w-20 h-20 rounded-full bg-theme-card flex items-center justify-center mb-4">
-          <Music className="w-10 h-10 text-theme-text opacity-40" />
+        <div className="w-20 h-20 rounded-full bg-t-card flex items-center justify-center mb-4">
+          <Music className="w-10 h-10 text-t-text-secondary" />
         </div>
-        <h3 className="text-xl font-semibold text-theme-text mb-2">
+        <h3 className="text-xl font-semibold text-t-text mb-2">
           No stations yet
         </h3>
-        <p className="text-theme-text opacity-60 max-w-md">
+        <p className="text-t-text-secondary max-w-md">
           Add your first radio station to get started, or import a CSV file with your favorite stations.
         </p>
       </div>
@@ -63,13 +63,13 @@ export const StationsDisplay: React.FC = () => {
     if (showOnlyFavorites) {
       return (
         <div className="flex flex-col items-center justify-center py-20 text-center">
-          <div className="w-20 h-20 rounded-full bg-theme-card flex items-center justify-center mb-4">
-            <Heart className="w-10 h-10 text-theme-text opacity-40" />
+          <div className="w-20 h-20 rounded-full bg-t-card flex items-center justify-center mb-4">
+            <Heart className="w-10 h-10 text-t-text-secondary" />
           </div>
-          <h3 className="text-xl font-semibold text-theme-text mb-2">
+          <h3 className="text-xl font-semibold text-t-text mb-2">
             No favorite stations
           </h3>
-          <p className="text-theme-text opacity-60 max-w-md">
+          <p className="text-t-text-secondary max-w-md">
             Mark stations as favorites by clicking the heart icon to see them here.
           </p>
         </div>
@@ -78,13 +78,13 @@ export const StationsDisplay: React.FC = () => {
 
     return (
       <div className="flex flex-col items-center justify-center py-20 text-center">
-        <div className="w-20 h-20 rounded-full bg-theme-card flex items-center justify-center mb-4">
-          <SearchX className="w-10 h-10 text-theme-text opacity-40" />
+        <div className="w-20 h-20 rounded-full bg-t-card flex items-center justify-center mb-4">
+          <SearchX className="w-10 h-10 text-t-text-secondary" />
         </div>
-        <h3 className="text-xl font-semibold text-theme-text mb-2">
+        <h3 className="text-xl font-semibold text-t-text mb-2">
           No stations found
         </h3>
-        <p className="text-theme-text opacity-60 max-w-md">
+        <p className="text-t-text-secondary max-w-md">
           No stations match "{searchQuery}". Try a different search term.
         </p>
       </div>

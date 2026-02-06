@@ -36,8 +36,8 @@ export const StationCard: React.FC<StationCardProps> = ({ station }) => {
   };
 
   return (
-    <div className="group relative bg-theme-card rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-theme-border">
-      <div className="aspect-video relative overflow-hidden bg-gradient-to-br from-primary/10 to-primary-light/10">
+    <div className="group relative bg-t-card rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-t-border">
+      <div className="aspect-video relative overflow-hidden bg-t-primary-subtle">
         <img
           src={getLogoPath(station.logo)}
           alt={station.stationName}
@@ -46,10 +46,10 @@ export const StationCard: React.FC<StationCardProps> = ({ station }) => {
             e.currentTarget.src = getLogoPath('');
           }}
         />
-        <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center">
+        <div className="absolute inset-0 bg-[var(--overlay)] opacity-0 group-hover:opacity-60 transition-opacity duration-300 flex items-center justify-center">
           <button
             onClick={() => playStation(station)}
-            className="w-16 h-16 rounded-full bg-primary hover:bg-primary-dark text-white flex items-center justify-center transform scale-0 group-hover:scale-100 transition-transform duration-300 shadow-lg"
+            className="w-16 h-16 rounded-full bg-t-primary hover:bg-t-primary-hover text-t-text-on-primary flex items-center justify-center transform scale-0 group-hover:scale-100 transition-transform duration-300 shadow-lg"
           >
             {isCurrentStation && isPlaying ? (
               <Pause className="w-8 h-8" />
@@ -60,7 +60,7 @@ export const StationCard: React.FC<StationCardProps> = ({ station }) => {
         </div>
         {isCurrentStation && isPlaying && (
           <div className="absolute top-3 right-3">
-            <div className="flex items-center gap-1 bg-green-500 text-white px-3 py-1 rounded-full text-xs font-semibold shadow-lg">
+            <div className="flex items-center gap-1 bg-t-success text-t-text-on-primary px-3 py-1 rounded-full text-xs font-semibold shadow-lg">
               <Radio className="w-3 h-3 animate-pulse" />
               LIVE
             </div>
@@ -69,10 +69,10 @@ export const StationCard: React.FC<StationCardProps> = ({ station }) => {
       </div>
 
       <div className="p-3 sm:p-4">
-        <h3 className="font-semibold text-theme-text text-base sm:text-lg truncate mb-2">
+        <h3 className="font-semibold text-t-text text-base sm:text-lg truncate mb-2">
           {station.stationName}
         </h3>
-        <span className="inline-block px-2 py-1 text-xs font-medium bg-primary/20 text-primary-dark rounded-full">
+        <span className="inline-block px-2 py-1 text-xs font-medium bg-t-primary-subtle text-t-primary rounded-full">
           {station.category}
         </span>
       </div>
@@ -81,23 +81,23 @@ export const StationCard: React.FC<StationCardProps> = ({ station }) => {
         onClick={handleFavorite}
         className={`absolute top-2 left-2 sm:top-3 sm:left-3 w-8 h-8 rounded-full ${
           isFav
-            ? 'bg-pink-500 hover:bg-pink-600 opacity-100'
-            : 'bg-gray-500 hover:bg-gray-600 opacity-0 group-hover:opacity-100'
-        } text-white flex items-center justify-center transition-all duration-300 shadow-lg touch-manipulation`}
+            ? 'bg-t-favorite hover:bg-t-favorite-hover opacity-100'
+            : 'bg-t-text-secondary opacity-0 group-hover:opacity-100'
+        } text-t-text-on-primary flex items-center justify-center transition-all duration-300 shadow-lg touch-manipulation`}
       >
-        <Heart className={`w-4 h-4 ${isFav ? 'fill-white' : ''}`} />
+        <Heart className={`w-4 h-4 ${isFav ? 'fill-current' : ''}`} />
       </button>
 
       <button
         onClick={handleEdit}
-        className="hidden sm:flex absolute top-3 left-12 w-8 h-8 rounded-full bg-primary hover:bg-primary-dark text-white items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-lg"
+        className="hidden sm:flex absolute top-3 left-12 w-8 h-8 rounded-full bg-t-primary hover:bg-t-primary-hover text-t-text-on-primary items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-lg"
       >
         <Edit className="w-4 h-4" />
       </button>
 
       <button
         onClick={handleDelete}
-        className="hidden sm:flex absolute top-3 right-3 w-8 h-8 rounded-full bg-red-500 hover:bg-red-600 text-white items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-lg"
+        className="hidden sm:flex absolute top-3 right-3 w-8 h-8 rounded-full bg-t-danger hover:bg-t-danger-hover text-t-text-on-primary items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-lg"
       >
         <Trash2 className="w-4 h-4" />
       </button>

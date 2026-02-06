@@ -1,36 +1,46 @@
-export type DesignSystem = 'mint' | 'classic' | 'ocean' | 'sunset';
+export type DesignSystem = 'blueprint' | 'ember' | 'forest' | 'nightfall';
 
 export interface ThemeDefinition {
   id: DesignSystem;
   name: string;
   description: string;
   accentColor: string;
+  previewBg: string;
+  previewCard: string;
 }
 
 export const themes: ThemeDefinition[] = [
   {
-    id: 'mint',
-    name: 'Mint Wave',
-    description: 'Modern, vibrant mint green',
-    accentColor: '#00ff88',
+    id: 'blueprint',
+    name: 'Blueprint',
+    description: 'Clean and professional blue',
+    accentColor: '#2563eb',
+    previewBg: '#dbeafe',
+    previewCard: '#ffffff',
   },
   {
-    id: 'classic',
-    name: 'Classic Blue',
-    description: 'Traditional professional blue',
-    accentColor: '#3b82f6',
+    id: 'ember',
+    name: 'Ember',
+    description: 'Warm amber and terracotta',
+    accentColor: '#d97706',
+    previewBg: '#fef3e2',
+    previewCard: '#fffbf5',
   },
   {
-    id: 'ocean',
-    name: 'Ocean',
-    description: 'Cool, calming cyan',
-    accentColor: '#06b6d4',
+    id: 'forest',
+    name: 'Forest',
+    description: 'Natural earthy greens',
+    accentColor: '#16a34a',
+    previewBg: '#e8f5e2',
+    previewCard: '#f5faf2',
   },
   {
-    id: 'sunset',
-    name: 'Sunset',
-    description: 'Warm, energetic orange',
-    accentColor: '#f97316',
+    id: 'nightfall',
+    name: 'Nightfall',
+    description: 'Cool teal and slate',
+    accentColor: '#0891b2',
+    previewBg: '#e8f4f8',
+    previewCard: '#f0f9fb',
   },
 ];
 

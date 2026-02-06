@@ -14,7 +14,7 @@ function AppContent() {
   useKeyboardShortcuts();
 
   return (
-    <div className="min-h-screen bg-theme-bg flex flex-col transition-colors">
+    <div className="min-h-screen bg-t-bg flex flex-col transition-colors">
       <Header />
 
       <main className="flex-1 overflow-y-auto pb-24 sm:pb-32">
