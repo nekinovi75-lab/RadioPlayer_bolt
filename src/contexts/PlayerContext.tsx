@@ -53,16 +53,22 @@ export const PlayerProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   const playStation = (station: RadioStation) => {
     if (!audioRef.current) return;
 
-    setIsLoading(true);
     setError(null);
 
-    if (currentStation?.id === station.id && isPlaying) {
-      audioRef.current.pause();
-      setIsPlaying(false);
-      setIsLoading(false);
-      return;
+    if (currentStation?.id === station.id) {
+      if (isPlaying) {
+        audioRef.current.pause();
+        setIsPlaying(false);
+        return;
+      } else {
+        audioRef.current.play().catch(() => {
+          setError('Failed to play stream. Try clicking again.');
+        });
+        return;
+      }
     }
 
+    setIsLoading(true);
     audioRef.current.src = station.url;
     audioRef.current.load();
 
