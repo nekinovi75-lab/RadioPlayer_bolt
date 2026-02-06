@@ -30,9 +30,9 @@ export const SleepTimerModal: React.FC<SleepTimerModalProps> = ({ isOpen, onClos
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-sm w-full transform transition-all">
-        <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Sleep Timer</h2>
+      <div className="bg-theme-card rounded-xl shadow-2xl max-w-sm w-full transform transition-all">
+        <div className="flex items-center justify-between p-6 border-b border-theme-border">
+          <h2 className="text-2xl font-bold text-theme-text">Sleep Timer</h2>
           <button
             onClick={onClose}
             className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
@@ -51,7 +51,7 @@ export const SleepTimerModal: React.FC<SleepTimerModalProps> = ({ isOpen, onClos
               <button
                 key={minutes}
                 onClick={() => handlePreset(minutes)}
-                className="px-4 py-3 bg-blue-100 hover:bg-blue-200 dark:bg-blue-900 dark:hover:bg-blue-800 text-blue-800 dark:text-blue-200 rounded-lg font-medium transition-colors"
+                className="px-4 py-3 bg-primary/20 hover:bg-primary/30 text-primary-dark rounded-lg font-medium transition-colors"
               >
                 {minutes} min
               </button>
@@ -69,7 +69,7 @@ export const SleepTimerModal: React.FC<SleepTimerModalProps> = ({ isOpen, onClos
                 max="480"
                 value={customMinutes}
                 onChange={(e) => setCustomMinutes(e.target.value)}
-                className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="flex-1 px-3 py-2 border border-theme-border rounded-lg bg-theme-bg text-theme-text focus:ring-2 focus:ring-primary focus:border-transparent"
                 placeholder="Minutes"
               />
               <button
@@ -93,7 +93,7 @@ export const SleepTimerModal: React.FC<SleepTimerModalProps> = ({ isOpen, onClos
             </button>
             <button
               onClick={onClose}
-              className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors font-medium"
+              className="flex-1 px-4 py-2 border border-theme-border text-gray-700 dark:text-gray-300 rounded-lg hover:bg-theme-bg transition-colors font-medium"
             >
               Close
             </button>

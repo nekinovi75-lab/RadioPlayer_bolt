@@ -20,7 +20,7 @@ export const AudioPlayer: React.FC = () => {
 
   if (!currentStation) {
     return (
-      <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 p-6 transition-colors z-50">
+      <div className="fixed bottom-0 left-0 right-0 bg-theme-card border-t border-theme-border p-6 transition-colors z-50">
         <div className="max-w-7xl mx-auto text-center text-gray-400 dark:text-gray-500">
           Select a station to start playing
         </div>
@@ -29,13 +29,13 @@ export const AudioPlayer: React.FC = () => {
   }
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 p-3 sm:p-6 transition-colors z-50">
+    <div className="fixed bottom-0 left-0 right-0 bg-theme-card border-t border-theme-border p-3 sm:p-6 transition-colors z-50">
       <div className="max-w-7xl mx-auto flex items-center gap-3 sm:gap-6">
         <div className="relative flex-shrink-0">
           <img
             src={getLogoPath(currentStation.logo)}
             alt={currentStation.stationName}
-            className="w-12 h-12 sm:w-16 sm:h-16 rounded-lg object-contain bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-gray-700 dark:to-gray-600 p-2 shadow-md"
+            className="w-12 h-12 sm:w-16 sm:h-16 rounded-lg object-contain bg-gradient-to-br from-primary/10 to-primary-light/10 p-2 shadow-md"
             onError={(e) => {
               e.currentTarget.src = getLogoPath('');
             }}
@@ -46,7 +46,7 @@ export const AudioPlayer: React.FC = () => {
         </div>
 
         <div className="flex-1 min-w-0">
-          <h3 className="text-sm sm:text-lg font-semibold text-gray-900 dark:text-white truncate">
+          <h3 className="text-sm sm:text-lg font-semibold text-theme-text truncate">
             {currentStation.stationName}
           </h3>
           <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 truncate">
@@ -73,7 +73,7 @@ export const AudioPlayer: React.FC = () => {
         <button
           onClick={() => isPlaying ? pause() : playStation(currentStation)}
           disabled={isLoading}
-          className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white flex items-center justify-center transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-lg flex-shrink-0 touch-manipulation"
+          className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-primary hover:bg-primary-dark text-white flex items-center justify-center transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-lg flex-shrink-0 touch-manipulation"
         >
           {isLoading ? (
             <Loader2 className="w-5 h-5 sm:w-6 sm:h-6 animate-spin" />
@@ -98,7 +98,7 @@ export const AudioPlayer: React.FC = () => {
 
         <button
           onClick={() => setIsShortcutsOpen(true)}
-          className="hidden sm:flex p-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors flex-shrink-0"
+          className="hidden sm:flex p-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-theme-bg rounded-lg transition-colors flex-shrink-0"
           title="View keyboard shortcuts"
         >
           <HelpCircle className="w-5 h-5" />

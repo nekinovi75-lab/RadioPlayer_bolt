@@ -36,13 +36,13 @@ export const StationListItem: React.FC<StationListItemProps> = ({ station }) => 
   };
 
   return (
-    <div className="group bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg hover:shadow-md transition-all duration-200">
+    <div className="group bg-theme-card border border-theme-border rounded-lg hover:shadow-md transition-all duration-200">
       <div className="flex items-center gap-3 p-3 sm:gap-4 sm:p-4">
         <div className="relative flex-shrink-0">
           <img
             src={getLogoPath(station.logo)}
             alt={station.stationName}
-            className="w-12 h-12 sm:w-16 sm:h-16 rounded-lg object-contain bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-gray-700 dark:to-gray-600 p-2 shadow-sm"
+            className="w-12 h-12 sm:w-16 sm:h-16 rounded-lg object-contain bg-gradient-to-br from-primary/10 to-primary-light/10 p-2 shadow-sm"
             onError={(e) => {
               e.currentTarget.src = getLogoPath('');
             }}
@@ -54,7 +54,7 @@ export const StationListItem: React.FC<StationListItemProps> = ({ station }) => 
 
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
-            <h3 className="font-semibold text-gray-900 dark:text-white text-sm sm:text-base line-clamp-1">
+            <h3 className="font-semibold text-theme-text text-sm sm:text-base line-clamp-1">
               {station.stationName}
             </h3>
             {isCurrentStation && isPlaying && (
@@ -63,7 +63,7 @@ export const StationListItem: React.FC<StationListItemProps> = ({ station }) => 
                 <span className="hidden xs:inline">LIVE</span>
               </div>
             )}
-            <span className="inline-block px-2 py-0.5 text-xs font-medium bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full flex-shrink-0">
+            <span className="inline-block px-2 py-0.5 text-xs font-medium bg-primary/20 text-primary-dark rounded-full flex-shrink-0">
               {station.category}
             </span>
           </div>
@@ -86,7 +86,7 @@ export const StationListItem: React.FC<StationListItemProps> = ({ station }) => 
 
           <button
             onClick={() => playStation(station)}
-            className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white flex items-center justify-center transition-colors shadow-md touch-manipulation"
+            className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-primary hover:bg-primary-dark text-white flex items-center justify-center transition-colors shadow-md touch-manipulation"
           >
             {isCurrentStation && isPlaying ? (
               <Pause className="w-5 h-5" />
@@ -97,7 +97,7 @@ export const StationListItem: React.FC<StationListItemProps> = ({ station }) => 
 
           <button
             onClick={handleEdit}
-            className="hidden sm:flex w-10 h-10 rounded-full bg-blue-500 hover:bg-blue-600 text-white items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-md"
+            className="hidden sm:flex w-10 h-10 rounded-full bg-primary hover:bg-primary-dark text-white items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-md"
           >
             <Edit className="w-4 h-4" />
           </button>

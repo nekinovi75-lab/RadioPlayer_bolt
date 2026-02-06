@@ -36,8 +36,8 @@ export const StationCard: React.FC<StationCardProps> = ({ station }) => {
   };
 
   return (
-    <div className="group relative bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-200 dark:border-gray-700">
-      <div className="aspect-video relative overflow-hidden bg-gradient-to-br from-blue-100 to-cyan-100 dark:from-gray-700 dark:to-gray-600">
+    <div className="group relative bg-theme-card rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-theme-border">
+      <div className="aspect-video relative overflow-hidden bg-gradient-to-br from-primary/10 to-primary-light/10">
         <img
           src={getLogoPath(station.logo)}
           alt={station.stationName}
@@ -49,7 +49,7 @@ export const StationCard: React.FC<StationCardProps> = ({ station }) => {
         <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center">
           <button
             onClick={() => playStation(station)}
-            className="w-16 h-16 rounded-full bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center transform scale-0 group-hover:scale-100 transition-transform duration-300 shadow-lg"
+            className="w-16 h-16 rounded-full bg-primary hover:bg-primary-dark text-white flex items-center justify-center transform scale-0 group-hover:scale-100 transition-transform duration-300 shadow-lg"
           >
             {isCurrentStation && isPlaying ? (
               <Pause className="w-8 h-8" />
@@ -69,10 +69,10 @@ export const StationCard: React.FC<StationCardProps> = ({ station }) => {
       </div>
 
       <div className="p-3 sm:p-4">
-        <h3 className="font-semibold text-gray-900 dark:text-white text-base sm:text-lg truncate mb-2">
+        <h3 className="font-semibold text-theme-text text-base sm:text-lg truncate mb-2">
           {station.stationName}
         </h3>
-        <span className="inline-block px-2 py-1 text-xs font-medium bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full">
+        <span className="inline-block px-2 py-1 text-xs font-medium bg-primary/20 text-primary-dark rounded-full">
           {station.category}
         </span>
       </div>
@@ -90,7 +90,7 @@ export const StationCard: React.FC<StationCardProps> = ({ station }) => {
 
       <button
         onClick={handleEdit}
-        className="hidden sm:flex absolute top-3 left-12 w-8 h-8 rounded-full bg-blue-500 hover:bg-blue-600 text-white items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-lg"
+        className="hidden sm:flex absolute top-3 left-12 w-8 h-8 rounded-full bg-primary hover:bg-primary-dark text-white items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-lg"
       >
         <Edit className="w-4 h-4" />
       </button>

@@ -27,7 +27,7 @@ export const ThemeSelector: React.FC = () => {
       <button
         ref={buttonRef}
         onClick={() => setIsOpen(!isOpen)}
-        className="hidden sm:flex p-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+        className="hidden sm:flex p-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-theme-bg rounded-lg transition-colors"
         title="Theme selector"
       >
         <Palette className="w-5 h-5" />
@@ -36,9 +36,9 @@ export const ThemeSelector: React.FC = () => {
       {isOpen && (
         <div
           ref={menuRef}
-          className="absolute right-0 mt-2 w-56 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg z-50"
+          className="absolute right-0 mt-2 w-56 bg-theme-card border border-theme-border rounded-lg shadow-lg z-50"
         >
-          <div className="p-2 border-b border-gray-200 dark:border-gray-700">
+          <div className="p-2 border-b border-theme-border">
             <p className="text-xs font-semibold text-gray-600 dark:text-gray-400 px-2 py-1 uppercase">Design System</p>
           </div>
 
@@ -50,14 +50,14 @@ export const ThemeSelector: React.FC = () => {
                   setDesignSystem(theme.id);
                   setIsOpen(false);
                 }}
-                className="w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-colors hover:bg-gray-100 dark:hover:bg-gray-700 text-left"
+                className="w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-colors hover:bg-theme-bg text-left"
               >
                 <div
                   className="w-4 h-4 rounded flex-shrink-0"
                   style={{ backgroundColor: theme.accentColor }}
                 />
                 <div className="flex-1 min-w-0">
-                  <div className="text-sm font-medium text-gray-900 dark:text-white">
+                  <div className="text-sm font-medium text-theme-text">
                     {theme.name}
                   </div>
                   <div className="text-xs text-gray-500 dark:text-gray-400 truncate">
@@ -65,28 +65,28 @@ export const ThemeSelector: React.FC = () => {
                   </div>
                 </div>
                 {designSystem === theme.id && (
-                  <Check className="w-4 h-4 text-blue-600 dark:text-blue-400 flex-shrink-0" />
+                  <Check className="w-4 h-4 text-primary flex-shrink-0" />
                 )}
               </button>
             ))}
           </div>
 
-          <div className="border-t border-gray-200 dark:border-gray-700 p-2">
+          <div className="border-t border-theme-border p-2">
             <button
               onClick={() => setColorMode(colorMode === 'light' ? 'dark' : 'light')}
-              className="w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-colors hover:bg-gray-100 dark:hover:bg-gray-700 text-left"
+              className="w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-colors hover:bg-theme-bg text-left"
             >
               {colorMode === 'light' ? (
                 <>
                   <Moon className="w-4 h-4 text-gray-600 dark:text-gray-400" />
-                  <span className="text-sm font-medium text-gray-900 dark:text-white">
+                  <span className="text-sm font-medium text-theme-text">
                     Switch to Dark Mode
                   </span>
                 </>
               ) : (
                 <>
                   <Sun className="w-4 h-4 text-gray-600 dark:text-gray-400" />
-                  <span className="text-sm font-medium text-gray-900 dark:text-white">
+                  <span className="text-sm font-medium text-theme-text">
                     Switch to Light Mode
                   </span>
                 </>
