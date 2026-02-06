@@ -4,11 +4,13 @@ import { useViewMode } from '../contexts/ViewModeContext';
 import { useStations } from '../contexts/StationsContext';
 import { useSearch } from '../contexts/SearchContext';
 import { useFavorites } from '../contexts/FavoritesContext';
-import { Sun, Moon, Grid3x3, List, Plus, Download, Upload, Search, X, Heart, Menu } from 'lucide-react';
+import { Sun, Moon, Grid3x3, List, Plus, Download, Upload, Search, X, Heart, Menu, Palette } from 'lucide-react';
 import { AddStationModal } from './AddStationModal';
+import { ThemeSelector } from './ThemeSelector';
+import { themes } from '../config/themes';
 
 export const Header: React.FC = () => {
-  const { theme, toggleTheme } = useTheme();
+  const { colorMode, designSystem, setColorMode, setDesignSystem } = useTheme();
   const { viewMode, toggleViewMode } = useViewMode();
   const { stations, exportStations, importStations } = useStations();
   const { searchQuery, setSearchQuery, categoryFilter, setCategoryFilter } = useSearch();
@@ -137,17 +139,7 @@ export const Header: React.FC = () => {
                 <Download className="w-5 h-5" />
               </button>
 
-              <button
-                onClick={toggleTheme}
-                className="hidden sm:flex p-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
-                title={theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
-              >
-                {theme === 'light' ? (
-                  <Moon className="w-5 h-5" />
-                ) : (
-                  <Sun className="w-5 h-5" />
-                )}
-              </button>
+              <ThemeSelector />
 
               <div className="relative sm:hidden">
                 <button
@@ -206,14 +198,40 @@ export const Header: React.FC = () => {
                       ))}
                     </select>
 
+                    <div className="border-t border-gray-200 dark:border-gray-700 pt-2">
+                      <p className="text-xs font-semibold text-gray-600 dark:text-gray-400 px-4 py-2 uppercase">Design System</p>
+                      <div className="space-y-1 px-2 pb-2">
+                        {themes.map(theme => (
+                          <button
+                            key={theme.id}
+                            onClick={() => {
+                              setDesignSystem(theme.id);
+                              setIsMobileMenuOpen(false);
+                            }}
+                            className={`w-full flex items-center gap-3 px-3 py-2 rounded text-sm transition-colors ${
+                              designSystem === theme.id
+                                ? 'bg-blue-100 dark:bg-blue-900 text-blue-900 dark:text-blue-100'
+                                : 'text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700'
+                            }`}
+                          >
+                            <div
+                              className="w-3 h-3 rounded flex-shrink-0"
+                              style={{ backgroundColor: theme.accentColor }}
+                            />
+                            {theme.name}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
                     <button
                       onClick={() => {
-                        toggleTheme();
+                        setColorMode(colorMode === 'light' ? 'dark' : 'light');
                         setIsMobileMenuOpen(false);
                       }}
                       className="w-full flex items-center gap-2 px-4 py-3 text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700 text-left transition-colors"
                     >
-                      {theme === 'light' ? (
+                      {colorMode === 'light' ? (
                         <>
                           <Moon className="w-5 h-5" />
                           <span>Dark Mode</span>

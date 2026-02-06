@@ -3,6 +3,78 @@
 @tailwind utilities;
 
 @layer base {
+  /* Mint Wave Theme */
+  .theme-mint {
+    --primary: 156 100% 50%;
+    --primary-light: 156 100% 60%;
+    --primary-dark: 156 100% 40%;
+    --background: 240 10% 96%;
+    --card: 240 10% 100%;
+    --text: 240 10% 5%;
+    --border: 240 10% 90%;
+  }
+
+  .theme-mint.dark {
+    --background: 240 10% 6%;
+    --card: 240 8% 10%;
+    --text: 240 10% 95%;
+    --border: 240 8% 20%;
+  }
+
+  /* Classic Blue Theme */
+  .theme-classic {
+    --primary: 217 91% 60%;
+    --primary-light: 217 91% 70%;
+    --primary-dark: 217 91% 50%;
+    --background: 0 0% 100%;
+    --card: 0 0% 100%;
+    --text: 0 0% 5%;
+    --border: 0 0% 90%;
+  }
+
+  .theme-classic.dark {
+    --background: 222 47% 11%;
+    --card: 222 47% 15%;
+    --text: 222 47% 95%;
+    --border: 222 47% 25%;
+  }
+
+  /* Ocean Theme */
+  .theme-ocean {
+    --primary: 187 100% 42%;
+    --primary-light: 187 100% 52%;
+    --primary-dark: 187 100% 32%;
+    --background: 200 50% 98%;
+    --card: 200 50% 100%;
+    --text: 200 50% 5%;
+    --border: 200 50% 90%;
+  }
+
+  .theme-ocean.dark {
+    --background: 200 50% 8%;
+    --card: 200 50% 12%;
+    --text: 200 50% 95%;
+    --border: 200 50% 22%;
+  }
+
+  /* Sunset Theme */
+  .theme-sunset {
+    --primary: 25 95% 53%;
+    --primary-light: 25 95% 63%;
+    --primary-dark: 25 95% 43%;
+    --background: 20 30% 98%;
+    --card: 20 30% 100%;
+    --text: 20 30% 5%;
+    --border: 20 30% 90%;
+  }
+
+  .theme-sunset.dark {
+    --background: 20 30% 8%;
+    --card: 20 30% 12%;
+    --text: 20 30% 95%;
+    --border: 20 30% 22%;
+  }
+
   * {
     @apply transition-colors duration-200;
   }

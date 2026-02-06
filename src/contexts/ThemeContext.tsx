@@ -1,31 +1,70 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
+import type { DesignSystem } from '../config/themes';
+import { themes } from '../config/themes';
 
-type Theme = 'light' | 'dark';
+type ColorMode = 'light' | 'dark';
 
 interface ThemeContextType {
-  theme: Theme;
+  colorMode: ColorMode;
+  designSystem: DesignSystem;
+  toggleColorMode: () => void;
+  setColorMode: (mode: ColorMode) => void;
+  setDesignSystem: (system: DesignSystem) => void;
+  theme: ColorMode;
   toggleTheme: () => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [theme, setTheme] = useState<Theme>(() => {
-    const stored = localStorage.getItem('radio-theme');
-    return (stored as Theme) || 'light';
+  const [colorMode, setColorMode] = useState<ColorMode>(() => {
+    const stored = localStorage.getItem('radio-color-mode');
+    return (stored as ColorMode) || 'light';
+  });
+
+  const [designSystem, setDesignSystem] = useState<DesignSystem>(() => {
+    const stored = localStorage.getItem('radio-design-system');
+    return (stored as DesignSystem) || 'mint';
   });
 
   useEffect(() => {
-    localStorage.setItem('radio-theme', theme);
-    document.documentElement.classList.toggle('dark', theme === 'dark');
-  }, [theme]);
+    localStorage.setItem('radio-color-mode', colorMode);
+    localStorage.setItem('radio-design-system', designSystem);
+
+    const root = document.documentElement;
+
+    themes.forEach(t => root.classList.remove(`theme-${t.id}`));
+    root.classList.remove('light', 'dark');
+
+    root.classList.add(`theme-${designSystem}`, colorMode);
+  }, [colorMode, designSystem]);
+
+  const toggleColorMode = () => {
+    setColorMode(prev => prev === 'light' ? 'dark' : 'light');
+  };
+
+  const setColorModeValue = (mode: ColorMode) => {
+    setColorMode(mode);
+  };
+
+  const setDesignSystemValue = (system: DesignSystem) => {
+    setDesignSystem(system);
+  };
 
   const toggleTheme = () => {
-    setTheme(prev => prev === 'light' ? 'dark' : 'light');
+    toggleColorMode();
   };
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+    <ThemeContext.Provider value={{
+      colorMode,
+      designSystem,
+      toggleColorMode,
+      setColorMode: setColorModeValue,
+      setDesignSystem: setDesignSystemValue,
+      theme: colorMode,
+      toggleTheme,
+    }}>
       {children}
     </ThemeContext.Provider>
   );
