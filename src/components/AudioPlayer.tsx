@@ -20,7 +20,7 @@ export const AudioPlayer: React.FC = () => {
 
   if (!currentStation) {
     return (
-      <div className="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 p-6 transition-colors">
+      <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 p-6 transition-colors z-50">
         <div className="max-w-7xl mx-auto text-center text-gray-400 dark:text-gray-500">
           Select a station to start playing
         </div>
@@ -29,7 +29,7 @@ export const AudioPlayer: React.FC = () => {
   }
 
   return (
-    <div className="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 p-3 sm:p-6 transition-colors">
+    <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 p-3 sm:p-6 transition-colors z-50">
       <div className="max-w-7xl mx-auto flex items-center gap-3 sm:gap-6">
         <div className="relative flex-shrink-0">
           <img
