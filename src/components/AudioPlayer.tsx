@@ -58,6 +58,18 @@ export const AudioPlayer: React.FC = () => {
         </div>
 
         <button
+          onClick={() => setIsTimerModalOpen(true)}
+          className={`p-2 sm:p-0 rounded-lg transition-colors flex-shrink-0 ${
+            isActive
+              ? 'bg-orange-100 hover:bg-orange-200 dark:bg-orange-900 dark:hover:bg-orange-800 text-orange-700 dark:text-orange-200'
+              : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white sm:hover:bg-gray-100 sm:dark:hover:bg-gray-700'
+          }`}
+          title="Sleep timer"
+        >
+          <Clock className="w-5 h-5" />
+        </button>
+
+        <button
           onClick={() => isPlaying ? pause() : playStation(currentStation)}
           disabled={isLoading}
           className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white flex items-center justify-center transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-lg flex-shrink-0 touch-manipulation"
@@ -71,18 +83,17 @@ export const AudioPlayer: React.FC = () => {
           )}
         </button>
 
-        <button
-          onClick={() => setIsTimerModalOpen(true)}
-          className={`hidden sm:flex items-center gap-2 px-3 py-2 rounded-lg transition-colors flex-shrink-0 ${
-            isActive
-              ? 'bg-orange-100 hover:bg-orange-200 dark:bg-orange-900 dark:hover:bg-orange-800 text-orange-700 dark:text-orange-200'
-              : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
-          }`}
-          title="Sleep timer"
-        >
-          <Clock className="w-5 h-5" />
-          {isActive && <span className="text-sm font-medium">{formatTime(timeRemaining)}</span>}
-        </button>
+        <div className="hidden sm:flex items-center gap-2 px-3 py-2">
+          {isActive && (
+            <span className={`text-sm font-medium ${
+              isActive
+                ? 'text-orange-700 dark:text-orange-200'
+                : 'text-gray-600 dark:text-gray-400'
+            }`}>
+              {formatTime(timeRemaining)}
+            </span>
+          )}
+        </div>
 
         <button
           onClick={() => setIsShortcutsOpen(true)}
