@@ -192,6 +192,53 @@
   --overlay: rgba(0, 0, 0, 0.6);
 }
 
+/* Mint Theme - Vibrant mint green with dark charcoal tones */
+.theme-mint {
+  --bg: #e6f7f2;
+  --card: #f2fbf8;
+  --card-hover: #d9f2ea;
+  --header: #f2fbf8;
+  --primary: #0d9488;
+  --primary-hover: #0f766e;
+  --primary-subtle: #ccfbf1;
+  --text: #192126;
+  --text-secondary: #4d5461;
+  --text-on-primary: #ffffff;
+  --border: #99e1d4;
+  --input-bg: #f5fcfa;
+  --danger: #dc2626;
+  --danger-hover: #b91c1c;
+  --danger-subtle: #fef2f2;
+  --success: #22c55e;
+  --success-hover: #16a34a;
+  --favorite: #e11d48;
+  --favorite-hover: #be123c;
+  --overlay: rgba(25, 33, 38, 0.5);
+}
+
+.theme-mint.dark {
+  --bg: #161d21;
+  --card: #212936;
+  --card-hover: #394150;
+  --header: #212936;
+  --primary: #3be8b8;
+  --primary-hover: #5fecd3;
+  --primary-subtle: #1a3d35;
+  --text: #f9fafb;
+  --text-secondary: #9ea3ae;
+  --text-on-primary: #161d21;
+  --border: #394150;
+  --input-bg: #161d21;
+  --danger: #f87171;
+  --danger-hover: #ef4444;
+  --danger-subtle: #3b1818;
+  --success: #3be8b8;
+  --success-hover: #2dd4a4;
+  --favorite: #f0a5c0;
+  --favorite-hover: #e890b0;
+  --overlay: rgba(0, 0, 0, 0.6);
+}
+
 /* Global base styles */
 @layer base {
   * {

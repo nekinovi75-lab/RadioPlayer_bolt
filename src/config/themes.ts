@@ -1,4 +1,4 @@
-export type DesignSystem = 'blueprint' | 'ember' | 'forest' | 'nightfall';
+export type DesignSystem = 'blueprint' | 'ember' | 'forest' | 'nightfall' | 'mint';
 
 export interface ThemeDefinition {
   id: DesignSystem;
@@ -41,6 +41,14 @@ export const themes: ThemeDefinition[] = [
     accentColor: '#0891b2',
     previewBg: '#e8f4f8',
     previewCard: '#f0f9fb',
+  },
+  {
+    id: 'mint',
+    name: 'Mint',
+    description: 'Vibrant mint and charcoal',
+    accentColor: '#3be8b8',
+    previewBg: '#e6f7f2',
+    previewCard: '#f2fbf8',
   },
 ];
 
