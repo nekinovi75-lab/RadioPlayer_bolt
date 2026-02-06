@@ -59,7 +59,7 @@ export const AudioPlayer: React.FC = () => {
 
         <button
           onClick={() => setIsTimerModalOpen(true)}
-          className={`p-2 sm:p-0 rounded-lg transition-colors flex-shrink-0 ${
+          className={`flex items-center gap-1 p-2 sm:p-0 rounded-lg transition-colors flex-shrink-0 ${
             isActive
               ? 'bg-orange-100 hover:bg-orange-200 dark:bg-orange-900 dark:hover:bg-orange-800 text-orange-700 dark:text-orange-200'
               : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white sm:hover:bg-gray-100 sm:dark:hover:bg-gray-700'
@@ -67,6 +67,7 @@ export const AudioPlayer: React.FC = () => {
           title="Sleep timer"
         >
           <Clock className="w-5 h-5" />
+          {isActive && <span className="text-xs sm:hidden font-medium">{formatTime(timeRemaining)}</span>}
         </button>
 
         <button
