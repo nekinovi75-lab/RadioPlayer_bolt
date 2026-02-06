@@ -3,76 +3,76 @@
 @tailwind utilities;
 
 @layer base {
-  /* Mint Wave Theme */
+  /* Mint Wave Theme - Modern, vibrant with glass-morphism */
   .theme-mint {
     --primary: 156 100% 50%;
     --primary-light: 156 100% 60%;
     --primary-dark: 156 100% 40%;
-    --background: 240 10% 96%;
-    --card: 240 10% 100%;
-    --text: 240 10% 5%;
-    --border: 240 10% 90%;
+    --background: 150 30% 97%;
+    --card: 150 20% 100%;
+    --text: 150 15% 10%;
+    --border: 150 20% 88%;
   }
 
   .theme-mint.dark {
-    --background: 240 10% 6%;
-    --card: 240 8% 10%;
-    --text: 240 10% 95%;
-    --border: 240 8% 20%;
+    --background: 150 20% 4%;
+    --card: 150 15% 8%;
+    --text: 150 15% 96%;
+    --border: 150 15% 18%;
   }
 
-  /* Classic Blue Theme */
+  /* Classic Blue Theme - Traditional, professional */
   .theme-classic {
     --primary: 217 91% 60%;
     --primary-light: 217 91% 70%;
     --primary-dark: 217 91% 50%;
-    --background: 0 0% 100%;
+    --background: 210 20% 98%;
     --card: 0 0% 100%;
-    --text: 0 0% 5%;
-    --border: 0 0% 90%;
+    --text: 220 15% 15%;
+    --border: 214 20% 85%;
   }
 
   .theme-classic.dark {
-    --background: 222 47% 11%;
-    --card: 222 47% 15%;
-    --text: 222 47% 95%;
-    --border: 222 47% 25%;
+    --background: 220 25% 8%;
+    --card: 220 22% 12%;
+    --text: 210 20% 96%;
+    --border: 220 20% 22%;
   }
 
-  /* Ocean Theme */
+  /* Ocean Theme - Cool, calming with blue tints */
   .theme-ocean {
     --primary: 187 100% 42%;
     --primary-light: 187 100% 52%;
     --primary-dark: 187 100% 32%;
-    --background: 200 50% 98%;
-    --card: 200 50% 100%;
-    --text: 200 50% 5%;
-    --border: 200 50% 90%;
+    --background: 195 50% 96%;
+    --card: 195 40% 98%;
+    --text: 200 40% 12%;
+    --border: 195 35% 82%;
   }
 
   .theme-ocean.dark {
-    --background: 200 50% 8%;
-    --card: 200 50% 12%;
-    --text: 200 50% 95%;
-    --border: 200 50% 22%;
+    --background: 200 45% 6%;
+    --card: 200 40% 10%;
+    --text: 195 30% 94%;
+    --border: 200 35% 20%;
   }
 
-  /* Sunset Theme */
+  /* Sunset Theme - Warm, energetic with orange/amber tints */
   .theme-sunset {
     --primary: 25 95% 53%;
     --primary-light: 25 95% 63%;
     --primary-dark: 25 95% 43%;
-    --background: 20 30% 98%;
-    --card: 20 30% 100%;
-    --text: 20 30% 5%;
-    --border: 20 30% 90%;
+    --background: 30 40% 97%;
+    --card: 35 35% 99%;
+    --text: 25 35% 12%;
+    --border: 30 30% 86%;
   }
 
   .theme-sunset.dark {
-    --background: 20 30% 8%;
-    --card: 20 30% 12%;
-    --text: 20 30% 95%;
-    --border: 20 30% 22%;
+    --background: 25 30% 6%;
+    --card: 25 25% 10%;
+    --text: 30 25% 94%;
+    --border: 25 25% 20%;
   }
 
   * {
