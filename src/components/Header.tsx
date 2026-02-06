@@ -151,7 +151,7 @@ export const Header: React.FC = () => {
                 </button>
 
                 {isMobileMenuOpen && (
-                  <div className="absolute right-0 mt-2 w-48 bg-theme-card border border-theme-border rounded-lg shadow-lg z-50">
+                  <div className="absolute right-0 mt-2 w-48 border border-theme-border rounded-lg shadow-lg z-50" style={{ backgroundColor: 'hsl(var(--card))' }}>
                     <button
                       onClick={() => {
                         setIsModalOpen(true);

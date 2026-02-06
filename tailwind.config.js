@@ -10,15 +10,9 @@ export default {
           light: 'hsl(var(--primary-light))',
           dark: 'hsl(var(--primary-dark))',
         },
-      },
-      backgroundColor: {
         'theme-bg': 'hsl(var(--background))',
         'theme-card': 'hsl(var(--card))',
-      },
-      textColor: {
         'theme-text': 'hsl(var(--text))',
-      },
-      borderColor: {
         'theme-border': 'hsl(var(--border))',
       },
     },

@@ -36,7 +36,8 @@ export const ThemeSelector: React.FC = () => {
       {isOpen && (
         <div
           ref={menuRef}
-          className="absolute right-0 mt-2 w-56 bg-theme-card border border-theme-border rounded-lg shadow-lg z-50"
+          className="absolute right-0 mt-2 w-56 border border-theme-border rounded-lg shadow-lg z-50"
+          style={{ backgroundColor: 'hsl(var(--card))' }}
         >
           <div className="p-2 border-b border-theme-border">
             <p className="text-xs font-semibold text-theme-text opacity-60 px-2 py-1 uppercase">Design System</p>
