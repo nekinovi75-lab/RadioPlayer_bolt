@@ -1,0 +1,74 @@
+/* Audio Visualizer Styling */
+.audio-visualizer {
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    height: 18px;
+    margin-top: 2px;
+    padding: 1px 0;
+    width: fit-content;
+}
+
+.visualizer-bar {
+    width: 3px;
+    background: linear-gradient(to top, var(--primary, #3b82f6), var(--primary-hover, #60a5fa));
+    animation: visualizer-bounce 1s infinite ease-in-out;
+    border-radius: 4px 4px 1px 1px;
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.2);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Varied animation durations for a more organic feel */
+.visualizer-bar:nth-child(1) {
+    animation-duration: 0.8s;
+    height: 35%;
+}
+
+.visualizer-bar:nth-child(2) {
+    animation-duration: 1.1s;
+    height: 60%;
+}
+
+.visualizer-bar:nth-child(3) {
+    animation-duration: 0.9s;
+    height: 45%;
+}
+
+.visualizer-bar:nth-child(4) {
+    animation-duration: 1.2s;
+    height: 70%;
+}
+
+.visualizer-bar:nth-child(5) {
+    animation-duration: 0.7s;
+    height: 55%;
+}
+
+/* Stopped state styles */
+.audio-visualizer.stopped .visualizer-bar {
+    animation: none;
+    height: 4px;
+    opacity: 0.5;
+    background: var(--text-secondary, #9ca3af);
+    box-shadow: none;
+    border-radius: 2px;
+}
+
+/* Pulse animation for the bars */
+@keyframes visualizer-bounce {
+
+    0%,
+    100% {
+        height: 20%;
+    }
+
+    50% {
+        height: 100%;
+        filter: brightness(1.2);
+    }
+}
+
+/* Support for dark mode variables if present */
+[data-theme="dark"] .visualizer-bar {
+    box-shadow: 0 0 15px rgba(129, 140, 248, 0.4);
+}

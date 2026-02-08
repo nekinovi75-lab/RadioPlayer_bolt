@@ -13,7 +13,7 @@ export const parseCSV = (csvContent: string): RadioStation[] => {
     return [];
   }
 
-  const headers = lines[0].split(',').map(h => h.trim());
+  // const headers = lines[0].split(',').map(h => h.trim());
   const stations: RadioStation[] = [];
 
   for (let i = 1; i < lines.length; i++) {

@@ -6,6 +6,8 @@ import { Pause, Play, Volume2, VolumeX, Loader2, Clock, HelpCircle } from 'lucid
 import { SleepTimerModal } from './SleepTimerModal';
 import { KeyboardShortcutsModal } from './KeyboardShortcutsModal';
 
+import Visualizer from './Visualizer';
+
 const formatTime = (seconds: number): string => {
   const mins = Math.floor(seconds / 60);
   const secs = seconds % 60;
@@ -46,12 +48,18 @@ export const AudioPlayer: React.FC = () => {
         </div>
 
         <div className="flex-1 min-w-0">
-          <h3 className="text-sm sm:text-lg font-semibold text-t-text truncate">
+          <h3 className="text-sm sm:text-lg font-semibold text-t-text truncate leading-tight">
             {currentStation.stationName}
           </h3>
-          <p className="text-xs sm:text-sm text-t-text-secondary truncate">
-            {isLoading ? 'Connecting...' : isPlaying ? 'Now Playing' : 'Paused'}
-          </p>
+          <div className="h-6 flex items-center">
+            {isLoading ? (
+              <p className="text-xs sm:text-sm text-t-text-secondary truncate animate-pulse">
+                Connecting...
+              </p>
+            ) : (
+              <Visualizer isPlaying={isPlaying} />
+            )}
+          </div>
           {error && (
             <p className="text-xs sm:text-sm text-t-danger mt-1">{error}</p>
           )}
@@ -59,11 +67,10 @@ export const AudioPlayer: React.FC = () => {
 
         <button
           onClick={() => setIsTimerModalOpen(true)}
-          className={`flex items-center gap-1 p-2 sm:p-0 rounded-lg transition-colors flex-shrink-0 ${
-            isActive
+          className={`flex items-center gap-1 p-2 sm:p-0 rounded-lg transition-colors flex-shrink-0 ${isActive
               ? 'bg-t-primary-subtle text-t-primary'
               : 'text-t-text-secondary hover:text-t-text hover:bg-t-card-hover'
-          }`}
+            }`}
           title="Sleep timer"
         >
           <Clock className="w-5 h-5" />

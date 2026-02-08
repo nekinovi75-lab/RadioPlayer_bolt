@@ -8,3 +8,12 @@
 **Description:** Analyzed the full codebase and wrote a comprehensive README.md.
 **Summary:** Replaced the placeholder README with a features overview (audio playback, station management, favorites, search/filter, theming, view modes, sleep timer, keyboard shortcuts, responsive design) and a technical specification (stack, project structure, architecture, data flow, scripts, CSV format).
 
+## 2026-02-08 — Visualizer Component & Integration
+**Description:** Created a new animated bar visualizer component and integrated it into the AudioPlayer bar.
+**Summary:** Implemented `Visualizer.tsx` and `Visualizer.css` featuring a 5-bar animated frequency display that responds to the `isPlaying` state. Integrated the component into `AudioPlayer.tsx` next to the station info, replacing the "Playing" text placeholder. Enhanced the UI with a pulse animation on the station logo when active.
+
+## 2026-02-08 — Fix: Export definitions and Typecheck Cleanup
+**Description:** Resolved TypeScript module export errors and cleaned up unused code for a green build.
+**Summary:** Fixed "no exported member 'VisualizerProps'" by adding the `export` keyword to the interface in `Visualizer.tsx`. Optimized `src/utils/csvParser.ts` by removing an unused `headers` variable that was causing lint errors. Verified project health with `npm run typecheck`.
+
+
