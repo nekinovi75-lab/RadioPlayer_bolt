@@ -90,19 +90,19 @@ Internet Radio Player — a browser-based web app for streaming internet radio s
 │   │   └── ThemeSelector.tsx
 │   ├── config/
 │   │   └── themes.ts      # Theme definitions
-│   ├── contexts/          # React Context providers
-│   │   ├── FavoritesContext.tsx
-│   │   ├── PlayerContext.tsx
-│   │   ├── SearchContext.tsx
-│   │   ├── SleepTimerContext.tsx
-│   │   ├── StationsContext.tsx
-│   │   ├── ThemeContext.tsx
-│   │   └── ViewModeContext.tsx
+│   ├── stores/            # Zustand global state stores
+│   │   ├── useFavoritesStore.ts
+│   │   ├── usePlayerStore.ts
+│   │   ├── useSearchStore.ts
+│   │   ├── useSleepTimerStore.ts
+│   │   ├── useStationsStore.ts
+│   │   ├── useThemeStore.ts
+│   │   └── useViewModeStore.ts
 │   ├── hooks/
 │   │   └── useKeyboardShortcuts.ts
 │   ├── utils/
 │   │   └── csvParser.ts   # CSV parse / generate / download
-│   ├── App.tsx            # Root component with provider tree
+│   ├── App.tsx            # Root component (no provider nesting)
 │   ├── main.tsx           # Entry point
 │   └── index.css          # Theme CSS variables + base styles
 ├── supabase/
@@ -116,22 +116,23 @@ Internet Radio Player — a browser-based web app for streaming internet radio s
 
 ### Architecture
 
-- **State management** — 7 React Context providers composed in `App.tsx`, no external state library.
+- **State management** — 7 Zustand stores in `src/stores/` (search, viewMode, favorites, theme, player, sleepTimer, stations). No React Context or provider nesting.
 - **Data model** — `RadioStation { id, stationName, url, logo, category }` defined in `csvParser.ts`.
 - **Persistence** — All user data (stations, favorites, volume, theme, view mode) stored in `localStorage`.
 - **Theming** — CSS custom properties (`--primary`, `--bg`, `--card`, etc.) defined per theme × color mode in `index.css`; consumed via Tailwind utility classes mapped in `tailwind.config.js` (`t-*` prefix).
-- **Audio** — Single `HTMLAudioElement` instance managed by `PlayerContext`; event listeners track `playing`, `pause`, `waiting`, `error` states.
+- **Audio** — Single `HTMLAudioElement` instance managed as a module-level variable in `usePlayerStore`; event listeners track `playing`, `pause`, `waiting`, `error` states.
+- **Cross-store deps** — `useSleepTimerStore` calls `usePlayerStore.getState().pause()` directly on timer expiry.
 
 ### Data Flow
 
 ```
-stations.csv → fetch → parseCSV() → StationsContext (state)
+stations.csv → fetch → parseCSV() → useStationsStore (Zustand)
                                           ↓
                                     localStorage (persist)
                                           ↓
                         StationsDisplay → StationCard / StationListItem
                                           ↓
-                                    PlayerContext → AudioPlayer (HTML5 Audio)
+                                    usePlayerStore → AudioPlayer (HTML5 Audio)
 ```
 
 ### Scripts

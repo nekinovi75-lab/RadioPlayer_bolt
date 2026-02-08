@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useStations } from '../contexts/StationsContext';
+import { useStations } from '../stores/useStationsStore';
 import { RadioStation } from '../utils/csvParser';
 import { X } from 'lucide-react';
 

@@ -1,9 +1,9 @@
 import React, { useState, useRef } from 'react';
-import { useTheme } from '../contexts/ThemeContext';
-import { useViewMode } from '../contexts/ViewModeContext';
-import { useStations } from '../contexts/StationsContext';
-import { useSearch } from '../contexts/SearchContext';
-import { useFavorites } from '../contexts/FavoritesContext';
+import { useTheme } from '../stores/useThemeStore';
+import { useViewMode } from '../stores/useViewModeStore';
+import { useStations } from '../stores/useStationsStore';
+import { useSearch } from '../stores/useSearchStore';
+import { useFavorites } from '../stores/useFavoritesStore';
 import { Sun, Moon, Grid3x3, List, Plus, Download, Upload, Search, X, Heart, Menu } from 'lucide-react';
 import { AddStationModal } from './AddStationModal';
 import { ThemeSelector } from './ThemeSelector';

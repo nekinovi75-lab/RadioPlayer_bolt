@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useStations } from '../contexts/StationsContext';
+import { useStations } from '../stores/useStationsStore';
 import { X } from 'lucide-react';
 
 interface AddStationModalProps {

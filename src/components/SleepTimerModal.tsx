@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { X } from 'lucide-react';
-import { useSleepTimer } from '../contexts/SleepTimerContext';
+import { useSleepTimer } from '../stores/useSleepTimerStore';
 
 interface SleepTimerModalProps {
   isOpen: boolean;

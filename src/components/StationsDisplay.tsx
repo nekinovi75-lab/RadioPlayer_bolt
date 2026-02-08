@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react';
-import { useStations } from '../contexts/StationsContext';
-import { useViewMode } from '../contexts/ViewModeContext';
-import { useSearch } from '../contexts/SearchContext';
-import { useFavorites } from '../contexts/FavoritesContext';
+import { useStations } from '../stores/useStationsStore';
+import { useViewMode } from '../stores/useViewModeStore';
+import { useSearch } from '../stores/useSearchStore';
+import { useFavorites } from '../stores/useFavoritesStore';
 import { StationCard } from './StationCard';
 import { StationListItem } from './StationListItem';
 import { Loader2, Music, SearchX, Heart } from 'lucide-react';

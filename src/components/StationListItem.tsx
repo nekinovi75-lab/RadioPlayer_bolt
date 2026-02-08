@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { RadioStation, getLogoPath } from '../utils/csvParser';
-import { usePlayer } from '../contexts/PlayerContext';
-import { useStations } from '../contexts/StationsContext';
-import { useFavorites } from '../contexts/FavoritesContext';
+import { usePlayer } from '../stores/usePlayerStore';
+import { useStations } from '../stores/useStationsStore';
+import { useFavorites } from '../stores/useFavoritesStore';
 import { Play, Pause, Trash2, Radio, Edit, Heart } from 'lucide-react';
 import { EditStationModal } from './EditStationModal';
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { usePlayer } from '../contexts/PlayerContext';
-import { useSleepTimer } from '../contexts/SleepTimerContext';
+import { usePlayer } from '../stores/usePlayerStore';
+import { useSleepTimer } from '../stores/useSleepTimerStore';
 import { getLogoPath } from '../utils/csvParser';
 import { Pause, Play, Volume2, VolumeX, Loader2, Clock, HelpCircle } from 'lucide-react';
 import { SleepTimerModal } from './SleepTimerModal';

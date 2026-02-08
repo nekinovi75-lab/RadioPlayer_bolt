@@ -1,16 +1,9 @@
-import { ThemeProvider } from './contexts/ThemeContext';
-import { StationsProvider } from './contexts/StationsContext';
-import { PlayerProvider } from './contexts/PlayerContext';
-import { SleepTimerProvider } from './contexts/SleepTimerContext';
-import { ViewModeProvider } from './contexts/ViewModeContext';
-import { SearchProvider } from './contexts/SearchContext';
-import { FavoritesProvider } from './contexts/FavoritesContext';
 import { Header } from './components/Header';
 import { StationsDisplay } from './components/StationsDisplay';
 import { AudioPlayer } from './components/AudioPlayer';
 import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts';
 
-function AppContent() {
+const App = () => {
   useKeyboardShortcuts();
 
   return (
@@ -26,26 +19,6 @@ function AppContent() {
       <AudioPlayer />
     </div>
   );
-}
-
-function App() {
-  return (
-    <ThemeProvider>
-      <StationsProvider>
-        <FavoritesProvider>
-          <PlayerProvider>
-            <SleepTimerProvider>
-              <ViewModeProvider>
-                <SearchProvider>
-                  <AppContent />
-                </SearchProvider>
-              </ViewModeProvider>
-            </SleepTimerProvider>
-          </PlayerProvider>
-        </FavoritesProvider>
-      </StationsProvider>
-    </ThemeProvider>
-  );
-}
+};
 
 export default App;
