@@ -14,7 +14,7 @@ interface StationsState {
   editStation: (id: string, station: Omit<RadioStation, 'id'>) => void;
   deleteStation: (id: string) => void;
   exportStations: () => void;
-  importStations: (file: File) => Promise<void>;
+  importStations: (file: File) => Promise<{ imported: number; skipped: number }>;
 }
 
 export const useStations = create<StationsState>()((set, get) => ({
@@ -47,12 +47,20 @@ export const useStations = create<StationsState>()((set, get) => ({
   },
 
   addStation: (station) => {
+    const { stations } = get();
+    const isDuplicate = stations.some(s => s.url.toLowerCase() === station.url.toLowerCase());
+
+    if (isDuplicate) {
+      set({ error: 'A station with this URL already exists' });
+      return;
+    }
+
     const newStation: RadioStation = {
       ...station,
       id: `${Date.now()}-${Math.random()}`,
     };
-    const updated = [...get().stations, newStation];
-    set({ stations: updated });
+    const updated = [...stations, newStation];
+    set({ stations: updated, error: null });
     persistStations(updated);
   },
 
@@ -87,10 +95,28 @@ export const useStations = create<StationsState>()((set, get) => ({
             return;
           }
 
-          const updated = [...get().stations, ...parsedStations];
-          set({ stations: updated, error: null });
-          persistStations(updated);
-          resolve();
+          const currentStations = get().stations;
+          const existingUrls = new Set(currentStations.map(s => s.url.toLowerCase()));
+
+          const newStations: RadioStation[] = [];
+          let skipped = 0;
+
+          parsedStations.forEach(station => {
+            if (existingUrls.has(station.url.toLowerCase())) {
+              skipped++;
+            } else {
+              newStations.push(station);
+              existingUrls.add(station.url.toLowerCase()); // Prevent duplicates within the import file itself
+            }
+          });
+
+          if (newStations.length > 0) {
+            const updated = [...currentStations, ...newStations];
+            set({ stations: updated, error: null });
+            persistStations(updated);
+          }
+
+          resolve({ imported: newStations.length, skipped });
         } catch {
           reject(new Error('Failed to parse CSV file'));
         }

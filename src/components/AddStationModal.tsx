@@ -39,6 +39,15 @@ export const AddStationModal: React.FC<AddStationModalProps> = ({ isOpen, onClos
 
     if (!validateForm()) return;
 
+    const isDuplicate = useStations.getState().stations.some(
+      s => s.url.toLowerCase() === url.trim().toLowerCase()
+    );
+
+    if (isDuplicate) {
+      setErrors({ url: 'A station with this URL already exists' });
+      return;
+    }
+
     addStation({
       stationName: stationName.trim(),
       url: url.trim(),

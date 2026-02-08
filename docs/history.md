@@ -11,6 +11,14 @@
 ## 2026-02-08 — Visualizer Component & Integration
 **Description:** Created a new animated bar visualizer component and integrated it into the AudioPlayer bar.
 **Summary:** Implemented `Visualizer.tsx` and `Visualizer.css` featuring a 5-bar animated frequency display that responds to the `isPlaying` state. Integrated the component into `AudioPlayer.tsx` next to the station info, replacing the "Playing" text placeholder. Enhanced the UI with a pulse animation on the station logo when active.
+## 2026-02-08 — Duplicate Prevention & Import Summary
+**Description:** Enhanced CSV import and manual station addition to prevent duplicate entries based on Stream URL.
+**Summary:** 
+- Modified `useStationsStore.ts` to check for existing URLs during import and return a summary of imported/skipped counts.
+- Updated `Header.tsx` to display a detailed alert message after CSV imports (e.g., "Imported: 5, Skipped: 2").
+- Added duplicate validation to `AddStationModal.tsx` to prevent adding existing URLs through the UI.
+- Ensured case-insensitive URL comparison for robust detection.
+
 
 ## 2026-02-08 — Fix: Export definitions and Typecheck Cleanup
 **Description:** Resolved TypeScript module export errors and cleaned up unused code for a green build.

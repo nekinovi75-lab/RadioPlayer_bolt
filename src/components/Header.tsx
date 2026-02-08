@@ -26,7 +26,10 @@ export const Header: React.FC = () => {
     if (!file) return;
 
     try {
-      await importStations(file);
+      const result = await importStations(file);
+      if (result.imported > 0 || result.skipped > 0) {
+        alert(`Import complete!\n- Imported: ${result.imported}\n- Skipped (duplicates): ${result.skipped}`);
+      }
     } catch (error) {
       alert('Failed to import stations. Please check the file format.');
     }
@@ -85,11 +88,10 @@ export const Header: React.FC = () => {
             <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
               <button
                 onClick={() => setShowOnlyFavorites(!showOnlyFavorites)}
-                className={`p-2 rounded-lg transition-colors ${
-                  showOnlyFavorites
+                className={`p-2 rounded-lg transition-colors ${showOnlyFavorites
                     ? 'bg-t-favorite text-t-text-on-primary hover:bg-t-favorite-hover'
                     : 'text-t-text-secondary hover:text-t-text hover:bg-t-card-hover'
-                }`}
+                  }`}
                 title={showOnlyFavorites ? 'Show all stations' : 'Show only favorites'}
               >
                 <Heart className={`w-5 h-5 ${showOnlyFavorites ? 'fill-current' : ''}`} />
@@ -216,11 +218,10 @@ export const Header: React.FC = () => {
                               setDesignSystem(theme.id);
                               setIsMobileMenuOpen(false);
                             }}
-                            className={`w-full flex items-center gap-3 px-3 py-2 rounded text-sm transition-colors ${
-                              designSystem === theme.id
+                            className={`w-full flex items-center gap-3 px-3 py-2 rounded text-sm transition-colors ${designSystem === theme.id
                                 ? 'bg-t-primary-subtle text-t-primary'
                                 : 'text-t-text hover:bg-t-card-hover'
-                            }`}
+                              }`}
                           >
                             <div
                               className="w-3 h-3 rounded-full flex-shrink-0"
