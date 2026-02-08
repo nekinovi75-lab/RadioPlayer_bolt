@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useStations } from '../stores/useStationsStore';
 import { RadioStation } from '../utils/csvParser';
 import { X } from 'lucide-react';
+import { toast } from 'sonner';
 
 interface EditStationModalProps {
   isOpen: boolean;
@@ -55,6 +56,10 @@ export const EditStationModal: React.FC<EditStationModalProps> = ({ isOpen, onCl
       url: url.trim(),
       logo: logo.trim(),
       category: category
+    });
+
+    toast.success('Station updated', {
+      description: `Changes to "${stationName.trim()}" have been saved.`
     });
 
     setErrors({});

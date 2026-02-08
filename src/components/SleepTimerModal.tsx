@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { X } from 'lucide-react';
 import { useSleepTimer } from '../stores/useSleepTimerStore';
+import { toast } from 'sonner';
 
 interface SleepTimerModalProps {
   isOpen: boolean;
@@ -17,6 +18,9 @@ export const SleepTimerModal: React.FC<SleepTimerModalProps> = ({ isOpen, onClos
 
   const handlePreset = (minutes: number) => {
     setTimer(minutes);
+    toast.success('Sleep timer set', {
+      description: `Playback will stop in ${minutes} minutes.`
+    });
     onClose();
   };
 
@@ -24,6 +28,9 @@ export const SleepTimerModal: React.FC<SleepTimerModalProps> = ({ isOpen, onClos
     const minutes = parseInt(customMinutes, 10);
     if (minutes > 0 && minutes <= 480) {
       setTimer(minutes);
+      toast.success('Sleep timer set', {
+        description: `Playback will stop in ${minutes} minutes.`
+      });
       onClose();
     }
   };
@@ -86,7 +93,10 @@ export const SleepTimerModal: React.FC<SleepTimerModalProps> = ({ isOpen, onClos
 
           <div className="flex gap-3 pt-4">
             <button
-              onClick={cancelTimer}
+              onClick={() => {
+                cancelTimer();
+                toast.info('Sleep timer cancelled');
+              }}
               className="flex-1 px-4 py-2 border border-t-danger text-t-danger rounded-lg hover:bg-t-danger-subtle transition-colors font-medium"
             >
               Cancel Timer

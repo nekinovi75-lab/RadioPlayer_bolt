@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useStations } from '../stores/useStationsStore';
 import { X } from 'lucide-react';
+import { toast } from 'sonner';
 
 interface AddStationModalProps {
   isOpen: boolean;
@@ -45,6 +46,9 @@ export const AddStationModal: React.FC<AddStationModalProps> = ({ isOpen, onClos
 
     if (isDuplicate) {
       setErrors({ url: 'A station with this URL already exists' });
+      toast.error('Duplicate station', {
+        description: 'A station with this URL already exists in your list.'
+      });
       return;
     }
 
@@ -53,6 +57,10 @@ export const AddStationModal: React.FC<AddStationModalProps> = ({ isOpen, onClos
       url: url.trim(),
       logo: logo.trim(),
       category: category
+    });
+
+    toast.success('Station added', {
+      description: `"${stationName.trim()}" has been added to your stations.`
     });
 
     setStationName('');

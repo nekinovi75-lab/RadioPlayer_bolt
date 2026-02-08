@@ -2,6 +2,7 @@ import { Header } from './components/Header';
 import { StationsDisplay } from './components/StationsDisplay';
 import { AudioPlayer } from './components/AudioPlayer';
 import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts';
+import { Toaster } from 'sonner';
 
 const App = () => {
   useKeyboardShortcuts();
@@ -17,6 +18,7 @@ const App = () => {
       </main>
 
       <AudioPlayer />
+      <Toaster position="top-right" expand={true} richColors />
     </div>
   );
 };

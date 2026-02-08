@@ -5,6 +5,7 @@ import { useStations } from '../stores/useStationsStore';
 import { useSearch } from '../stores/useSearchStore';
 import { useFavorites } from '../stores/useFavoritesStore';
 import { Sun, Moon, Grid3x3, List, Plus, Download, Upload, Search, X, Heart, Menu } from 'lucide-react';
+import { toast } from 'sonner';
 import { AddStationModal } from './AddStationModal';
 import { ThemeSelector } from './ThemeSelector';
 import { themes } from '../config/themes';
@@ -28,10 +29,12 @@ export const Header: React.FC = () => {
     try {
       const result = await importStations(file);
       if (result.imported > 0 || result.skipped > 0) {
-        alert(`Import complete!\n- Imported: ${result.imported}\n- Skipped (duplicates): ${result.skipped}`);
+        toast.success('Import complete!', {
+          description: `Imported: ${result.imported} | Skipped: ${result.skipped}`
+        });
       }
     } catch (error) {
-      alert('Failed to import stations. Please check the file format.');
+      toast.error('Failed to import stations. Please check the file format.');
     }
 
     if (fileInputRef.current) {
@@ -89,8 +92,8 @@ export const Header: React.FC = () => {
               <button
                 onClick={() => setShowOnlyFavorites(!showOnlyFavorites)}
                 className={`p-2 rounded-lg transition-colors ${showOnlyFavorites
-                    ? 'bg-t-favorite text-t-text-on-primary hover:bg-t-favorite-hover'
-                    : 'text-t-text-secondary hover:text-t-text hover:bg-t-card-hover'
+                  ? 'bg-t-favorite text-t-text-on-primary hover:bg-t-favorite-hover'
+                  : 'text-t-text-secondary hover:text-t-text hover:bg-t-card-hover'
                   }`}
                 title={showOnlyFavorites ? 'Show all stations' : 'Show only favorites'}
               >
@@ -219,8 +222,8 @@ export const Header: React.FC = () => {
                               setIsMobileMenuOpen(false);
                             }}
                             className={`w-full flex items-center gap-3 px-3 py-2 rounded text-sm transition-colors ${designSystem === theme.id
-                                ? 'bg-t-primary-subtle text-t-primary'
-                                : 'text-t-text hover:bg-t-card-hover'
+                              ? 'bg-t-primary-subtle text-t-primary'
+                              : 'text-t-text hover:bg-t-card-hover'
                               }`}
                           >
                             <div

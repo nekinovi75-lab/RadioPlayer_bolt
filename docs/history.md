@@ -11,6 +11,14 @@
 ## 2026-02-08 — Visualizer Component & Integration
 **Description:** Created a new animated bar visualizer component and integrated it into the AudioPlayer bar.
 **Summary:** Implemented `Visualizer.tsx` and `Visualizer.css` featuring a 5-bar animated frequency display that responds to the `isPlaying` state. Integrated the component into `AudioPlayer.tsx` next to the station info, replacing the "Playing" text placeholder. Enhanced the UI with a pulse animation on the station logo when active.
+
+## 2026-02-08 — Sonner Integration & Alert Replacement
+**Description:** Replaced all browser native alerts and confirmation feedback with `sonner` toast notifications.
+**Summary:** 
+- Installed `sonner` and added `<Toaster />` to `App.tsx`.
+- Replaced `alert()` in `Header.tsx` for CSV import success/error messages.
+- Added success/info toasts for station addition, deletion, editing, favoriting, theme switching, and sleep timer settings.
+- Improved UX by providing non-blocking, beautiful notifications for all user actions.
 ## 2026-02-08 — Duplicate Prevention & Import Summary
 **Description:** Enhanced CSV import and manual station addition to prevent duplicate entries based on Stream URL.
 **Summary:** 

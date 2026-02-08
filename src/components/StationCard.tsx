@@ -4,6 +4,7 @@ import { usePlayer } from '../stores/usePlayerStore';
 import { useStations } from '../stores/useStationsStore';
 import { useFavorites } from '../stores/useFavoritesStore';
 import { Play, Pause, Trash2, Radio, Edit, Heart } from 'lucide-react';
+import { toast } from 'sonner';
 import { EditStationModal } from './EditStationModal';
 
 interface StationCardProps {
@@ -22,6 +23,9 @@ export const StationCard: React.FC<StationCardProps> = ({ station }) => {
     e.stopPropagation();
     if (confirm(`Delete "${station.stationName}"?`)) {
       deleteStation(station.id);
+      toast.success('Station deleted', {
+        description: `"${station.stationName}" has been removed.`
+      });
     }
   };
 
@@ -33,6 +37,15 @@ export const StationCard: React.FC<StationCardProps> = ({ station }) => {
   const handleFavorite = (e: React.MouseEvent) => {
     e.stopPropagation();
     toggleFavorite(station.id);
+    if (isFav) {
+      toast.info(`Removed from favorites`, {
+        description: `"${station.stationName}" has been removed.`
+      });
+    } else {
+      toast.success(`Added to favorites`, {
+        description: `"${station.stationName}" has been added.`
+      });
+    }
   };
 
   return (
@@ -79,11 +92,10 @@ export const StationCard: React.FC<StationCardProps> = ({ station }) => {
 
       <button
         onClick={handleFavorite}
-        className={`absolute top-2 left-2 sm:top-3 sm:left-3 w-8 h-8 rounded-full ${
-          isFav
-            ? 'bg-t-favorite hover:bg-t-favorite-hover opacity-100'
-            : 'bg-t-text-secondary opacity-0 group-hover:opacity-100'
-        } text-t-text-on-primary flex items-center justify-center transition-all duration-300 shadow-lg touch-manipulation`}
+        className={`absolute top-2 left-2 sm:top-3 sm:left-3 w-8 h-8 rounded-full ${isFav
+          ? 'bg-t-favorite hover:bg-t-favorite-hover opacity-100'
+          : 'bg-t-text-secondary opacity-0 group-hover:opacity-100'
+          } text-t-text-on-primary flex items-center justify-center transition-all duration-300 shadow-lg touch-manipulation`}
       >
         <Heart className={`w-4 h-4 ${isFav ? 'fill-current' : ''}`} />
       </button>

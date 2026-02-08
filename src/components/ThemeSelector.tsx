@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import { Palette, Check } from 'lucide-react';
 import { useTheme } from '../stores/useThemeStore';
 import { themes } from '../config/themes';
+import { toast } from 'sonner';
 
 export const ThemeSelector: React.FC = () => {
   const { designSystem, setDesignSystem } = useTheme();
@@ -48,13 +49,13 @@ export const ThemeSelector: React.FC = () => {
                 key={theme.id}
                 onClick={() => {
                   setDesignSystem(theme.id);
+                  toast.success(`Theme set to ${theme.name}`);
                   setIsOpen(false);
                 }}
-                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors text-left ${
-                  designSystem === theme.id
+                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors text-left ${designSystem === theme.id
                     ? 'bg-t-primary-subtle'
                     : 'hover:bg-t-card-hover'
-                }`}
+                  }`}
               >
                 <div className="flex gap-1 flex-shrink-0">
                   <div
