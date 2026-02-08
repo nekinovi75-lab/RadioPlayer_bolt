@@ -6,6 +6,7 @@ import { useFavorites } from '../stores/useFavoritesStore';
 import { Play, Pause, Trash2, Radio, Edit, Heart } from 'lucide-react';
 import { toast } from 'sonner';
 import { EditStationModal } from './EditStationModal';
+import { ConfirmDialog } from './ConfirmDialog';
 
 interface StationListItemProps {
   station: RadioStation;
@@ -18,15 +19,18 @@ export const StationListItem: React.FC<StationListItemProps> = ({ station }) => 
   const isCurrentStation = currentStation?.id === station.id;
   const isFav = isFavorite(station.id);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
-  const handleDelete = (e: React.MouseEvent) => {
+  const handleDeleteClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (confirm(`Delete "${station.stationName}"?`)) {
-      deleteStation(station.id);
-      toast.success('Station deleted', {
-        description: `"${station.stationName}" has been removed.`
-      });
-    }
+    setIsDeleteDialogOpen(true);
+  };
+
+  const handleConfirmDelete = () => {
+    deleteStation(station.id);
+    toast.success('Station deleted', {
+      description: `"${station.stationName}" has been removed.`
+    });
   };
 
   const handleEdit = (e: React.MouseEvent) => {
@@ -115,7 +119,7 @@ export const StationListItem: React.FC<StationListItemProps> = ({ station }) => 
           </button>
 
           <button
-            onClick={handleDelete}
+            onClick={handleDeleteClick}
             className="hidden sm:flex w-10 h-10 rounded-full bg-t-danger hover:bg-t-danger-hover text-t-text-on-primary items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-md"
           >
             <Trash2 className="w-4 h-4" />
@@ -127,6 +131,15 @@ export const StationListItem: React.FC<StationListItemProps> = ({ station }) => 
         isOpen={isEditModalOpen}
         onClose={() => setIsEditModalOpen(false)}
         station={station}
+      />
+
+      <ConfirmDialog
+        isOpen={isDeleteDialogOpen}
+        title="Delete Station"
+        message={`Are you sure you want to delete "${station.stationName}"? This action cannot be undone.`}
+        confirmText="Delete"
+        onConfirm={handleConfirmDelete}
+        onCancel={() => setIsDeleteDialogOpen(false)}
       />
     </div>
   );

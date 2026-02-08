@@ -27,6 +27,15 @@
 - Added duplicate validation to `AddStationModal.tsx` to prevent adding existing URLs through the UI.
 - Ensured case-insensitive URL comparison for robust detection.
 
+## 2026-02-08 — Custom Native Confirm Dialog
+**Description:** Replaced the browser native `confirm()` with a custom React component using the native HTML `<dialog>` element.
+**Summary:** 
+- Created `ConfirmDialog.tsx` as a reusable component using the `<dialog>` element for better accessibility and styling.
+- Replaced native `confirm()` calls in `StationCard.tsx` and `StationListItem.tsx` with the new component.
+- Added smooth scale and fade animations for the dialog backdrop and content.
+- Integrated `sonner` notifications as follow-up feedback after confirmed deletions.
+
+
 
 ## 2026-02-08 — Fix: Export definitions and Typecheck Cleanup
 **Description:** Resolved TypeScript module export errors and cleaned up unused code for a green build.
