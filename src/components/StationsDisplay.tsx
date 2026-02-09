@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react';
-import { useStations } from '../contexts/StationsContext';
-import { useViewMode } from '../contexts/ViewModeContext';
-import { useSearch } from '../contexts/SearchContext';
-import { useFavorites } from '../contexts/FavoritesContext';
+import { useStations } from '../stores/useStationsStore';
+import { useViewMode } from '../stores/useViewModeStore';
+import { useSearch } from '../stores/useSearchStore';
+import { useFavorites } from '../stores/useFavoritesStore';
 import { StationCard } from './StationCard';
 import { StationListItem } from './StationListItem';
 import { Loader2, Music, SearchX, Heart } from 'lucide-react';
@@ -38,7 +38,7 @@ export const StationsDisplay: React.FC = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <Loader2 className="w-8 h-8 text-blue-600 animate-spin" />
+        <Loader2 className="w-8 h-8 text-t-primary animate-spin" />
       </div>
     );
   }
@@ -46,13 +46,13 @@ export const StationsDisplay: React.FC = () => {
   if (stations.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-20 text-center">
-        <div className="w-20 h-20 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center mb-4">
-          <Music className="w-10 h-10 text-gray-400" />
+        <div className="w-20 h-20 rounded-full bg-t-card flex items-center justify-center mb-4">
+          <Music className="w-10 h-10 text-t-text-secondary" />
         </div>
-        <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+        <h3 className="text-xl font-semibold text-t-text mb-2">
           No stations yet
         </h3>
-        <p className="text-gray-500 dark:text-gray-400 max-w-md">
+        <p className="text-t-text-secondary max-w-md">
           Add your first radio station to get started, or import a CSV file with your favorite stations.
         </p>
       </div>
@@ -63,13 +63,13 @@ export const StationsDisplay: React.FC = () => {
     if (showOnlyFavorites) {
       return (
         <div className="flex flex-col items-center justify-center py-20 text-center">
-          <div className="w-20 h-20 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center mb-4">
-            <Heart className="w-10 h-10 text-gray-400" />
+          <div className="w-20 h-20 rounded-full bg-t-card flex items-center justify-center mb-4">
+            <Heart className="w-10 h-10 text-t-text-secondary" />
           </div>
-          <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+          <h3 className="text-xl font-semibold text-t-text mb-2">
             No favorite stations
           </h3>
-          <p className="text-gray-500 dark:text-gray-400 max-w-md">
+          <p className="text-t-text-secondary max-w-md">
             Mark stations as favorites by clicking the heart icon to see them here.
           </p>
         </div>
@@ -78,13 +78,13 @@ export const StationsDisplay: React.FC = () => {
 
     return (
       <div className="flex flex-col items-center justify-center py-20 text-center">
-        <div className="w-20 h-20 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center mb-4">
-          <SearchX className="w-10 h-10 text-gray-400" />
+        <div className="w-20 h-20 rounded-full bg-t-card flex items-center justify-center mb-4">
+          <SearchX className="w-10 h-10 text-t-text-secondary" />
         </div>
-        <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+        <h3 className="text-xl font-semibold text-t-text mb-2">
           No stations found
         </h3>
-        <p className="text-gray-500 dark:text-gray-400 max-w-md">
+        <p className="text-t-text-secondary max-w-md">
           No stations match "{searchQuery}". Try a different search term.
         </p>
       </div>

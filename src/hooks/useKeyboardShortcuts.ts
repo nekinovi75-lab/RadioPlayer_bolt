@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-import { usePlayer } from '../contexts/PlayerContext';
-import { useStations } from '../contexts/StationsContext';
+import { usePlayer } from '../stores/usePlayerStore';
+import { useStations } from '../stores/useStationsStore';
 
 export const useKeyboardShortcuts = () => {
   const { currentStation, isPlaying, playStation, pause, volume, setVolume } = usePlayer();

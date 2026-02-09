@@ -1,20 +1,14 @@
-import { ThemeProvider } from './contexts/ThemeContext';
-import { StationsProvider } from './contexts/StationsContext';
-import { PlayerProvider } from './contexts/PlayerContext';
-import { SleepTimerProvider } from './contexts/SleepTimerContext';
-import { ViewModeProvider } from './contexts/ViewModeContext';
-import { SearchProvider } from './contexts/SearchContext';
-import { FavoritesProvider } from './contexts/FavoritesContext';
 import { Header } from './components/Header';
 import { StationsDisplay } from './components/StationsDisplay';
 import { AudioPlayer } from './components/AudioPlayer';
 import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts';
+import { Toaster } from 'sonner';
 
-function AppContent() {
+const App = () => {
   useKeyboardShortcuts();
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col transition-colors">
+    <div className="min-h-screen bg-t-bg flex flex-col transition-colors">
       <Header />
 
       <main className="flex-1 overflow-y-auto pb-24 sm:pb-32">
@@ -24,28 +18,9 @@ function AppContent() {
       </main>
 
       <AudioPlayer />
+      <Toaster position="top-right" expand={true} richColors />
     </div>
   );
-}
-
-function App() {
-  return (
-    <ThemeProvider>
-      <StationsProvider>
-        <FavoritesProvider>
-          <PlayerProvider>
-            <SleepTimerProvider>
-              <ViewModeProvider>
-                <SearchProvider>
-                  <AppContent />
-                </SearchProvider>
-              </ViewModeProvider>
-            </SleepTimerProvider>
-          </PlayerProvider>
-        </FavoritesProvider>
-      </StationsProvider>
-    </ThemeProvider>
-  );
-}
+};
 
 export default App;

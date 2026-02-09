@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { X } from 'lucide-react';
-import { useSleepTimer } from '../contexts/SleepTimerContext';
+import { useSleepTimer } from '../stores/useSleepTimerStore';
+import { toast } from 'sonner';
 
 interface SleepTimerModalProps {
   isOpen: boolean;
@@ -17,6 +18,9 @@ export const SleepTimerModal: React.FC<SleepTimerModalProps> = ({ isOpen, onClos
 
   const handlePreset = (minutes: number) => {
     setTimer(minutes);
+    toast.success('Sleep timer set', {
+      description: `Playback will stop in ${minutes} minutes.`
+    });
     onClose();
   };
 
@@ -24,25 +28,28 @@ export const SleepTimerModal: React.FC<SleepTimerModalProps> = ({ isOpen, onClos
     const minutes = parseInt(customMinutes, 10);
     if (minutes > 0 && minutes <= 480) {
       setTimer(minutes);
+      toast.success('Sleep timer set', {
+        description: `Playback will stop in ${minutes} minutes.`
+      });
       onClose();
     }
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-sm w-full transform transition-all">
-        <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Sleep Timer</h2>
+    <div className="fixed inset-0 bg-[var(--overlay)] flex items-center justify-center z-50 p-4">
+      <div className="bg-t-card rounded-xl shadow-2xl max-w-sm w-full transform transition-all">
+        <div className="flex items-center justify-between p-6 border-b border-t-border">
+          <h2 className="text-2xl font-bold text-t-text">Sleep Timer</h2>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+            className="text-t-text-secondary hover:text-t-text transition-colors"
           >
             <X className="w-6 h-6" />
           </button>
         </div>
 
         <div className="p-6 space-y-4">
-          <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+          <p className="text-sm text-t-text-secondary mb-4">
             Playback will stop after the selected duration
           </p>
 
@@ -51,7 +58,7 @@ export const SleepTimerModal: React.FC<SleepTimerModalProps> = ({ isOpen, onClos
               <button
                 key={minutes}
                 onClick={() => handlePreset(minutes)}
-                className="px-4 py-3 bg-blue-100 hover:bg-blue-200 dark:bg-blue-900 dark:hover:bg-blue-800 text-blue-800 dark:text-blue-200 rounded-lg font-medium transition-colors"
+                className="px-4 py-3 bg-t-primary-subtle hover:bg-t-primary hover:text-t-text-on-primary text-t-primary rounded-lg font-medium transition-colors"
               >
                 {minutes} min
               </button>
@@ -59,7 +66,7 @@ export const SleepTimerModal: React.FC<SleepTimerModalProps> = ({ isOpen, onClos
           </div>
 
           <div className="pt-2">
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-sm font-medium text-t-text-secondary mb-2">
               Custom Duration
             </label>
             <div className="flex gap-2">
@@ -69,31 +76,34 @@ export const SleepTimerModal: React.FC<SleepTimerModalProps> = ({ isOpen, onClos
                 max="480"
                 value={customMinutes}
                 onChange={(e) => setCustomMinutes(e.target.value)}
-                className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="flex-1 px-3 py-2 border border-t-border rounded-lg bg-t-bg text-t-text focus:ring-2 focus:ring-t-primary focus:border-transparent"
                 placeholder="Minutes"
               />
               <button
                 onClick={handleCustom}
-                className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium transition-colors"
+                className="px-4 py-2 bg-t-success hover:bg-t-success-hover text-t-text-on-primary rounded-lg font-medium transition-colors"
               >
                 Set
               </button>
             </div>
-            <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+            <p className="mt-1 text-xs text-t-text-secondary">
               1 - 480 minutes
             </p>
           </div>
 
           <div className="flex gap-3 pt-4">
             <button
-              onClick={cancelTimer}
-              className="flex-1 px-4 py-2 border border-red-300 dark:border-red-700 text-red-700 dark:text-red-300 rounded-lg hover:bg-red-50 dark:hover:bg-red-900 transition-colors font-medium"
+              onClick={() => {
+                cancelTimer();
+                toast.info('Sleep timer cancelled');
+              }}
+              className="flex-1 px-4 py-2 border border-t-danger text-t-danger rounded-lg hover:bg-t-danger-subtle transition-colors font-medium"
             >
               Cancel Timer
             </button>
             <button
               onClick={onClose}
-              className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors font-medium"
+              className="flex-1 px-4 py-2 border border-t-border text-t-text-secondary rounded-lg hover:bg-t-card-hover transition-colors font-medium"
             >
               Close
             </button>

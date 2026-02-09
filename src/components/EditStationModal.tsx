@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useStations } from '../contexts/StationsContext';
+import { useStations } from '../stores/useStationsStore';
 import { RadioStation } from '../utils/csvParser';
 import { X } from 'lucide-react';
+import { toast } from 'sonner';
 
 interface EditStationModalProps {
   isOpen: boolean;
@@ -57,6 +58,10 @@ export const EditStationModal: React.FC<EditStationModalProps> = ({ isOpen, onCl
       category: category
     });
 
+    toast.success('Station updated', {
+      description: `Changes to "${stationName.trim()}" have been saved.`
+    });
+
     setErrors({});
     onClose();
   };
@@ -67,13 +72,13 @@ export const EditStationModal: React.FC<EditStationModalProps> = ({ isOpen, onCl
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-md w-full transform transition-all">
-        <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Edit Radio Station</h2>
+    <div className="fixed inset-0 bg-[var(--overlay)] flex items-center justify-center z-50 p-4">
+      <div className="bg-t-card rounded-xl shadow-2xl max-w-md w-full transform transition-all">
+        <div className="flex items-center justify-between p-6 border-b border-t-border">
+          <h2 className="text-2xl font-bold text-t-text">Edit Radio Station</h2>
           <button
             onClick={handleClose}
-            className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+            className="text-t-text-secondary hover:text-t-text transition-colors"
           >
             <X className="w-6 h-6" />
           </button>
@@ -81,61 +86,61 @@ export const EditStationModal: React.FC<EditStationModalProps> = ({ isOpen, onCl
 
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-sm font-medium text-t-text mb-2">
               Station Name *
             </label>
             <input
               type="text"
               value={stationName}
               onChange={(e) => setStationName(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+              className="w-full px-4 py-2 border border-t-border rounded-lg bg-t-bg text-t-text focus:ring-2 focus:ring-t-primary focus:border-transparent transition-colors"
               placeholder="BBC Radio 1"
             />
             {errors.name && (
-              <p className="mt-1 text-sm text-red-500">{errors.name}</p>
+              <p className="mt-1 text-sm text-t-danger">{errors.name}</p>
             )}
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-sm font-medium text-t-text mb-2">
               Stream URL *
             </label>
             <input
               type="text"
               value={url}
               onChange={(e) => setUrl(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+              className="w-full px-4 py-2 border border-t-border rounded-lg bg-t-bg text-t-text focus:ring-2 focus:ring-t-primary focus:border-transparent transition-colors"
               placeholder="https://stream.example.com/radio"
             />
             {errors.url && (
-              <p className="mt-1 text-sm text-red-500">{errors.url}</p>
+              <p className="mt-1 text-sm text-t-danger">{errors.url}</p>
             )}
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-sm font-medium text-t-text mb-2">
               Logo (optional)
             </label>
             <input
               type="text"
               value={logo}
               onChange={(e) => setLogo(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+              className="w-full px-4 py-2 border border-t-border rounded-lg bg-t-bg text-t-text focus:ring-2 focus:ring-t-primary focus:border-transparent transition-colors"
               placeholder="bbc-radio1.svg or https://example.com/logo.png"
             />
-            <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+            <p className="mt-1 text-xs text-t-text-secondary">
               Enter filename (from /images/logos/) or full URL
             </p>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-sm font-medium text-t-text mb-2">
               Category
             </label>
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors cursor-pointer"
+              className="w-full px-4 py-2 border border-t-border rounded-lg bg-t-bg text-t-text focus:ring-2 focus:ring-t-primary focus:border-transparent transition-colors cursor-pointer"
             >
               <option value="Pop">Pop</option>
               <option value="Rock">Rock</option>
@@ -165,13 +170,13 @@ export const EditStationModal: React.FC<EditStationModalProps> = ({ isOpen, onCl
             <button
               type="button"
               onClick={handleClose}
-              className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+              className="flex-1 px-4 py-2 border border-t-border text-t-text-secondary rounded-lg hover:bg-t-card-hover transition-colors"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="flex-1 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors shadow-md"
+              className="flex-1 px-4 py-2 bg-t-primary hover:bg-t-primary-hover text-t-text-on-primary rounded-lg transition-colors shadow-md"
             >
               Save Changes
             </button>

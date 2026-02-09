@@ -3,7 +3,31 @@ export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   darkMode: 'class',
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        t: {
+          bg: 'var(--bg)',
+          card: 'var(--card)',
+          'card-hover': 'var(--card-hover)',
+          header: 'var(--header)',
+          primary: 'var(--primary)',
+          'primary-hover': 'var(--primary-hover)',
+          'primary-subtle': 'var(--primary-subtle)',
+          text: 'var(--text)',
+          'text-secondary': 'var(--text-secondary)',
+          'text-on-primary': 'var(--text-on-primary)',
+          border: 'var(--border)',
+          'input-bg': 'var(--input-bg)',
+          danger: 'var(--danger)',
+          'danger-hover': 'var(--danger-hover)',
+          'danger-subtle': 'var(--danger-subtle)',
+          success: 'var(--success)',
+          'success-hover': 'var(--success-hover)',
+          favorite: 'var(--favorite)',
+          'favorite-hover': 'var(--favorite-hover)',
+        },
+      },
+    },
   },
   plugins: [],
 };

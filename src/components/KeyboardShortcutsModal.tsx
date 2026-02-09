@@ -20,17 +20,17 @@ export const KeyboardShortcutsModal: React.FC<KeyboardShortcutsModalProps> = ({ 
   return (
     <>
       <div
-        className="fixed inset-0 bg-black/50 z-50 transition-opacity"
+        className="fixed inset-0 bg-[var(--overlay)] z-50 transition-opacity"
         onClick={onClose}
         role="presentation"
       />
 
-      <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-gray-800 rounded-lg shadow-xl z-50 max-w-sm w-full mx-4 overflow-hidden transition-colors">
-        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-700">
-          <h2 className="text-lg font-bold text-gray-900 dark:text-white">Keyboard Shortcuts</h2>
+      <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-t-card rounded-lg shadow-xl z-50 max-w-sm w-full mx-4 overflow-hidden transition-colors">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-t-border">
+          <h2 className="text-lg font-bold text-t-text">Keyboard Shortcuts</h2>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+            className="text-t-text-secondary hover:text-t-text transition-colors"
             aria-label="Close dialog"
           >
             <X className="w-5 h-5" />
@@ -42,20 +42,20 @@ export const KeyboardShortcutsModal: React.FC<KeyboardShortcutsModalProps> = ({ 
             {shortcuts.map((shortcut, index) => (
               <div key={index} className="flex items-start gap-3">
                 <div className="flex-shrink-0">
-                  <kbd className="px-2 py-1 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded text-xs font-semibold text-gray-900 dark:text-white whitespace-nowrap">
+                  <kbd className="px-2 py-1 bg-t-bg border border-t-border rounded text-xs font-semibold text-t-text whitespace-nowrap">
                     {shortcut.key}
                   </kbd>
                 </div>
-                <p className="text-gray-700 dark:text-gray-300 text-sm pt-1">{shortcut.action}</p>
+                <p className="text-t-text-secondary text-sm pt-1">{shortcut.action}</p>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="px-6 py-4 border-t border-gray-200 dark:border-gray-700 flex justify-end">
+        <div className="px-6 py-4 border-t border-t-border flex justify-end">
           <button
             onClick={onClose}
-            className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium text-sm"
+            className="px-4 py-2 bg-t-primary hover:bg-t-primary-hover text-t-text-on-primary rounded-lg transition-colors font-medium text-sm"
           >
             Got it
           </button>
