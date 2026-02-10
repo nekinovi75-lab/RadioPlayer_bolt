@@ -15,6 +15,7 @@ interface StationsState {
   deleteStation: (id: string) => void;
   exportStations: () => void;
   importStations: (file: File) => Promise<{ imported: number; skipped: number }>;
+  resetStations: (keepCustom?: boolean) => Promise<void>;
 }
 
 export const useStations = create<StationsState>()((set, get) => ({
@@ -125,6 +126,36 @@ export const useStations = create<StationsState>()((set, get) => ({
       reader.onerror = () => reject(new Error('Failed to read file'));
       reader.readAsText(file);
     });
+  },
+
+  resetStations: async (keepCustom?: boolean) => {
+    try {
+      set({ loading: true });
+      const response = await fetch('/stations.csv');
+
+      if (!response.ok) {
+        set({ loading: false, error: 'Failed to fetch default stations' });
+        return;
+      }
+
+      const csvContent = await response.text();
+      const defaultStations = parseCSV(csvContent);
+
+      let finalStations: RadioStation[];
+
+      if (keepCustom) {
+        const defaultUrls = new Set(defaultStations.map(s => s.url.toLowerCase()));
+        const customStations = get().stations.filter(s => !defaultUrls.has(s.url.toLowerCase()));
+        finalStations = [...defaultStations, ...customStations];
+      } else {
+        finalStations = defaultStations;
+      }
+
+      set({ stations: finalStations, error: null, loading: false });
+      persistStations(finalStations);
+    } catch {
+      set({ error: 'Failed to reset stations', loading: false });
+    }
   },
 }));
 

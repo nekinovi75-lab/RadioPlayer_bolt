@@ -1,5 +1,14 @@
 # History
 
+## 2026-02-11 — Add Reset to Defaults Feature
+**Description:** Added a reset button to restore default stations from `stations.csv`.
+**Summary:** 
+- Implemented `resetStations` in `useStationsStore.ts` to clear `localStorage` and re-fetch the default station list, with an optional `keepCustom` parameter.
+- Added a "Reset to Defaults" button (using `RotateCcw` icon) to the Header in both desktop and mobile views.
+- Enhanced `ConfirmDialog` to support an optional checkbox for user preferences.
+- Integrated the "Keep custom stations" checkbox in the reset flow, dynamically adjusting the confirmation message and logic.
+- Provided user feedback via `sonner` toast notifications tailored to the reset mode.
+
 ## 2026-02-08 — Migrate from React Context to Zustand
 **Description:** Replaced all 7 React Context providers with Zustand global state stores.
 **Summary:** Created 7 Zustand stores (`useSearchStore`, `useViewModeStore`, `useFavoritesStore`, `useThemeStore`, `usePlayerStore`, `useSleepTimerStore`, `useStationsStore`) in `src/stores/`. Rewired all 11 consumer files (App.tsx, 9 components, 1 hook) to import from stores instead of contexts. Removed the 7-deep provider nesting from App.tsx. Deleted all files in `src/contexts/`. Key improvements: no provider ordering dependency, cross-store communication via `getState()`, module-level `HTMLAudioElement` outside React render cycle, auto-loading stations at module level. TypeScript typecheck and production build pass clean.

@@ -10,6 +10,9 @@ interface ConfirmDialogProps {
     confirmText?: string;
     cancelText?: string;
     variant?: 'danger' | 'warning' | 'info';
+    checkboxLabel?: string;
+    onCheckboxChange?: (checked: boolean) => void;
+    checkboxChecked?: boolean;
 }
 
 export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
@@ -20,7 +23,10 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
     onCancel,
     confirmText = 'Confirm',
     cancelText = 'Cancel',
-    variant = 'danger'
+    variant = 'danger',
+    checkboxLabel,
+    onCheckboxChange,
+    checkboxChecked = false
 }) => {
     const dialogRef = useRef<HTMLDialogElement>(null);
 
@@ -88,6 +94,15 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
                     <p className="text-t-text-secondary leading-relaxed">
                         {message}
                     </p>
+
+                    {checkboxLabel && (
+                        <div className="mt-6 flex items-center gap-3 group cursor-pointer" onClick={() => onCheckboxChange?.(!checkboxChecked)}>
+                            <div className={`w-5 h-5 rounded border-2 transition-colors flex items-center justify-center ${checkboxChecked ? 'bg-t-primary border-t-primary' : 'border-t-border group-hover:border-t-primary'}`}>
+                                {checkboxChecked && <div className="w-2.5 h-2.5 bg-t-text-on-primary rounded-sm" />}
+                            </div>
+                            <span className="text-sm font-medium text-t-text select-none">{checkboxLabel}</span>
+                        </div>
+                    )}
                 </div>
 
                 <div className="flex gap-3 p-6 pt-0">

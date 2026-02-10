@@ -4,20 +4,23 @@ import { useViewMode } from '../stores/useViewModeStore';
 import { useStations } from '../stores/useStationsStore';
 import { useSearch } from '../stores/useSearchStore';
 import { useFavorites } from '../stores/useFavoritesStore';
-import { Sun, Moon, Grid3x3, List, Plus, Download, Upload, Search, X, Heart, Menu } from 'lucide-react';
+import { Sun, Moon, Grid3x3, List, Plus, Download, Upload, Search, X, Heart, Menu, RotateCcw } from 'lucide-react';
 import { toast } from 'sonner';
 import { AddStationModal } from './AddStationModal';
 import { ThemeSelector } from './ThemeSelector';
+import { ConfirmDialog } from './ConfirmDialog';
 import { themes } from '../config/themes';
 
 export const Header: React.FC = () => {
   const { colorMode, designSystem, setColorMode, toggleColorMode, setDesignSystem } = useTheme();
   const { viewMode, toggleViewMode } = useViewMode();
-  const { stations, exportStations, importStations } = useStations();
+  const { stations, exportStations, importStations, resetStations } = useStations();
   const { searchQuery, setSearchQuery, categoryFilter, setCategoryFilter } = useSearch();
   const { showOnlyFavorites, setShowOnlyFavorites } = useFavorites();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isResetDialogOpen, setIsResetDialogOpen] = useState(false);
+  const [keepCustom, setKeepCustom] = useState(true);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const categories = ['All', ...Array.from(new Set(stations.map(s => s.category))).sort()];
@@ -39,6 +42,19 @@ export const Header: React.FC = () => {
 
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
+    }
+  };
+
+  const handleReset = () => {
+    setIsResetDialogOpen(true);
+  };
+
+  const handleConfirmReset = async () => {
+    try {
+      await resetStations(keepCustom);
+      toast.success(keepCustom ? 'Stations refreshed' : 'Stations reset to default');
+    } catch (error) {
+      toast.error('Failed to reset stations');
     }
   };
 
@@ -144,6 +160,14 @@ export const Header: React.FC = () => {
                 <Download className="w-5 h-5" />
               </button>
 
+              <button
+                onClick={handleReset}
+                className="hidden sm:flex p-2 text-t-text-secondary hover:text-t-text hover:bg-t-card-hover rounded-lg transition-colors"
+                title="Reset to Defaults"
+              >
+                <RotateCcw className="w-5 h-5" />
+              </button>
+
               <ThemeSelector />
 
               <button
@@ -196,6 +220,17 @@ export const Header: React.FC = () => {
                     >
                       <Download className="w-5 h-5" />
                       <span>Export CSV</span>
+                    </button>
+
+                    <button
+                      onClick={() => {
+                        handleReset();
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className="w-full flex items-center gap-2 px-4 py-3 text-t-text hover:bg-t-card-hover text-left transition-colors border-b border-t-border"
+                    >
+                      <RotateCcw className="w-5 h-5" />
+                      <span>Reset to Defaults</span>
                     </button>
 
                     <select
@@ -264,6 +299,20 @@ export const Header: React.FC = () => {
       </header>
 
       <AddStationModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      <ConfirmDialog
+        isOpen={isResetDialogOpen}
+        title="Reset Stations"
+        message={keepCustom
+          ? "This will restore any missing default stations while keeping your manually added ones."
+          : "Are you sure you want to reset all stations? This will remove ANY custom stations you have added and restore defaults."}
+        confirmText="Reset"
+        variant="warning"
+        checkboxLabel="Keep custom stations"
+        checkboxChecked={keepCustom}
+        onCheckboxChange={setKeepCustom}
+        onConfirm={handleConfirmReset}
+        onCancel={() => setIsResetDialogOpen(false)}
+      />
     </>
   );
 };
