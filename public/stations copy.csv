@@ -1,0 +1,10 @@
+StationName,Url,Logo,Category
+Smooth FM,https://media-ssl.musicradio.com/SmoothUK,smooth-fm.svg,Jazz
+TDI radio,https://streaming.tdiradio.com/tdiradio.mp3,radiotdi-big.png,Talk
+Rock radio,https://edge9.pink.rs/rockstream,rockradio-big.png,Rock
+Naxi radio,https://naxi128.streaming.rs:9152/;*.mp3,naxiradio-big.png,Pop
+Play,https://stream.playradio.rs:8443/play.mp3,play-big.png,Pop
+Naxi 80-te,https://naxidigital-80s128ssl.streaming.rs:8042/;*.mp3,naxi80e-big.png,Retro
+Naxi Caffe,https://naxidigital-cafe128ssl.streaming.rs:8022/;*.mp3,naxicafe-big.png,Chill
+Naxi EX-YU,https://naxidigital-exyu128ssl.streaming.rs:8242/;*.mp3,naxiexyu-big.png,Regional
+021,https://radio.dukahosting.com/8006/stream/;*.mp3,https://radiofm.rs/images/radio/021-big.png,Pop
