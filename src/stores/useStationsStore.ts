@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { RadioStation, parseCSV, generateCSV, downloadCSV } from '../utils/csvParser';
+import defaultStationsUrl from '../config/defaultStations.csv?url';
 
 const persistStations = (stations: RadioStation[]) => {
   localStorage.setItem('radio-stations', JSON.stringify(stations));
@@ -31,8 +32,7 @@ export const useStations = create<StationsState>()((set, get) => ({
         return;
       }
 
-      const baseUrl = import.meta.env.BASE_URL || '/';
-      const response = await fetch(`${baseUrl}stations.csv`.replace(/\/+/g, '/'));
+      const response = await fetch(defaultStationsUrl);
 
       if (!response.ok) {
         set({ loading: false });
@@ -132,8 +132,7 @@ export const useStations = create<StationsState>()((set, get) => ({
   resetStations: async (keepCustom?: boolean) => {
     try {
       set({ loading: true });
-      const baseUrl = import.meta.env.BASE_URL || '/';
-      const response = await fetch(`${baseUrl}stations.csv`.replace(/\/+/g, '/'));
+      const response = await fetch(defaultStationsUrl);
 
       if (!response.ok) {
         set({ loading: false, error: 'Failed to fetch default stations' });

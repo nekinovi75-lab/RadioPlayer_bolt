@@ -9,6 +9,7 @@
 - Defined `warning`, `warning-hover`, and `warning-subtle` colors across all 10 themes in `index.css` and mapped them in `tailwind.config.js` to fix the invisible Reset button in light themes.
 - Integrated the "Keep custom stations" checkbox in the reset flow, dynamically adjusting the confirmation message and logic.
 - Resolved a production issue where `resetStations` failed on some hosting platforms by using `import.meta.env.BASE_URL` for the CSV path and adding content validation.
+- Fixed aggressive browser caching by moving `stations.csv` from `public/` to `src/config/` and importing it as a hashed asset URL (`?url`), ensuring users always get the latest station list without manual refresh.
 - Provided user feedback via `sonner` toast notifications tailored to the reset mode.
 
 ## 2026-02-08 — Migrate from React Context to Zustand
