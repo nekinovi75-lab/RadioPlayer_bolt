@@ -8,6 +8,8 @@ import { toast } from 'sonner';
 import { EditStationModal } from './EditStationModal';
 import { ConfirmDialog } from './ConfirmDialog';
 
+import { useMobileActions } from '../stores/useMobileActionsStore';
+
 interface StationListItemProps {
   station: RadioStation;
 }
@@ -16,10 +18,19 @@ export const StationListItem: React.FC<StationListItemProps> = ({ station }) => 
   const { currentStation, isPlaying, playStation } = usePlayer();
   const { deleteStation } = useStations();
   const { isFavorite, toggleFavorite } = useFavorites();
+  const { activeStationId, toggleStation } = useMobileActions();
   const isCurrentStation = currentStation?.id === station.id;
   const isFav = isFavorite(station.id);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+
+  const showActions = activeStationId === station.id;
+
+  const handleToggleActions = () => {
+    if (window.innerWidth < 640) {
+      toggleStation(station.id);
+    }
+  };
 
   const handleDeleteClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -53,7 +64,10 @@ export const StationListItem: React.FC<StationListItemProps> = ({ station }) => 
   };
 
   return (
-    <div className="group bg-t-card border border-t-border rounded-lg hover:shadow-md transition-all duration-200">
+    <div
+      onClick={handleToggleActions}
+      className="group bg-t-card border border-t-border rounded-lg hover:shadow-md transition-all duration-200 cursor-pointer"
+    >
       <div className="flex items-center gap-3 p-3 sm:gap-4 sm:p-4">
         <div className="relative flex-shrink-0">
           <img
@@ -84,9 +98,6 @@ export const StationListItem: React.FC<StationListItemProps> = ({ station }) => 
               {station.category}
             </span>
           </div>
-          <p className="text-xs sm:text-sm text-t-text-secondary truncate mt-0.5 sm:mt-1">
-            {station.url}
-          </p>
         </div>
 
         <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
@@ -94,14 +105,18 @@ export const StationListItem: React.FC<StationListItemProps> = ({ station }) => 
             onClick={handleFavorite}
             className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full ${isFav
               ? 'bg-t-favorite hover:bg-t-favorite-hover'
-              : 'bg-t-text-secondary opacity-0 group-hover:opacity-100 sm:opacity-0'
-              } text-t-text-on-primary flex items-center justify-center transition-all shadow-md touch-manipulation`}
+              : `bg-t-text-secondary transition-all shadow-md touch-manipulation ${showActions ? 'opacity-100' : 'opacity-0 sm:group-hover:opacity-100'
+              }`
+              } text-t-text-on-primary flex items-center justify-center`}
           >
             <Heart className={`w-4 h-4 ${isFav ? 'fill-current' : ''}`} />
           </button>
 
           <button
-            onClick={() => playStation(station)}
+            onClick={(e) => {
+              e.stopPropagation();
+              playStation(station);
+            }}
             className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-t-primary hover:bg-t-primary-hover text-t-text-on-primary flex items-center justify-center transition-colors shadow-md touch-manipulation"
           >
             {isCurrentStation && isPlaying ? (
@@ -113,14 +128,16 @@ export const StationListItem: React.FC<StationListItemProps> = ({ station }) => 
 
           <button
             onClick={handleEdit}
-            className="flex w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-t-primary hover:bg-t-primary-hover text-t-text-on-primary items-center justify-center opacity-0 group-hover:opacity-100 transition-all shadow-md touch-manipulation"
+            className={`flex w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-t-primary hover:bg-t-primary-hover text-t-text-on-primary items-center justify-center transition-all shadow-md touch-manipulation ${showActions ? 'opacity-100' : 'opacity-0 sm:group-hover:opacity-100'
+              }`}
           >
             <Edit className="w-4 h-4" />
           </button>
 
           <button
             onClick={handleDeleteClick}
-            className="flex w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-t-danger hover:bg-t-danger-hover text-t-text-on-primary items-center justify-center opacity-0 group-hover:opacity-100 transition-all shadow-md touch-manipulation"
+            className={`flex w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-t-danger hover:bg-t-danger-hover text-t-text-on-primary items-center justify-center transition-all shadow-md touch-manipulation ${showActions ? 'opacity-100' : 'opacity-0 sm:group-hover:opacity-100'
+              }`}
           >
             <Trash2 className="w-4 h-4" />
           </button>

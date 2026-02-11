@@ -8,6 +8,8 @@ import { toast } from 'sonner';
 import { EditStationModal } from './EditStationModal';
 import { ConfirmDialog } from './ConfirmDialog';
 
+import { useMobileActions } from '../stores/useMobileActionsStore';
+
 interface StationCardProps {
   station: RadioStation;
 }
@@ -16,10 +18,19 @@ export const StationCard: React.FC<StationCardProps> = ({ station }) => {
   const { currentStation, isPlaying, playStation } = usePlayer();
   const { deleteStation } = useStations();
   const { isFavorite, toggleFavorite } = useFavorites();
+  const { activeStationId, toggleStation } = useMobileActions();
   const isCurrentStation = currentStation?.id === station.id;
   const isFav = isFavorite(station.id);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+
+  const showActions = activeStationId === station.id;
+
+  const handleToggleActions = () => {
+    if (window.innerWidth < 640) {
+      toggleStation(station.id);
+    }
+  };
 
   const handleDeleteClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -53,7 +64,10 @@ export const StationCard: React.FC<StationCardProps> = ({ station }) => {
   };
 
   return (
-    <div className="group relative bg-t-card rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-t-border">
+    <div
+      onClick={handleToggleActions}
+      className="group relative bg-t-card rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-t-border cursor-pointer"
+    >
       <div className="aspect-video relative overflow-hidden bg-t-primary-subtle">
         <img
           src={getLogoPath(station.logo)}
@@ -63,10 +77,15 @@ export const StationCard: React.FC<StationCardProps> = ({ station }) => {
             e.currentTarget.src = getLogoPath('');
           }}
         />
-        <div className="absolute inset-0 bg-[var(--overlay)] opacity-0 group-hover:opacity-60 transition-opacity duration-300 flex items-center justify-center">
+        <div className={`absolute inset-0 bg-[var(--overlay)] transition-opacity duration-300 flex items-center justify-center ${showActions ? 'opacity-60' : 'opacity-0 sm:group-hover:opacity-60'
+          }`}>
           <button
-            onClick={() => playStation(station)}
-            className="w-16 h-16 rounded-full bg-t-primary hover:bg-t-primary-hover text-t-text-on-primary flex items-center justify-center transform scale-0 group-hover:scale-100 transition-transform duration-300 shadow-lg"
+            onClick={(e) => {
+              e.stopPropagation();
+              playStation(station);
+            }}
+            className={`w-16 h-16 rounded-full bg-t-primary hover:bg-t-primary-hover text-t-text-on-primary flex items-center justify-center transform transition-all duration-300 shadow-lg ${showActions ? 'scale-100 opacity-100' : 'scale-0 sm:group-hover:scale-100 opacity-0 sm:group-hover:opacity-100'
+              }`}
           >
             {isCurrentStation && isPlaying ? (
               <Pause className="w-8 h-8" />
@@ -98,22 +117,25 @@ export const StationCard: React.FC<StationCardProps> = ({ station }) => {
         onClick={handleFavorite}
         className={`absolute top-2 left-2 sm:top-3 sm:left-3 w-8 h-8 rounded-full ${isFav
           ? 'bg-t-favorite hover:bg-t-favorite-hover opacity-100'
-          : 'bg-t-text-secondary opacity-0 group-hover:opacity-100'
-          } text-t-text-on-primary flex items-center justify-center transition-all duration-300 shadow-lg touch-manipulation`}
+          : `bg-t-text-secondary transition-all duration-300 shadow-lg touch-manipulation ${showActions ? 'opacity-100' : 'opacity-0 sm:group-hover:opacity-100'
+          }`
+          } text-t-text-on-primary flex items-center justify-center`}
       >
         <Heart className={`w-4 h-4 ${isFav ? 'fill-current' : ''}`} />
       </button>
 
       <button
         onClick={handleEdit}
-        className="flex absolute top-2 left-12 sm:top-3 sm:left-12 w-8 h-8 rounded-full bg-t-primary hover:bg-t-primary-hover text-t-text-on-primary items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-lg touch-manipulation"
+        className={`flex absolute top-2 left-12 sm:top-3 sm:left-12 w-8 h-8 rounded-full bg-t-primary hover:bg-t-primary-hover text-t-text-on-primary items-center justify-center transition-all duration-300 shadow-lg touch-manipulation ${showActions ? 'opacity-100' : 'opacity-0 sm:group-hover:opacity-100'
+          }`}
       >
         <Edit className="w-4 h-4" />
       </button>
 
       <button
         onClick={handleDeleteClick}
-        className="flex absolute top-2 right-2 sm:top-3 sm:right-3 w-8 h-8 rounded-full bg-t-danger hover:bg-t-danger-hover text-t-text-on-primary items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-lg touch-manipulation"
+        className={`flex absolute top-2 right-2 sm:top-3 sm:right-3 w-8 h-8 rounded-full bg-t-danger hover:bg-t-danger-hover text-t-text-on-primary items-center justify-center transition-all duration-300 shadow-lg touch-manipulation ${showActions ? 'opacity-100' : 'opacity-0 sm:group-hover:opacity-100'
+          }`}
       >
         <Trash2 className="w-4 h-4" />
       </button>

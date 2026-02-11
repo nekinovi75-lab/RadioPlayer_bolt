@@ -1,5 +1,20 @@
 # History
 
+## 2026-02-11 — Mobile UX: Exclusive Toggle Actions
+**Description:** Refined mobile action visibility to be exclusive and fixed 'sticky' hover in emulators.
+**Summary:** 
+- Created `useMobileActionsStore.ts` to manage a global `activeStationId`.
+- Restricted CSS hover effects to desktop-only (`sm:group-hover`) to prevent emulated mobile devices from keeping buttons visible after a toggle-off tap.
+- Updated `StationCard.tsx` and `StationListItem.tsx` to handle exclusive visibility via shared store.
+- Ensured tapping the same item correctly hides its actions by clearing the global state.
+
+## 2026-02-11 — UI Refinement: Remove Station URL
+**Description:** Removed the station stream URL from the list view to reduce visual clutter.
+**Summary:** 
+- Deleted the URL Display from `StationListItem.tsx`.
+- Ensured `StationCard.tsx` remains clean (it already lacked the URL).
+- Improved focus on station name and category for a cleaner UI.
+
 ## 2026-02-11 — Mobile Accessibility Fix: Station Actions
 **Description:** Enabled edit and delete buttons on mobile devices for both grid and list views.
 **Summary:** 
