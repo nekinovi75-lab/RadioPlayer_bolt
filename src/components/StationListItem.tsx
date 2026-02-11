@@ -113,14 +113,14 @@ export const StationListItem: React.FC<StationListItemProps> = ({ station }) => 
 
           <button
             onClick={handleEdit}
-            className="hidden sm:flex w-10 h-10 rounded-full bg-t-primary hover:bg-t-primary-hover text-t-text-on-primary items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-md"
+            className="flex w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-t-primary hover:bg-t-primary-hover text-t-text-on-primary items-center justify-center opacity-0 group-hover:opacity-100 transition-all shadow-md touch-manipulation"
           >
             <Edit className="w-4 h-4" />
           </button>
 
           <button
             onClick={handleDeleteClick}
-            className="hidden sm:flex w-10 h-10 rounded-full bg-t-danger hover:bg-t-danger-hover text-t-text-on-primary items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-md"
+            className="flex w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-t-danger hover:bg-t-danger-hover text-t-text-on-primary items-center justify-center opacity-0 group-hover:opacity-100 transition-all shadow-md touch-manipulation"
           >
             <Trash2 className="w-4 h-4" />
           </button>

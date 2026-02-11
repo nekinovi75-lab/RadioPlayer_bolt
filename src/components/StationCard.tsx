@@ -106,14 +106,14 @@ export const StationCard: React.FC<StationCardProps> = ({ station }) => {
 
       <button
         onClick={handleEdit}
-        className="hidden sm:flex absolute top-3 left-12 w-8 h-8 rounded-full bg-t-primary hover:bg-t-primary-hover text-t-text-on-primary items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-lg"
+        className="flex absolute top-2 left-12 sm:top-3 sm:left-12 w-8 h-8 rounded-full bg-t-primary hover:bg-t-primary-hover text-t-text-on-primary items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-lg touch-manipulation"
       >
         <Edit className="w-4 h-4" />
       </button>
 
       <button
         onClick={handleDeleteClick}
-        className="hidden sm:flex absolute top-3 right-3 w-8 h-8 rounded-full bg-t-danger hover:bg-t-danger-hover text-t-text-on-primary items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-lg"
+        className="flex absolute top-2 right-2 sm:top-3 sm:right-3 w-8 h-8 rounded-full bg-t-danger hover:bg-t-danger-hover text-t-text-on-primary items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-lg touch-manipulation"
       >
         <Trash2 className="w-4 h-4" />
       </button>

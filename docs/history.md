@@ -1,5 +1,14 @@
 # History
 
+## 2026-02-11 — Mobile Accessibility Fix: Station Actions
+**Description:** Enabled edit and delete buttons on mobile devices for both grid and list views.
+**Summary:** 
+- Removed `hidden sm:flex` restriction from edit and delete buttons in `StationCard.tsx` and `StationListItem.tsx`.
+- Implemented `group-hover` based visibility for mobile, allowing these buttons to appear when a station item is tapped/clicked.
+- Optimized button sizes (`w-9`) and spacing for mobile layouts to prevent UI overflow.
+- Added `touch-manipulation` class to improve interaction responsiveness on touch devices.
+- Unified positioning of action buttons in `StationCard` for consistent mobile experience.
+
 ## 2026-02-11 — Add Reset to Defaults Feature
 **Description:** Added a reset button to restore default stations from `stations.csv`.
 **Summary:** 
