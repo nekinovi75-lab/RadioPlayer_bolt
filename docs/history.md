@@ -6,6 +6,7 @@
 - Implemented `resetStations` in `useStationsStore.ts` to clear `localStorage` and re-fetch the default station list, with an optional `keepCustom` parameter.
 - Added a "Reset to Defaults" button (using `RotateCcw` icon) to the Header in both desktop and mobile views.
 - Enhanced `ConfirmDialog` to support an optional checkbox for user preferences.
+- Defined `warning`, `warning-hover`, and `warning-subtle` colors across all 10 themes in `index.css` and mapped them in `tailwind.config.js` to fix the invisible Reset button in light themes.
 - Integrated the "Keep custom stations" checkbox in the reset flow, dynamically adjusting the confirmation message and logic.
 - Provided user feedback via `sonner` toast notifications tailored to the reset mode.
 
