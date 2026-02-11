@@ -77,23 +77,6 @@ export const StationCard: React.FC<StationCardProps> = ({ station }) => {
             e.currentTarget.src = getLogoPath('');
           }}
         />
-        <div className={`absolute inset-0 bg-[var(--overlay)] transition-opacity duration-300 flex items-center justify-center ${showActions ? 'opacity-60' : 'opacity-0 sm:group-hover:opacity-60'
-          }`}>
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              playStation(station);
-            }}
-            className={`w-16 h-16 rounded-full bg-t-primary hover:bg-t-primary-hover text-t-text-on-primary flex items-center justify-center transform transition-all duration-300 shadow-lg ${showActions ? 'scale-100 opacity-100' : 'scale-0 sm:group-hover:scale-100 opacity-0 sm:group-hover:opacity-100'
-              }`}
-          >
-            {isCurrentStation && isPlaying ? (
-              <Pause className="w-8 h-8" />
-            ) : (
-              <Play className="w-8 h-8 ml-1" />
-            )}
-          </button>
-        </div>
         {isCurrentStation && isPlaying && (
           <div className="absolute top-3 right-3">
             <div className="flex items-center gap-1 bg-t-success text-t-text-on-primary px-3 py-1 rounded-full text-xs font-semibold shadow-lg">
@@ -102,6 +85,24 @@ export const StationCard: React.FC<StationCardProps> = ({ station }) => {
             </div>
           </div>
         )}
+      </div>
+
+      <div className={`absolute inset-0 bg-[var(--overlay)] transition-opacity duration-300 flex items-center justify-center z-10 ${showActions ? 'opacity-60' : 'opacity-0 sm:group-hover:opacity-60'
+        }`}>
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            playStation(station);
+          }}
+          className={`w-16 h-16 rounded-full bg-t-primary hover:bg-t-primary-hover text-t-text-on-primary flex items-center justify-center transform transition-all duration-300 shadow-xl ${showActions ? 'scale-100 opacity-100' : 'scale-0 sm:group-hover:scale-100 opacity-0 sm:group-hover:opacity-100'
+            }`}
+        >
+          {isCurrentStation && isPlaying ? (
+            <Pause className="w-8 h-8" />
+          ) : (
+            <Play className="w-8 h-8 ml-1" />
+          )}
+        </button>
       </div>
 
       <div className="p-3 sm:p-4">
@@ -115,7 +116,7 @@ export const StationCard: React.FC<StationCardProps> = ({ station }) => {
 
       <button
         onClick={handleFavorite}
-        className={`absolute top-2 left-2 sm:top-3 sm:left-3 w-8 h-8 rounded-full ${isFav
+        className={`absolute top-2 left-2 sm:top-3 sm:left-3 w-8 h-8 rounded-full z-20 ${isFav
           ? 'bg-t-favorite hover:bg-t-favorite-hover opacity-100'
           : `bg-t-text-secondary transition-all duration-300 shadow-lg touch-manipulation ${showActions ? 'opacity-100' : 'opacity-0 sm:group-hover:opacity-100'
           }`
@@ -126,7 +127,7 @@ export const StationCard: React.FC<StationCardProps> = ({ station }) => {
 
       <button
         onClick={handleEdit}
-        className={`flex absolute top-2 left-12 sm:top-3 sm:left-12 w-8 h-8 rounded-full bg-t-primary hover:bg-t-primary-hover text-t-text-on-primary items-center justify-center transition-all duration-300 shadow-lg touch-manipulation ${showActions ? 'opacity-100' : 'opacity-0 sm:group-hover:opacity-100'
+        className={`flex absolute top-2 left-12 sm:top-3 sm:left-12 w-8 h-8 rounded-full bg-t-primary hover:bg-t-primary-hover text-t-text-on-primary items-center justify-center transition-all duration-300 shadow-lg touch-manipulation z-20 ${showActions ? 'opacity-100' : 'opacity-0 sm:group-hover:opacity-100'
           }`}
       >
         <Edit className="w-4 h-4" />
@@ -134,7 +135,7 @@ export const StationCard: React.FC<StationCardProps> = ({ station }) => {
 
       <button
         onClick={handleDeleteClick}
-        className={`flex absolute top-2 right-2 sm:top-3 sm:right-3 w-8 h-8 rounded-full bg-t-danger hover:bg-t-danger-hover text-t-text-on-primary items-center justify-center transition-all duration-300 shadow-lg touch-manipulation ${showActions ? 'opacity-100' : 'opacity-0 sm:group-hover:opacity-100'
+        className={`flex absolute top-2 right-2 sm:top-3 sm:right-3 w-8 h-8 rounded-full bg-t-danger hover:bg-t-danger-hover text-t-text-on-primary items-center justify-center transition-all duration-300 shadow-lg touch-manipulation z-20 ${showActions ? 'opacity-100' : 'opacity-0 sm:group-hover:opacity-100'
           }`}
       >
         <Trash2 className="w-4 h-4" />

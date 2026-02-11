@@ -1,5 +1,12 @@
 # History
 
+## 2026-02-12 — UI Improvement: Card-level Play Button
+**Description:** Centered the Play button relative to the entire station card to reduce visual clutter.
+**Summary:** 
+- Moved the play button overlay in `StationCard.tsx` from the image container to the root card container.
+- Applied `z-10` to the overlay and `z-20` to the action buttons to ensure correct layering and interactivity.
+- Centered the central Play button across the full card dimensions for a more balanced look on mobile.
+
 ## 2026-02-11 — Mobile UX: Exclusive Toggle Actions
 **Description:** Refined mobile action visibility to be exclusive and fixed 'sticky' hover in emulators.
 **Summary:** 
