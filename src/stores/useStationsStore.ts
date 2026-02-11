@@ -31,7 +31,8 @@ export const useStations = create<StationsState>()((set, get) => ({
         return;
       }
 
-      const response = await fetch('/stations.csv');
+      const baseUrl = import.meta.env.BASE_URL || '/';
+      const response = await fetch(`${baseUrl}stations.csv`.replace(/\/+/g, '/'));
 
       if (!response.ok) {
         set({ loading: false });
@@ -131,7 +132,8 @@ export const useStations = create<StationsState>()((set, get) => ({
   resetStations: async (keepCustom?: boolean) => {
     try {
       set({ loading: true });
-      const response = await fetch('/stations.csv');
+      const baseUrl = import.meta.env.BASE_URL || '/';
+      const response = await fetch(`${baseUrl}stations.csv`.replace(/\/+/g, '/'));
 
       if (!response.ok) {
         set({ loading: false, error: 'Failed to fetch default stations' });
@@ -140,6 +142,11 @@ export const useStations = create<StationsState>()((set, get) => ({
 
       const csvContent = await response.text();
       const defaultStations = parseCSV(csvContent);
+
+      if (defaultStations.length === 0) {
+        set({ loading: false, error: 'No default stations found. The file might be missing or corrupted.' });
+        return;
+      }
 
       let finalStations: RadioStation[];
 
