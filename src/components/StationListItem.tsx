@@ -3,11 +3,11 @@ import { RadioStation, getLogoPath } from '../utils/csvParser';
 import { usePlayer } from '../stores/usePlayerStore';
 import { useStations } from '../stores/useStationsStore';
 import { useFavorites } from '../stores/useFavoritesStore';
-import { Play, Pause, Trash2, Radio, Edit, Heart } from 'lucide-react';
+import { Play, Pause, Radio } from 'lucide-react';
 import { toast } from 'sonner';
 import { EditStationModal } from './EditStationModal';
 import { ConfirmDialog } from './ConfirmDialog';
-
+import { StationListItemActions } from './StationListItemActions';
 import { useMobileActions } from '../stores/useMobileActionsStore';
 
 interface StationListItemProps {
@@ -101,16 +101,13 @@ export const StationListItem: React.FC<StationListItemProps> = ({ station }) => 
         </div>
 
         <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
-          <button
-            onClick={handleFavorite}
-            className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full ${isFav
-              ? 'bg-t-favorite hover:bg-t-favorite-hover'
-              : `bg-t-text-secondary transition-all shadow-md touch-manipulation ${showActions ? 'opacity-100' : 'opacity-0 sm:group-hover:opacity-100'
-              }`
-              } text-t-text-on-primary flex items-center justify-center`}
-          >
-            <Heart className={`w-4 h-4 ${isFav ? 'fill-current' : ''}`} />
-          </button>
+          <StationListItemActions
+            showActions={showActions}
+            isFav={isFav}
+            onFavorite={handleFavorite}
+            onEdit={handleEdit}
+            onDelete={handleDeleteClick}
+          />
 
           <button
             onClick={(e) => {
@@ -124,22 +121,6 @@ export const StationListItem: React.FC<StationListItemProps> = ({ station }) => 
             ) : (
               <Play className="w-5 h-5 ml-0.5" />
             )}
-          </button>
-
-          <button
-            onClick={handleEdit}
-            className={`flex w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-t-primary hover:bg-t-primary-hover text-t-text-on-primary items-center justify-center transition-all shadow-md touch-manipulation ${showActions ? 'opacity-100' : 'opacity-0 sm:group-hover:opacity-100'
-              }`}
-          >
-            <Edit className="w-4 h-4" />
-          </button>
-
-          <button
-            onClick={handleDeleteClick}
-            className={`flex w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-t-danger hover:bg-t-danger-hover text-t-text-on-primary items-center justify-center transition-all shadow-md touch-manipulation ${showActions ? 'opacity-100' : 'opacity-0 sm:group-hover:opacity-100'
-              }`}
-          >
-            <Trash2 className="w-4 h-4" />
           </button>
         </div>
       </div>
