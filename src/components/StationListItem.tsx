@@ -66,7 +66,13 @@ export const StationListItem: React.FC<StationListItemProps> = ({ station }) => 
   return (
     <div
       onClick={handleToggleActions}
-      className="group bg-t-card border border-t-border rounded-lg hover:shadow-md transition-all duration-200 cursor-pointer"
+      className={`group bg-t-card rounded-lg hover:shadow-md transition-all duration-200 cursor-pointer ${
+        isCurrentStation
+          ? 'ring-2 ring-t-primary border border-transparent'
+          : showActions
+          ? 'border border-t-border sm:border-transparent sm:hover:border-t-border'
+          : 'border border-transparent hover:border-t-border'
+      }`}
     >
       <div className="flex items-center gap-3 p-3 sm:gap-4 sm:p-4">
         <div className="relative flex-shrink-0">

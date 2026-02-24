@@ -42,7 +42,7 @@
   --text: #e2e8f0;
   --text-secondary: #94a3b8;
   --text-on-primary: #ffffff;
-  --border: #334155;
+  --border: #4a6080;
   --input-bg: #0f172a;
   --danger: #f87171;
   --danger-hover: #ef4444;
@@ -95,7 +95,7 @@
   --text: #fef3c7;
   --text-secondary: #a8a29e;
   --text-on-primary: #1c1410;
-  --border: #44382b;
+  --border: #6b5233;
   --input-bg: #1c1410;
   --danger: #f87171;
   --danger-hover: #ef4444;
@@ -148,7 +148,7 @@
   --text: #dcfce7;
   --text-secondary: #86b88a;
   --text-on-primary: #0f1a10;
-  --border: #2d4a2d;
+  --border: #3f6640;
   --input-bg: #0f1a10;
   --danger: #f87171;
   --danger-hover: #ef4444;
@@ -201,7 +201,7 @@
   --text: #e0f2fe;
   --text-secondary: #7ba3b8;
   --text-on-primary: #0c1222;
-  --border: #243347;
+  --border: #2e4f72;
   --input-bg: #0c1222;
   --danger: #f87171;
   --danger-hover: #ef4444;
@@ -254,7 +254,7 @@
   --text: #f9fafb;
   --text-secondary: #9ea3ae;
   --text-on-primary: #161d21;
-  --border: #394150;
+  --border: #4a6070;
   --input-bg: #161d21;
   --danger: #f87171;
   --danger-hover: #ef4444;
@@ -267,6 +267,59 @@
   --favorite: #f0a5c0;
   --favorite-hover: #e890b0;
   --overlay: rgba(0, 0, 0, 0.6);
+}
+
+/* Cyber Theme - Neon teal on dark carbon */
+.theme-cyber {
+  --bg: #e0f7f3;
+  --card: #f0fdf9;
+  --card-hover: #d0f2ec;
+  --header: #f0fdf9;
+  --primary: #00b894;
+  --primary-hover: #00a37e;
+  --primary-subtle: #ccf7ed;
+  --text: #0a1f1c;
+  --text-secondary: #3d7a70;
+  --text-on-primary: #ffffff;
+  --border: #7de0cf;
+  --input-bg: #f5fdfa;
+  --danger: #dc2626;
+  --danger-hover: #b91c1c;
+  --danger-subtle: #fef2f2;
+  --success: #22c55e;
+  --success-hover: #16a34a;
+  --warning: #f59e0b;
+  --warning-hover: #d97706;
+  --warning-subtle: #fffbeb;
+  --favorite: #e11d48;
+  --favorite-hover: #be123c;
+  --overlay: rgba(10, 31, 28, 0.5);
+}
+
+.theme-cyber.dark {
+  --bg: #080d14;
+  --card: #0f1723;
+  --card-hover: #162030;
+  --header: #0f1723;
+  --primary: #00d4a8;
+  --primary-hover: #00ebbf;
+  --primary-subtle: #082923;
+  --text: #e0f9f5;
+  --text-secondary: #5da898;
+  --text-on-primary: #080d14;
+  --border: #1a7a6c;
+  --input-bg: #080d14;
+  --danger: #ff5580;
+  --danger-hover: #ff2d60;
+  --danger-subtle: #2d0a14;
+  --success: #00d4a8;
+  --success-hover: #00b894;
+  --warning: #fbbf24;
+  --warning-hover: #f59e0b;
+  --warning-subtle: #2d1f07;
+  --favorite: #ff79c6;
+  --favorite-hover: #ff5fba;
+  --overlay: rgba(0, 0, 0, 0.7);
 }
 
 /* Global base styles */

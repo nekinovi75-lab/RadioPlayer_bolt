@@ -1,4 +1,4 @@
-export type DesignSystem = 'blueprint' | 'ember' | 'forest' | 'nightfall' | 'mint';
+export type DesignSystem = 'blueprint' | 'ember' | 'forest' | 'nightfall' | 'mint' | 'cyber';
 
 export interface ThemeDefinition {
   id: DesignSystem;
@@ -49,6 +49,14 @@ export const themes: ThemeDefinition[] = [
     accentColor: '#3be8b8',
     previewBg: '#e6f7f2',
     previewCard: '#f2fbf8',
+  },
+  {
+    id: 'cyber',
+    name: 'Cyber',
+    description: 'Neon teal on dark carbon',
+    accentColor: '#00d4a8',
+    previewBg: '#080d14',
+    previewCard: '#0f1723',
   },
 ];
 
