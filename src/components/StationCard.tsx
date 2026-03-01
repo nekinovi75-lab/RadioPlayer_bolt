@@ -66,7 +66,13 @@ export const StationCard: React.FC<StationCardProps> = ({ station }) => {
   return (
     <div
       onClick={handleToggleActions}
-      className="group relative bg-t-card rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-t-border cursor-pointer"
+      className={`group relative bg-t-card rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden cursor-pointer ${
+        isCurrentStation
+          ? 'ring-2 ring-t-primary border border-transparent'
+          : showActions
+          ? 'border border-t-border sm:border-transparent sm:hover:border-t-border'
+          : 'border border-transparent hover:border-t-border'
+      }`}
     >
       <div className="aspect-video relative overflow-hidden bg-t-primary-subtle">
         <img
